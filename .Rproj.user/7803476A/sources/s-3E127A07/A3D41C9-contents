@@ -9,6 +9,6 @@ Description: For anybody interested in case-control studies of alternative splic
     based package includes functions for barcode deconvolution, integration with STARlong
     alignment tool, mapping and filtering of high confidence, spliced reads, and several
     methods to conduct and visualize differential splicing analysis.
-License: Weill Cornell Medicine
+License: What license is it under?
 Encoding: UTF-8
 LazyData: true
