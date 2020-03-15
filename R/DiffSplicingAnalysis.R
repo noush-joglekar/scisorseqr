@@ -1,5 +1,5 @@
 #' Perform differential splicing analysis
-#' @aliases DSA, DiffTest, DiffIsoTest
+#' @aliases DSA DiffTest DiffIsoTest
 #' @description This function allows you to test alternative
 #' splicing differences between any two groups
 #' based on the full splice-form, exons,
