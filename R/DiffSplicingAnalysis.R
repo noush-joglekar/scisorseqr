@@ -14,6 +14,7 @@
 #' depending on input. Defaults to Iso
 #' @return Output folder with results for each line of config
 #' file, i.e. for each set of comparisons
+#' @return Result file with gene, FDR, deltaPI value
 #' @usage DiffSplicingAnalysis('config',10,25,'Exon')
 #'
 #' @export

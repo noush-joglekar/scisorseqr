@@ -1,6 +1,6 @@
 #' Get single-cell barcodes from long read files
 #'
-#' This is an R-wrapper for a python function. It parallelizes the reading
+#' @description This is an R-wrapper for a python function. It parallelizes the reading
 #' and processing of fastq.gz files, and uses a sliding window approach to
 #' identify cell barcodes, assign cluster labels and output useful statistics
 #' in one .csv file and one _summary file per fastq.gz input file
