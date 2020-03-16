@@ -17,7 +17,9 @@ Imports:
 	data.table,
 	tidyr,
 	parallel,
-	tibble
+	tibble,
+	data.tree,
+	yaml
 Depends:
   dplyr
 
