@@ -2,6 +2,7 @@
 args <- commandArgs(trailingOnly=TRUE)
 
 
+### Initial set-up
 numIsoPerCluster <- data.table::fread(args[1])	## Need to make the package seamless
 					# enough that it takes the correct
 					#file depending on iso,tss,polyA
@@ -20,13 +21,35 @@ threshold <- as.integer(args[7])
 
 typeOfTest <- args[8]
 
-if(!dir.exists(paste0('TreeTraversal_',typeOfTest))){
-        dir.create(paste0('TreeTraversal_',typeOfTest))
-        out_dir <- paste0('TreeTraversal_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
-        dir.create(out_dir)
+if(is.hier == TRUE){
+  if(length(args) < 12){
+    print("Please input path to hierarchy.yaml file")
+    print("Indicate names of case-control corresponding to config file")
+    print("Aborting")
+    stop()
+  } else {
+    h <- yaml::yaml.load_file(args[10])
+    hier <- data.tree::as.Node(h)
+    region <- c(args[11],args[12])
+    if(!dir.exists(paste0('TreeTraversal_Hier_',typeOfTest))){
+      dir.create(paste0('TreeTraversal_Hier_',typeOfTest))
+      out_dir <- paste0('TreeTraversal_Hier_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
+      dir.create(out_dir)
+    } else {
+      out_dir <- paste0('TreeTraversal_Hier_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
+      dir.create(out_dir)
+    }
+  }
 } else {
-        out_dir <- paste0('TreeTraversal_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
-        dir.create(out_dir)}
+  if(!dir.exists(paste0('TreeTraversal_',typeOfTest))){
+    dir.create(paste0('TreeTraversal_',typeOfTest))
+    out_dir <- paste0('TreeTraversal_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
+    dir.create(out_dir)
+    } else {
+      out_dir <- paste0('TreeTraversal_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
+      dir.create(out_dir)
+    }
+}
 
 sink(paste0(out_dir,"REPORT_",threshold,".txt"), append=TRUE, split=TRUE)
 Sys.time()
@@ -67,6 +90,18 @@ colnames(numIsoPerCluster) <- c("Isoform","CellType","NumTranscripts")
 data_df <- separate(numIsoPerCluster, Isoform, into=c("Gene","IsoID"), sep="_")
 
 rm(numIsoPerCluster)
+
+##### Check if hierarchical analysis is true
+if(is.hier == TRUE){
+  cellGroup <- unlist(strsplit(comps[1],region[1]))[2]
+  if (cellGroup != hier$root$name){
+    parentCG <- data.tree::FindNode(hier, cellGroup)$parent$name
+    sig <- read.table(paste0("../TreeTraversal_Hier_Iso/",
+                             region[1],parentCG,"_",region[2],parentCG,"_",inum,"/",
+                             'sigGenes_',region[1],parentCG,"_",region[2],parentCG,threshold),header=TRUE)
+    data_df <- data_df[data_df$Gene %in% sig$x, ]
+  }
+}
 
 
 data_df$IsoID <- as.integer(data_df$IsoID)
