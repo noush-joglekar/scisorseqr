@@ -2,8 +2,8 @@
 % Please edit documentation in R/DiffSplicingAnalysis.R
 \name{DiffSplicingAnalysis}
 \alias{DiffSplicingAnalysis}
-\alias{DSA,}
-\alias{DiffTest,}
+\alias{DSA}
+\alias{DiffTest}
 \alias{DiffIsoTest}
 \title{Perform differential splicing analysis}
 \usage{
@@ -25,6 +25,8 @@ specifying the comparisons to be made}
 \value{
 Output folder with results for each line of config
 file, i.e. for each set of comparisons
+
+Result file with gene, FDR, deltaPI value
 }
 \description{
 This function allows you to test alternative
