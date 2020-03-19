@@ -2,7 +2,6 @@
 % Please edit documentation in R/DiffSplicingAnalysis.R
 \name{DiffSplicingAnalysis}
 \alias{DiffSplicingAnalysis}
-\alias{DSA}
 \alias{DiffTest}
 \alias{DiffIsoTest}
 \title{Perform differential splicing analysis}
@@ -39,4 +38,7 @@ This function allows you to test alternative
 splicing differences between any two groups
 based on the full splice-form, exons,
 the transcription start site (TSS) or end site (polyA).
+}
+\seealso{
+IsoQuant
 }
