@@ -1,5 +1,5 @@
 #' Perform differential splicing analysis
-#' @aliases DSA DiffTest DiffIsoTest
+#' @aliases DiffTest DiffIsoTest
 #' @description This function allows you to test alternative
 #' splicing differences between any two groups
 #' based on the full splice-form, exons,
@@ -19,6 +19,8 @@
 #' @return file with significantly differentially spliced genes
 #' @return file with numbers per gene and isoform tested in each group
 #' @usage DiffSplicingAnalysis('config',10,25,'Exon')
+#'
+#' @seealso IsoQuant
 #'
 #' @export
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",
