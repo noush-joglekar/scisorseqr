@@ -3,3 +3,4 @@
 export(DiffSplicingAnalysis)
 export(FilterBCOutput)
 export(GetBarcodes)
+export(IsoQuant)
