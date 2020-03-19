@@ -26,7 +26,13 @@ specifying the comparisons to be made}
 Output folder with results for each line of config
 file, i.e. for each set of comparisons
 
-Result file with gene, FDR, deltaPI value
+Result file with gene, uncorrected pval, deltaPI, FDR
+
+handy .Robj per comparison to import if need be
+
+file with significantly differentially spliced genes
+
+file with numbers per gene and isoform tested in each group
 }
 \description{
 This function allows you to test alternative
