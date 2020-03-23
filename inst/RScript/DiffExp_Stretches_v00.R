@@ -74,7 +74,8 @@ deltaPSI <- function(mat,gene,iso_to_cons){
 
 
 Get_Pval_DeltaPI <- function(mat){
-	max_ix <- as.integer(mat$IsoID[mat$delta == max(mat$delta)])
+  m <- mat$IsoID[mat$delta == max(mat$delta)]
+	max_ix <- as.integer(m[1])
 	pval <- chisq.test(mat[,3:4])$p.value
 	d_psi <- deltaPSI(mat,gene,iso_to_cons)
 	return(list(pval,d_psi,max_ix))
