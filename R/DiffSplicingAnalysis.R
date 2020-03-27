@@ -30,9 +30,9 @@ DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25,
   if (typeOfTest == "Iso"){
     inputFile = "IsoQuantOutput/NumIsoPerCluster"
   } else if (typeOfTest == "TSS"){
-    inputFile = "IsoQuantOutput/NumIsoPerCluster"
+    inputFile = "IsoQuantOutput/NumTSSPerCluster"
   } else if (typeOfTest == "PolyA"){
-    inputFile = "IsoQuantOutput/NumIsoPerCluster"
+    inputFile = "IsoQuantOutput/NumPolyAPerCluster"
   } else if (typeOfTest == "Exon"){
     inputFile = "ExonInclusionExclusion.tsv"
   }
