@@ -11,6 +11,8 @@
 #' @export
 
 FilterBCOutput <- function(outputFolder, raw_Output,  concatenate = TRUE) {
+  filterOut <- system.file("bash", "FilterBCReads.sh", package = "scisorseqr")
+
   filt_Output <- paste0(outputFolder, "/OutputFiltered/")
   dir.create(filt_Output)
 
