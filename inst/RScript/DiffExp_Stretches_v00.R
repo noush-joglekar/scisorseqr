@@ -74,11 +74,12 @@ deltaPSI <- function(mat,gene,iso_to_cons){
 
 
 Get_Pval_DeltaPI <- function(mat){
-  m <- mat$IsoID[abs(mat$delta) == max(abs(mat$delta))]
-	max_ix <- as.integer(m[1])
+	orderedIX <- mat$IsoID[order(abs(mat$delta),decreasing=TRUE)]
+	max_ix1 <- as.integer(orderedIX[1])
+	max_ix2 <- as.integer(orderedIX[2])
 	pval <- chisq.test(mat[,3:4])$p.value
 	d_psi <- deltaPSI(mat,gene,iso_to_cons)
-	return(list(pval,d_psi,max_ix))
+	return(list(pval,d_psi,max_ix1,max_ix2))
 }
 
 ############################
@@ -131,7 +132,7 @@ names(uncorrected_output) <- names(PerGene)
 
 
 output_DF <- as.data.frame(do.call(rbind, uncorrected_output))
-colnames(output_DF) <- c("pvals","dPI","maxDeltaPI_ix")
+colnames(output_DF) <- c("pvals","dPI","maxDeltaPI_ix1","maxDeltaPI_ix2")
 output_DF$FDR <- p.adjust(output_DF$pvals, method = "BH")
 output_DF$dPI <- as.numeric(output_DF$dPI)
 
@@ -144,7 +145,7 @@ cat("Number of significant genes by fdr:",length(which(output_DF$FDR <= 0.05)),"
 cat("Number of fdr genes with deltaPSI >= 0.1:",length(which(output_DF$FDR <= 0.05 & abs(output_DF$dPI) >= 0.1)),"\n")
 cat("Breakdown of isoform of sig genes with biggest change \n")
 sigs <- output_DF[which(output_DF$FDR <= 0.05 & abs(output_DF$dPI) >= 0.1),]
-print(table(unname(unlist(sigs$maxDeltaPI_ix))))
+print(table(unname(unlist(sigs$maxDeltaPI_ix1))))
 cat('\n')
 Sys.time()
 sink()
