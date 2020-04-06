@@ -1,0 +1,44 @@
+#' Extract isoform information from aligned reads
+#'
+#' @description This function follows the STARalign function.
+#' It is a wrapper for several scripts that impose checks and
+#' balances on the mapping quality, consensus nature of splice
+#' sites etc
+#' @seealso STARalign
+#' @param outputDir location within the working directory for files
+#' that will be created during this process
+#' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
+#' @param chromFaDir directory containing fa.gz files by individual
+#' chromosme. Defaults to mm10
+#' @param numThreads number of threads for parallel processes. Defaults to 12
+#' @return directory containing several bam, gff.gz, and flat files
+#' necessary for downstream analysis
+#' @usage MapAndAlign('LRoutput','gencode.vM21.annotation.gtf.gz','chromFa/',16)
+#' @export
+#'
+MapAndAlign <- function(outputDir = 'LRProcessingOutput/', annoGZ, chromFaDir, numThreads = 12){
+
+  checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
+  if(system(paste("sh", checkFile)) == 127) {
+    stop(paste0("Error: samtools necessary for conversion to .bam format \n",
+                "Check that both bedtools and samtools are installed and loaded before moving forward."))
+  }
+
+  miscFolder <- 'Misc/'
+  mainFile <- system.file("bash", "mapAndAlignReads.sh", package = "scisorseqr")
+
+  fastqGuide <- paste0(miscFolder,fastqGuide)
+  bamGuide <- paste0(miscFolder,bamGuide)
+
+  tmpFolder <- 'tmpDir'
+  if(!dir.exists(tmpFolder){dir.create(tmpFolder)})
+
+  annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
+  chromFaDir <- system.file("extdata/", "chromFa/", package = "scisorseqr")
+
+  awkScriptDir <- system.file("bash", package = "scisorseqr")
+
+  runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
+                      chromFaDir, annoGZ, bamGuide, awkScriptDir)
+
+}
