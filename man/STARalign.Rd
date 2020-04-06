@@ -29,5 +29,5 @@ data. It also performs sam to bam conversion to reduce
 space and .bam output is necessary for downstream analysis
 }
 \seealso{
-MapAndQuantify
+MapAndAlign
 }
