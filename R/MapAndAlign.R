@@ -31,7 +31,7 @@ MapAndAlign <- function(outputDir = 'LRProcessingOutput/', annoGZ, chromFaDir, n
   bamGuide <- paste0(miscFolder,bamGuide)
 
   tmpFolder <- 'tmpDir'
-  if(!dir.exists(tmpFolder){dir.create(tmpFolder)})
+  if(!dir.exists(tmpFolder)){dir.create(tmpFolder)}
 
   annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
   chromFaDir <- system.file("extdata/", "chromFa/", package = "scisorseqr")
