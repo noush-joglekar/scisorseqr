@@ -20,28 +20,19 @@ echo "outdir="$outdir
 tmpDir=$3
 echo "tmpDir="$tmpDir
 
-numCPUsHighMemory=$4
-echo "numCPUsHighMemory="$numCPUsHighMemory
+numThreads=$4
+echo "numThreads="$numThreads
 
-numCPUsLowMemory=$5
-echo "numCPUsLowMemory="$numCPUsLowMemory
-
-seqDirectory=$6
+seqDirectory=$5
 echo "seqDirectory="$seqDirectory
 
-annoGZ=$7;
+annoGZ=$6;
 echo "annoGZ="$annoGZ
 
-projectionGZ=$8;
-echo "projectionGZ="$projectionGZ
-
-chroms=${9};
-echo "chroms="$chroms
-
-mappingBAMGuide=${10}
+mappingBAMGuide=${7}
 echo "mappingBAMGuide="$mappingBAMGuide
 
-scriptDir=${11}
+scriptDir=${8}
 echo "scriptDir="$scriptDir
 
 
@@ -62,9 +53,6 @@ echo "+++++++++++++++++++++ 2b. sorting annotation and projection";
 
 echo "+++++++++++++++++++++ 2b1 sorting annotation";
 time zcat $annoGZ | awk '$3=="exon"' | sort -gk4,4 > $tmpdir1"/sortedAnno";
-
-echo "+++++++++++++++++++++ 2b2 sorting projection";
-time zcat $projectionGZ | awk '$3=="exonic"' | sort -gk4,4 > $tmpdir1"/sortedProj";
 
 echo "++++++++++++++++++ 2c. how many were well mapped";
 mappingWellMappedSAM=$tmpdir1"/mapping.bestperRead.sam";
@@ -97,7 +85,7 @@ echo "++++++++++++++++++ 2d1. finding ribosomal RNA hits";
 zcat $annoGZ | awk '$3=="exon" && ($14~/rRNA/ || $14~/rRNA_pseudogene/ || $14~/Mt_rRNA/)' > $tmpdir1"/tmp.AnnoRibo.gff";
 bedtools intersect -abam $mappingWellMappedBAM -b $tmpdir1"/tmp.AnnoRibo.gff" -split -bed > $tmpdir1"/reads2Remove.bed";
 
-echo "++++++++++++++++++ 2d2. removing ribosomal RNA hits"; 
+echo "++++++++++++++++++ 2d2. removing ribosomal RNA hits";
 samtools view -h $mappingWellMappedBAM | awk -v hits=$tmpdir1"/reads2Remove.bed" \
 'BEGIN{comm="cat "hits; while(comm|getline){rm[$4]=1;}}{if($1 in rm){next;} print;}' \
 | samtools view -b -S - > $outdir"/mapping.bestperRead.noRiboRNA.bam";
@@ -155,7 +143,7 @@ cat $outdir"/parallel.comp.anno.guide.3.siteSeq" | shuf > $outdir"/tmp";
 mv $outdir"/tmp" $outdir"/parallel.comp.anno.guide.3.siteSeq"
 
 echo "+++++++++++++++ 3a2b execution ";
-time python v0.2.executeInParallel.py --commandFile $outdir"/parallel.comp.anno.guide.3.siteSeq" --n $numCPUsLowMemory
+time python $scriptDir/v0.2.executeInParallel.py --commandFile $outdir"/parallel.comp.anno.guide.3.siteSeq" --n $numThreads
 
 echo "+++++++++++++++ 3a2c collecting results and removing temporary files";
 echo $collectCommand;
