@@ -4,7 +4,7 @@
 #' with stringent parameters optimized for PacBio sequenced
 #' data. It also performs sam to bam conversion to reduce
 #' space and .bam output is necessary for downstream analysis
-#' @seealso MapAndQuantify
+#' @seealso MapAndAlign
 #' @param fqFolder fastq.gz files from a single sample or replicate
 #' @param starProgPath path to STARlong aligner
 #' @param refGenome location of reference genome. Defaults to mouse mm10
