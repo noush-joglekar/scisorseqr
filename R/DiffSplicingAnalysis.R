@@ -25,8 +25,8 @@
 #' @export
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",
                                  is.hier = FALSE, region1 = NULL, region2 = NULL, yamlFile = NULL) {
-  R_file <- system.file("RScript", "DiffExp_Stretches_v00.R", package = "scisorseqr")
-  exonFile <- system.file("RScript", "CleanExonTest_v00.R", package = "scisorseqr")
+  R_file <- system.file("RScript", "IsoformTest.R", package = "scisorseqr")
+  exonFile <- system.file("RScript", "ExonTest.R", package = "scisorseqr")
 
   if (typeOfTest == "Iso"){
     inputFile = "IsoQuantOutput/NumIsoPerCluster"
