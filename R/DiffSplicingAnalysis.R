@@ -1,5 +1,5 @@
 #' Perform differential splicing analysis
-#' @aliases DiffTest DiffIsoTest
+#' @aliases DiffIsoTest
 #' @description This function allows you to test alternative
 #' splicing differences between any two groups
 #' based on the full splice-form, exons,
@@ -18,7 +18,7 @@
 #' @return handy .Robj per comparison to import if need be
 #' @return file with significantly differentially spliced genes
 #' @return file with numbers per gene and isoform tested in each group
-#' @usage DiffSplicingAnalysis('config',10,25,'Exon')
+#' @usage DiffSplicingAnalysis('config',10,25,'Exon',is.hier=FALSE)
 #'
 #' @seealso IsoQuant
 #'
@@ -26,6 +26,7 @@
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",
                                  is.hier = FALSE, region1 = NULL, region2 = NULL, yamlFile = NULL) {
   R_file <- system.file("RScript", "DiffExp_Stretches_v00.R", package = "scisorseqr")
+  exonFile <- system.file("RScript", "CleanExonTest_v00.R", package = "scisorseqr")
 
   if (typeOfTest == "Iso"){
     inputFile = "IsoQuantOutput/NumIsoPerCluster"
@@ -34,18 +35,31 @@ DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25,
   } else if (typeOfTest == "PolyA"){
     inputFile = "IsoQuantOutput/NumPolyAPerCluster"
   } else if (typeOfTest == "Exon"){
-    inputFile = "ExonInclusionExclusion.tsv"
+    inputFile = "ExonInfo/InclusionExclusionCounts.tsv"
   }
 
-  if (is.hier == FALSE){
-    call1 <- paste("while read -r line; do echo $line | Rscript", R_file,
-                   inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                   numIsoforms, minNumReads, typeOfTest, FALSE, "; done <", configFile)
+  if (typeOfTest != "Exon"){
+    if (is.hier == FALSE){
+      call1 <- paste("while read -r line; do echo $line | Rscript", R_file,
+                     inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
+                     numIsoforms, minNumReads, typeOfTest, FALSE, "; done <", configFile)
+    } else {
+      call1 <- paste("while read -r line; do echo $line | Rscript ", R_file,
+                     inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
+                     numIsoforms, minNumReads, typeOfTest, TRUE ,
+                     yamlFile, region1, region2, "; done <", configFile)
+    }
   } else {
-    call1 <- paste("while read -r line; do echo $line | Rscript ", R_file,
-                   inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                   numIsoforms, minNumReads, typeOfTest, TRUE,
-                   yamlFile, region1, region2, "; done <", configFile)
+    if (is.hier == FALSE){
+      call1 <- paste("while read -r line; do echo $line | Rscript", exonFile,
+                     inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
+                     FALSE, "; done <", configFile)
+    } else {
+      call1 <- paste("while read -r line; do echo $line | Rscript ", exonFile,
+                     inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
+                     TRUE, numIsoforms, minNumReads, yamlFile,
+                     region1, region2, "; done <", configFile)
+    }
   }
 
   system(call1)
