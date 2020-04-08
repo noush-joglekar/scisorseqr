@@ -1,29 +1,22 @@
-### Added layer to regular exon level analysis script. Trying to figure out the contribution of exons to diff iso expression, so
-### here we only test genes that are already deemed significant.
-### See also ChiSqForTSS.R
-### Input args: 1. file.tsv with Exon-Gene-Inclusion-Exclusion counts
-### args 2,3,4,5 (tsv from each line of config file): Shorthand comparison1 of interest, comma separated cell-types included, 
-###							Shorthand comparison2 of interest, comma separated cell-types included
-### Adding args 6,7,8 because we need to read in the significant genes from Diff Iso Exp comparison.
-### 6 is the number of isoforms considered, 7 is the min number of reads per gene required, and 8 is the TreeTraversal folder of DIE results
-### eg: args = c("Gene_CellType_InclusionPerExon","hippEN","P7Hipp_ExcitNeuron1,P7Hipp_ExcitNeuron2,P7Hipp_ExcitNeuron3","pfcEN","P7PFC_ExcitNeuron")
+#' Added layer to regular exon level analysis script where hierarchical testing is allowed.
+#' Input args: 1. file.tsv with Exon-Gene-Inclusion-Exclusion counts
+#' args 2,3,4,5 (tsv from each line of config file):
+#' --- Shorthand comparison1 of interest,
+#' --- comma separated cell-types included,
+#' --- Shorthand comparison2 of interest,
+#' --- comma separated cell-types included
 
-library(data.table)
-library(dplyr)
-library(parallel)
-library(data.tree)
-library(yaml)
 
 args <- commandArgs(trailingOnly=TRUE)
 
-inclusionFile <- fread(args[1])
+inclusionFile <- data.table::fread(args[1])
 
 comps <- c(args[2],args[4])
 
 type1 <- unlist(strsplit(args[3],","))
 type2 <- unlist(strsplit(args[5],","))
 
-inclusionFile$V3[inclusionFile$V3 %in% type1] = args[2]	## rename cell-subtype to comparison name: P7Hipp_ExcitNeuron3 to hippEN
+inclusionFile$V3[inclusionFile$V3 %in% type1] = args[2]	## rename cell-subtype to comparison name
 inclusionFile$V3[inclusionFile$V3 %in% type2] = args[4]
 comparisons <- comps
 
@@ -36,7 +29,7 @@ if(is.hier == TRUE){
                 print("Aborting")
                 stop()
 	} else {
-                h <- yaml.load_file(args[9])
+                h <- yaml::yaml.load_file(args[9])
                 hier <- as.Node(h)
                 region <- c(args[10],args[11])
 		if(!dir.exists('TreeTraversal_Hier_Exon')){
@@ -83,9 +76,9 @@ cat("Starting exon level analysis in",comps[1],"vs",comps[2],"\n")
 
 
 ### Group by same cell-type and add counts (eg: hippEN has 3 contributing cell-subtypes)
-condensedDF <- as.data.frame(inclusionFile %>% group_by(Exon,Gene,Celltype) %>%	
-	summarise(Inclusion = sum(inclusion),Exclusion= sum(exclusion)) %>% 
-	group_by(Exon) %>% filter( n() > 1 ))
+condensedDF <- as.data.frame(inclusionFile %>% group_by(Exon,Gene,Celltype) %>%
+                               dplyr::summarise(Inclusion = sum(inclusion),Exclusion= sum(exclusion)) %>%
+                               dplyr::group_by(Exon) %>% dplyr::filter( n() > 1 ))
 
 numExons <- dim(condensedDF)[1]/2
 
@@ -108,7 +101,7 @@ checkAndCompute <- function(inputMat,ix){
 	return(list(exonL,geneL,pval,dpsi,psi1,psi2))}
 
 ## Run function for the full dataset and convert to dataframe
-res <- mclapply(1:numExons, function(ix) checkAndCompute(condensedDF,ix),mc.cores=24)
+res <- parallel::mclapply(1:numExons, function(ix) checkAndCompute(condensedDF,ix),mc.cores=24)
 res <- unlist(plyr::compact(res))
 res <- as.data.frame(matrix(res, ncol = 6,  byrow = TRUE), stringsAsFactors = FALSE)
 colnames(res) <- c("Exon","Gene","Pval","dPSI","psi1","psi2")
@@ -120,7 +113,8 @@ res$FDR <- p.adjust(res$Pval,method="BY")
 sigCor <- which(res$FDR <= 0.05 & abs(as.numeric(res$dPSI)) >= 0.1)
 sig <- which(res$FDR <= 0.05)
 dPSI <- which(abs(as.numeric(res$dPSI)) >= 0.1)
-inputList <- nrow(inclusionFile %>% group_by(Gene) %>% do(data.frame(nrow=nrow(.))))
+inputList <- nrow(inclusionFile %>% dplyr::group_by(Gene) %>%
+                    dplyr::do(data.frame(nrow=nrow(.))))
 genesTested <- length(unique(res$Gene))
 genesSig <- length(unique(res[sigCor,"Gene"]))
 
