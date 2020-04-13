@@ -112,7 +112,7 @@ data_df$IsoID[data_df$IsoID >= inum] <- inum
 
 processedDF = data_df %>% group_by(Gene, CellType, IsoID) %>%
 	summarise(Sum = sum(NumTranscripts)) %>%
-	filter(sum(Sum) >= 25 & length(Sum) >= 2) %>%
+	filter(sum(Sum) >= threshold & length(Sum) >= 2) %>%
 	ungroup() %>% group_by(Gene) %>%
 	filter(length(unique(CellType)) == 2) %>%
 	tidyr::spread(CellType,Sum) %>% replace(is.na(.), 0) %>%
