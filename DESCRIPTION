@@ -19,7 +19,9 @@ Imports:
 	parallel,
 	tibble,
 	data.tree,
-	yaml
+	yaml,
+	clusterProfiler,
+	org.Mm.eg.db
 Depends:
   dplyr
 
