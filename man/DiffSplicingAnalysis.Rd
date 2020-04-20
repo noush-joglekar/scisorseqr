@@ -2,11 +2,10 @@
 % Please edit documentation in R/DiffSplicingAnalysis.R
 \name{DiffSplicingAnalysis}
 \alias{DiffSplicingAnalysis}
-\alias{DiffTest}
 \alias{DiffIsoTest}
 \title{Perform differential splicing analysis}
 \usage{
-DiffSplicingAnalysis('config',10,25,'Exon')
+DiffSplicingAnalysis('config',10,25,'Exon',is.hier=FALSE)
 }
 \arguments{
 \item{numIsoforms}{Cap on the number of sites to test
