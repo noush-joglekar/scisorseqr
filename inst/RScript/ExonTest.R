@@ -23,35 +23,35 @@ comparisons <- comps
 is.hier <- args[6]
 
 if(is.hier == TRUE){
-        if(length(args) < 11){
-                print("Please input path to hierarchy.yaml file")
-                print("Indicate names of case-control corresponding to config file")
-                print("Aborting")
-                stop()
-	} else {
-                h <- yaml::yaml.load_file(args[9])
-                hier <- as.Node(h)
-                region <- c(args[10],args[11])
-		if(!dir.exists('TreeTraversal_Hier_Exon')){
-        		dir.create('TreeTraversal_Hier_Exon/')
-        		out_dir <- paste0('TreeTraversal_Hier_Exon/',comps[1],"_",comps[2],"/")
-        		dir.create(out_dir)
-		} else {
-        		out_dir <- paste0('TreeTraversal_Hier_Exon/',comps[1],"_",comps[2],"/")
-        		dir.create(out_dir)}
-	}
+  if(length(args) < 11){
+    print("Please input path to hierarchy.yaml file")
+    print("Indicate names of case-control corresponding to config file")
+    print("Aborting")
+    stop()
+  } else {
+    inum <- as.integer(args[7])
+    threshold = as.integer(args[8])
+    h <- yaml::yaml.load_file(args[9])
+    hier <- as.Node(h)
+    region <- c(args[10],args[11])
+    if(!dir.exists('TreeTraversal_Hier_Exon')){
+      dir.create('TreeTraversal_Hier_Exon/')
+      out_dir <- paste0('TreeTraversal_Hier_Exon/',comps[1],"_",comps[2],"/")
+      dir.create(out_dir)
+    } else {
+      out_dir <- paste0('TreeTraversal_Hier_Exon/',comps[1],"_",comps[2],"/")
+      dir.create(out_dir)}
+  }
 } else {
-	if(!dir.exists('TreeTraversal_Exon')){
-        	dir.create('TreeTraversal_Exon/')
-	        out_dir <- paste0('TreeTraversal_Exon/',comps[1],"_",comps[2],"/")
-        	dir.create(out_dir)
-	} else {
-        	out_dir <- paste0('TreeTraversal_Exon/',comps[1],"_",comps[2],"/")
-	        dir.create(out_dir)}
+  if(!dir.exists('TreeTraversal_Exon')){
+    dir.create('TreeTraversal_Exon/')
+    out_dir <- paste0('TreeTraversal_Exon/',comps[1],"_",comps[2],"/")
+    dir.create(out_dir)
+  } else {
+    out_dir <- paste0('TreeTraversal_Exon/',comps[1],"_",comps[2],"/")
+    dir.create(out_dir)}
 }
 
-inum <- as.integer(args[7])
-threshold = as.integer(args[8])
 
 
 inclusionFile <- inclusionFile[inclusionFile$V3 %in% comparisons]
