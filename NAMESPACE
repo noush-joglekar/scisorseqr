@@ -2,6 +2,7 @@
 
 export(DiffSplicingAnalysis)
 export(FilterBCOutput)
+export(GO.Reference)
 export(GetBarcodes)
 export(IsoQuant)
 export(MapAndAlign)
