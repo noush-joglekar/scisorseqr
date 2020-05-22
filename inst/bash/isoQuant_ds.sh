@@ -12,7 +12,9 @@ then
 {for(i in a) {split(i,c,"_"); print c[1]"_"c[3],c[2],a[i]}}' \
 | grep -v "none" > $outDir/"NumIsoPerCell"
 
-	cat $outDir/$tabFile | awk '!(a[$1]) {a[$1]=$0; next} \
+	cat $outDir/$tabFile | awk '{a[$2"_"$5"~"$4]++;}END {for (isoBC in a) \
+{split(isoBC,i,"~"); OFS="\t"; print i[1],i[2],a[isoBC]}}' | \
+awk '!(a[$1]) {a[$1]=$0; next} \
 a[$1] {w=$1; $1=""; a[w]=a[w]"\t"$2"\t"$3}END \
  {for(i in a) {print a[i]}}' FS="\t" OFS="\t" > $outDir/"IsoXNumInCell"
 
