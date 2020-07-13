@@ -68,7 +68,6 @@ deltaPSI <- function(mat,gene,iso_to_cons){
     return(change)}
   else {
     x = c(mat$delta[mat$delta < 0],0,0)[1:2]
-#    iso_to_cons[[gene]] <<- list(sapply(x[x!=0], function(value) mat$IsoID[mat$delta==value]))
     return(-change)}
 }
 
@@ -96,6 +95,7 @@ rm(numIsoPerCluster)
 ##### Check if hierarchical analysis is true
 if(is.hier == TRUE){
   cellGroup <- unlist(strsplit(comps[1],region[1]))[2]
+  hierLevel <- FindNode(hier, cellGroup)$level
   if (cellGroup != hier$root$name){
     parentCG <- data.tree::FindNode(hier, cellGroup)$parent$name
     sig <- read.table(paste0("../TreeTraversal_Hier_Iso/",
@@ -103,7 +103,7 @@ if(is.hier == TRUE){
                              'sigGenes_',region[1],parentCG,"_",region[2],parentCG,threshold),header=TRUE)
     data_df <- data_df[data_df$Gene %in% sig$x, ]
   }
-}
+} else {hierLevel <- 1}
 
 
 data_df$IsoID <- as.integer(data_df$IsoID)
@@ -133,7 +133,7 @@ names(uncorrected_output) <- names(PerGene)
 
 output_DF <- as.data.frame(do.call(rbind, uncorrected_output))
 colnames(output_DF) <- c("pvals","dPI","maxDeltaPI_ix1","maxDeltaPI_ix2")
-output_DF$FDR <- p.adjust(output_DF$pvals, method = "BH")
+output_DF$FDR <- p.adjust(output_DF$pvals, method = "BH")*hierLevel
 output_DF$dPI <- as.numeric(output_DF$dPI)
 
 nums <- processedDF %>% select(Gene, IsoID, Group1, Group2) %>% group_by(Gene) %>%
