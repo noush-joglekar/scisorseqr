@@ -6,6 +6,7 @@ isIso=$3;
 isTSS=$4;
 isPolyA=$5;
 
+
 if [[ $isIso = "TRUE" ]]
 then
 	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {a[$2"_"$4"_"$5]+=1;}END \
