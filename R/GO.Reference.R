@@ -8,7 +8,7 @@
 #' files from differential isoform expression analysis
 #' @return OutputGO containing folders for Molecular Function, Biological
 #' Process, and Cellular Component
-#' @return .Robj files for MF,BP, and Cc
+#' @return .Robj files for MF, BP, and CC
 #' @usage GO.Reference('./','TreeTraversal_Iso/')
 #'
 #' @export
