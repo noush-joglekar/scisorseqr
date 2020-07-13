@@ -16,7 +16,7 @@ files from differential isoform expression analysis}
 OutputGO containing folders for Molecular Function, Biological
 Process, and Cellular Component
 
-.Robj files for MF,BP, and Cc
+.Robj files for MF, BP, and CC
 }
 \description{
 An easy way to look for enriched genes in the differential
