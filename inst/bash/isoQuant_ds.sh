@@ -6,7 +6,6 @@ isIso=$3;
 isTSS=$4;
 isPolyA=$5;
 
-
 if [[ $isIso = "TRUE" ]]
 then
 	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {a[$2"_"$4"_"$5]+=1;}END \
@@ -29,7 +28,7 @@ if [[ $isTSS = "TRUE" ]]
 then
 	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {count[$2"_"$6"~"$3]++}END \
 {for (gc in count) {split(gc,g,"~"); \
-print g[1],g[2],count[gc];}}' > $outDir/"NumTSOPerCluster"
+print g[1],g[2],count[gc];}}' > $outDir/"NumTSSPerCluster"
 fi
 
 if [[ $isPolyA = "TRUE" ]]
