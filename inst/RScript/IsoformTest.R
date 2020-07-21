@@ -59,26 +59,26 @@ cat("Starting analysis in",comps[1],"vs",comps[2],"with atleast", threshold,"rea
 ############################
 ####### Functions ##########
 
-deltaPSI <- function(mat,gene,iso_to_cons){
+deltaPI <- function(mat,gene){
   pos <- sum(c(rev(mat$delta[mat$delta > 0]),0,0)[1:2])
   neg <- abs(sum(c(mat$delta[mat$delta < 0],0,0)[1:2]))
   change=max(pos,neg)
   if (pos >= neg){
     x = c(rev(mat$delta[mat$delta > 0]),0)[1:2]
-    return(change)}
+    y = mat %>% filter(delta %in% x) %>% select(IsoID) %>% as.matrix()
+    return(list(change,y[1],y[2]))}
   else {
     x = c(mat$delta[mat$delta < 0],0,0)[1:2]
-    return(-change)}
+    y = mat %>% filter(delta %in% x) %>% select(IsoID) %>% as.matrix()
+    return(list(-change,y[1],y[2]))}
 }
 
-
 Get_Pval_DeltaPI <- function(mat){
-	orderedIX <- mat$IsoID[order(abs(mat$delta),decreasing=TRUE)]
-	max_ix1 <- as.integer(orderedIX[1])
-	max_ix2 <- as.integer(orderedIX[2])
-	pval <- chisq.test(mat[,3:4])$p.value
-	d_psi <- deltaPSI(mat,gene,iso_to_cons)
-	return(list(pval,d_psi,max_ix1,max_ix2))
+  max_ix1 <- deltaPI(mat,gene)[2]
+  max_ix2 <- deltaPI(mat,gene)[3]
+  pval <- chisq.test(mat[,3:4])$p.value
+  d_pi <- deltaPI(mat,gene)[1]
+	return(list(pval,d_pi,max_ix1,max_ix2))
 }
 
 ############################
@@ -142,7 +142,7 @@ colnames(nums)[3:4] <- comps
 
 cat("Total genes tested:",nrow(output_DF),"\n")
 cat("Number of significant genes by fdr:",length(which(output_DF$FDR <= 0.05)),"\n")
-cat("Number of fdr genes with deltaPSI >= 0.1:",length(which(output_DF$FDR <= 0.05 & abs(output_DF$dPI) >= 0.1)),"\n")
+cat("Number of fdr genes with deltaPI >= 0.1:",length(which(output_DF$FDR <= 0.05 & abs(output_DF$dPI) >= 0.1)),"\n")
 cat("Breakdown of isoform of sig genes with biggest change \n")
 sigs <- output_DF[which(output_DF$FDR <= 0.05 & abs(output_DF$dPI) >= 0.1),]
 print(table(unname(unlist(sigs$maxDeltaPI_ix1))))
