@@ -6,11 +6,11 @@
 \title{Align fastq.gz files with Minimap2}
 \usage{
 MMalign('FastqFiles/','~/minimap2',
-'/athena/tilgnerlab/store/hut2006/data/annotations/M.Musculus/mm10/gencode.vM21.annotation.gtf.gz',
-32)
+'~/gencode.vM21.annotation.gtf.gz',32)
 }
 \arguments{
-\item{fqFolder}{fastq.gz files from a single sample or replicate or barcoded output}
+\item{fqFolder}{fastq.gz files from a single sample or replicate,
+or barcoded output}
 
 \item{mmProgPath}{path to Minimap2 aligner}
 
@@ -28,5 +28,5 @@ data. It performs sam to bam conversion to reduce
 space, and .bam output is necessary for downstream analysis
 }
 \seealso{
-\code{\link{MapAndAlign}}
+\code{\link{MapAndFilter}}
 }

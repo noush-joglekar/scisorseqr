@@ -11,7 +11,8 @@ STARalign('FastqFiles/',
 32)
 }
 \arguments{
-\item{fqFolder}{fastq.gz files from a single sample or replicate}
+\item{fqFolder}{fastq.gz files from a single sample or replicate,
+or barcoded output}
 
 \item{starProgPath}{path to STARlong aligner}
 
@@ -29,5 +30,5 @@ data. It performs sam to bam conversion to reduce
 space, and .bam output is necessary for downstream analysis
 }
 \seealso{
-\code{\link{MapAndAlign}}
+\code{\link{MapAndFilter}}
 }
