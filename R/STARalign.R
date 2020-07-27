@@ -4,8 +4,9 @@
 #' with stringent parameters optimized for PacBio sequenced
 #' data. It performs sam to bam conversion to reduce
 #' space, and .bam output is necessary for downstream analysis
-#' @seealso \code{\link{MapAndAlign.R}}
-#' @param fqFolder fastq.gz files from a single sample or replicate
+#' @seealso \code{\link{MapAndAlign}}
+#' @param fqFolder fastq.gz files from a single sample or replicate,
+#' or barcoded output
 #' @param starProgPath path to STARlong aligner
 #' @param refGenome location of reference genome. Defaults to mouse mm10
 #' @param numThreads number of parallel threads to use, Defaults to 8
