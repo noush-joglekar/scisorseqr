@@ -3,11 +3,10 @@
 # April 2020
 
 fastqDir=$1;
-misc=$2;
-starOut=$3;
-progPath=$4;
-refGenome=$5
-numThreads=$6;
+starOut=$2;
+progPath=$3;
+refGenome=$4;
+numThreads=$5;
 
 ### For testing:
 # /athena/tilgnerlab/store/hut2006/soft/src/star-mapper/2.5.2b/STAR-2.5.2b/bin/Linux_x86_64/STARlong
@@ -15,7 +14,8 @@ numThreads=$6;
 
 
 ## Create a fastq guide
-for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) '{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path"/"$1}' ; done > $misc/fastqGuide
+for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) \
+'{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path"/"$1}' ; done > Misc/fastqGuide
 
 ## Running STAR program over all files listed in the guide
 n=`cat Misc/fastqGuide | wc -l`; \
@@ -49,4 +49,4 @@ done
 
 
 ## Create a bam guide for further processing
-for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(pwd) '{print path"/"$1}' ; done > $misc/bamGuide
+for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(pwd) '{print path"/"$1}' ; done > Misc/bamGuide
