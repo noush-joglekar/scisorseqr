@@ -11,22 +11,22 @@
 # 0. the arguments
 echo "+++++++++++++++++++++++++ 1. arguments";
 
-fastqGuide=$1
+fastqGuide=${1}
 echo "fastqGuide="$fastqGuide
 
-outdir=$2
+outdir=${2}
 echo "outdir="$outdir
 
-tmpDir=$3
+tmpDir=${3}
 echo "tmpDir="$tmpDir
 
-numThreads=$4
+numThreads=${4}
 echo "numThreads="$numThreads
 
-seqDirectory=$5
+seqDirectory=${5}
 echo "seqDirectory="$seqDirectory
 
-annoGZ=$6;
+annoGZ=${6};
 echo "annoGZ="$annoGZ
 
 mappingBAMGuide=${7}
@@ -233,6 +233,8 @@ gzip $outdir"/newIsoforms_vs_Anno_ignoreAnno/stretches"
 else
 echo "---> stretches file already exists, finishing up."
 fi
+
+
 
 echo "+++++++++++++++++++++++++ 6. done";
 mv $tmpdir1"/mapping.bestperRead.bam" $outdir
