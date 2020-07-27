@@ -11,10 +11,7 @@
 #' @param refGenome location of reference genome. Defaults to mouse mm10
 #' @param numThreads number of parallel threads to use, Defaults to 8
 #' @return STARoutput Folder containing star output files and reports
-#' @usage STARalign('FastqFiles/',
-#' '/athena/tilgnerlab/store/hut2006/soft/src/star-mapper/2.5.2b/STAR-2.5.2b/bin/Linux_x86_64/STARlong',
-#' '/athena/tilgnerlab/store/hut2006/data/seq/genomes/M.musculus/mm10/wholeGenomeUnzipped/starIndex_gencode10_sequins/',
-#' 32)
+#' @usage STARalign('FastqFiles/','~/STARlong','~/starIndex_gencode10_sequins/',32)
 #' @export
 
 STARalign <- function(fqFolder, starProgPath, refGenome, numThreads=8) {
