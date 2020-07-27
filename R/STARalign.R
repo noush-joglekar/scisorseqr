@@ -2,8 +2,8 @@
 #' @aliases STAR
 #' @description This function is a wrapper for STARlong
 #' with stringent parameters optimized for PacBio sequenced
-#' data. It also performs sam to bam conversion to reduce
-#' space and .bam output is necessary for downstream analysis
+#' data. It performs sam to bam conversion to reduce
+#' space, and .bam output is necessary for downstream analysis
 #' @seealso MapAndAlign
 #' @param fqFolder fastq.gz files from a single sample or replicate
 #' @param starProgPath path to STARlong aligner
@@ -12,7 +12,7 @@
 #' @return STARoutput Folder containing star output files and reports
 #' @usage STARalign('FastqFiles/',
 #' '/athena/tilgnerlab/store/hut2006/soft/src/star-mapper/2.5.2b/STAR-2.5.2b/bin/Linux_x86_64/STARlong',
-#' /athena/tilgnerlab/store/hut2006/data/seq/genomes/M.musculus/mm10/wholeGenomeUnzipped/starIndex_gencode10_sequins/,
+#' '/athena/tilgnerlab/store/hut2006/data/seq/genomes/M.musculus/mm10/wholeGenomeUnzipped/starIndex_gencode10_sequins/',
 #' 32)
 #' @export
 
