@@ -33,7 +33,7 @@ STARalign <- function(fqFolder, starProgPath, refGenome, numThreads=8) {
   if(!dir.exists(starOut)){dir.create(starOut)}
 
 
-  runIt <- paste("sh", starComm, fqFolder, miscFolder, starOut, starProgPath, refGenome, numThreads)
+  runIt <- paste("sh", starComm, fqFolder, starOut, starProgPath, refGenome, numThreads)
   system(runIt)
 
 }
