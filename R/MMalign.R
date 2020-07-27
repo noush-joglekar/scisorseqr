@@ -4,7 +4,7 @@
 #' with stringent parameters optimized for ONT/PacBio sequenced
 #' data. It performs sam to bam conversion to reduce
 #' space, and .bam output is necessary for downstream analysis
-#' @seealso \code{\link{MapAndAlign}}
+#' @seealso \code{\link{MapAndFilter}}
 #' @param fqFolder fastq.gz files from a single sample or replicate,
 #' or barcoded output
 #' @param mmProgPath path to Minimap2 aligner
