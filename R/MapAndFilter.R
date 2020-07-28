@@ -21,7 +21,7 @@
 #' @usage MapAndAlign('LRoutput','gencode.vM21.annotation.gtf.gz',16)
 #' @export
 #'
-MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ, numThreads = 12,
+MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,
                         filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
                         cp_distance = 50){
 
@@ -48,13 +48,14 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ, numThreads =
   tmpFolder <- 'tmpDir'
   if(!dir.exists(tmpFolder)){dir.create(tmpFolder)}
 
-  annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
-  chromFaDir <- system.file("extdata/", "chromFa/", package = "scisorseqr")
+  if(is.null(annoGZ)){
+    annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
+  }
 
   awkScriptDir <- system.file("bash", package = "scisorseqr")
 
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
-                      chromFaDir, annoGZ, bamGuide, awkScriptDir)
+                      annoGZ, bamGuide, awkScriptDir)
 
   if(filterFullLength == TRUE){
     cageGZ <- cageBed
