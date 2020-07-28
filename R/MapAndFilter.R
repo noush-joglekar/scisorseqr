@@ -1,10 +1,10 @@
 #' Extract isoform information from aligned reads
 #'
-#' @description This function follows the STARalign function.
+#' @description This function follows the alignment function.
 #' It is a wrapper for several scripts that impose checks and
 #' balances on the mapping quality, consensus nature of splice
-#' sites etc
-#' @seealso STARalign
+#' sites, and annotated start and end sites per transcript.
+#' @seealso \code{\link{STARalign}} \code{\link{MMalign}}
 #' @param outputDir location within the working directory for files
 #' that will be created during this process
 #' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
