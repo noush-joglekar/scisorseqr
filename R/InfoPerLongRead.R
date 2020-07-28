@@ -6,7 +6,7 @@
 #' reads/ genes/ UMIs per cellular barcode
 #' @seealso \code{\link{MapAndFilter}}
 #' @seealso \code{\link{GetBarcodes}}
-#' @param barcodeOutput .csv file containing barcode and cell-type information
+#' @param barcodeOutputFile .csv file containing barcode and cell-type information
 #' per read from the output of \code{\link{GetBarcodes}}
 #' @param mapAndFilterOut output directory of the mapping function. If full-length
 #' reads have been filtered using CAGE and PolyA site peaks, then it defaults
@@ -14,7 +14,7 @@
 #' @param minTimesIsoObserve minimum number of times an isoform is observed in the
 #' dataset. Defaults to 5
 #' @export
-InfoPerLongRead <- function(barcodeOutput, mapAndFilterOut, minTimesIsoObserve = 5) {
+InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObserve = 5) {
 
   longReadInfo_sh <- system.file("bash", "longReadInfo.sh", package = "scisorseqr")
 
@@ -29,7 +29,7 @@ InfoPerLongRead <- function(barcodeOutput, mapAndFilterOut, minTimesIsoObserve =
     geneFile <- file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
   } else {geneFile <- file.path(mapAndFilterOut,'mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')}
 
-  longReadInfoComm <- paste(longReadInfo_sh, perfectMatchFile, geneFile, stretchesFile, minTimesIsoObserve)
+  longReadInfoComm <- paste(longReadInfo_sh, barcodeOutputFile, geneFile, stretchesFile, minTimesIsoObserve)
   system(longReadInfoComm)
 
 }
