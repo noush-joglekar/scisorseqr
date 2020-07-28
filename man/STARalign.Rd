@@ -5,10 +5,7 @@
 \alias{STAR}
 \title{Align fastq.gz files with STARlong}
 \usage{
-STARalign('FastqFiles/',
-'/athena/tilgnerlab/store/hut2006/soft/src/star-mapper/2.5.2b/STAR-2.5.2b/bin/Linux_x86_64/STARlong',
-'/athena/tilgnerlab/store/hut2006/data/seq/genomes/M.musculus/mm10/wholeGenomeUnzipped/starIndex_gencode10_sequins/',
-32)
+STARalign('FastqFiles/','~/STARlong','~/starIndex_gencode10_sequins/',32)
 }
 \arguments{
 \item{fqFolder}{fastq.gz files from a single sample or replicate,

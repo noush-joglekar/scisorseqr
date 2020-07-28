@@ -1,3 +1,4 @@
+#' Combine all information per read to a flat file
 #' @aliases LongReadInfo
 #' @description Function to concatenate all the information per read, i.e
 #' gene-name, cellular barcode, UMI, cell-type information, and isoform

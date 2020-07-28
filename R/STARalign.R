@@ -1,4 +1,5 @@
 #' Align fastq.gz files with STARlong
+#'
 #' @aliases STAR
 #' @description This function is a wrapper for STARlong
 #' with stringent parameters optimized for PacBio sequenced
