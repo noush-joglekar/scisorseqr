@@ -22,7 +22,10 @@ Suggests:
 	yaml,
 	clusterProfiler,
 	org.Mm.eg.db,
-	DropletUtils
+	DropletUtils,
+	plyr,
+	utils,
+	methods
 Imports:
   dplyr,
   tidyr

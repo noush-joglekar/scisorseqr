@@ -39,15 +39,15 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
       if(is.null(ensemblToClear)){
         ensemblToClear <- system.file("extdata", "ENSEMBLE_v21_ClearGeneNames", package = "scisorseqr")}
 
-      clearGenes <- as.data.frame(read.table(ensemblToClear,sep="\t"))
+      clearGenes <- as.data.frame(utils::read.table(ensemblToClear,sep="\t"))
       colnames(clearGenes) <- c("gene","clear")
 
-      isoClear <- as.vector(join(geneNames,clearGenes)$clear)
+      isoClear <- as.vector(plyr::join(geneNames,clearGenes)$clear)
       isoClearID <- data.frame("clear"=isoClear,"id"=isoID)
-      isoClearwithID <- tidyr::unite(isoClearID, clearID,sep = "_")
+      isoClearwithID <- tidyr::unite(isoClearID, "clearID", sep = "_")
 
       DropletUtils::write10xCounts("Matrices/SeuratFriendly/",
-                                   as(as.matrix(isoMat),"dgCMatrix"),
+                                   methods::as(as.matrix(isoMat),"dgCMatrix"),
                                    barcodes=colnames(isoMat),
                                    gene.id=rownames(isoMat),
                                    gene.symbol=isoClearwithID$clearID)
