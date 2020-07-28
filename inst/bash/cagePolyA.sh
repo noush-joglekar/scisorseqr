@@ -1,5 +1,6 @@
 #!/bin/bash
-# by Hagen Tilgner for mapping of 454/pacBio.MOLECULO reads : 5/2014
+# by Hagen Tilgner 5/2014
+# Edited 07/2020 AJ
 
 function checkForFile {
     file=$1;

@@ -1,6 +1,6 @@
+## By Anoushka Joglekar 2019. Edited 04/2020, 07/2020
 
 args <- commandArgs(trailingOnly=TRUE)
-
 
 ### Initial set-up
 numIsoPerCluster <- data.table::fread(args[1])	## Need to make the package seamless

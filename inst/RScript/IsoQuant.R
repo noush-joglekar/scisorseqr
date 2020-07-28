@@ -1,5 +1,6 @@
-args <- commandArgs(trailingOnly=TRUE)
+## By Anoushka Joglekar 2019. Edited 03/2020
 
+args <- commandArgs(trailingOnly=TRUE)
 
 print("Reading in file, this might take a while")
 all_info <- data.table::fread(args[1])[,c(1:4,6)]

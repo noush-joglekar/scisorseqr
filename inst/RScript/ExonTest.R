@@ -1,3 +1,4 @@
+#' By Anoushka Joglekar 2019. Edited 04/2020
 #' Added layer to regular exon level analysis script where hierarchical testing is allowed.
 #' Input args: 1. file.tsv with Exon-Gene-Inclusion-Exclusion counts
 #' args 2,3,4,5 (tsv from each line of config file):

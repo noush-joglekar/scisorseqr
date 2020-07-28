@@ -1,4 +1,5 @@
 #!/bin/bash
+## By Anoushka Joglekar 04/2020
 
 f_name=$1;
 outFolder=$2;

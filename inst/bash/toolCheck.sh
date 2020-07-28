@@ -1,6 +1,6 @@
 #!/bin/bash
-# Anoushka Joglekar
-# April 2020
+# Anoushka Joglekar and Alex Stein
+# August 2019
 
 ## Check if bedtools and samtools are loaded
 if which bedtools >/dev/null; then

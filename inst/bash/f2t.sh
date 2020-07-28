@@ -1,3 +1,5 @@
+## Original by HT
+
 function FastaToTbl()
 {
         awk '{

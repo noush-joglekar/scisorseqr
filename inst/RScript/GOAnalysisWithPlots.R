@@ -1,3 +1,5 @@
+## By Anoushka Joglekar 2019. Edited 07/2020
+
 args <- commandArgs(trailingOnly=TRUE)
 current_dir <- args[1]
 setwd(current_dir)

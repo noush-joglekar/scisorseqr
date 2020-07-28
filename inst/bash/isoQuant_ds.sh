@@ -1,4 +1,6 @@
 #!/bin/bash
+## By Anoushka Joglekar. Edited 04/2020
+
 
 outDir=$1;
 tabFile=$2;

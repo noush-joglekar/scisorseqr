@@ -1,5 +1,6 @@
 #!/bin/bash
 # by Hagen Tilgner for mapping of pacBio reads : December 31st, 2011; updated July 2012
+# Edited AJ 04/2020
 
 { echo "#################################";
   echo "# RUNNING [$0]";

@@ -1,4 +1,5 @@
 #!/bin/bash
+## By Anoushka Joglekar 03/2020
 
 rawOutput=$1;
 filteredOutput=$2;
