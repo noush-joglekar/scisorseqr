@@ -21,7 +21,8 @@ Suggests:
 	data.tree,
 	yaml,
 	clusterProfiler,
-	org.Mm.eg.db
+	org.Mm.eg.db,
+	DropletUtils
 Imports:
   dplyr,
   tidyr

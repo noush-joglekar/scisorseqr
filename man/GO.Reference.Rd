@@ -24,3 +24,6 @@ splicing analysis. Uses the ClusterProfiler package to compare geneset
 against the reference genome and outputs an .Robj file along with .pdf
 network graphs
 }
+\seealso{
+\url{https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html}
+}

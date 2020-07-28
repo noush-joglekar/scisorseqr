@@ -30,11 +30,11 @@ directory containing several bam, gff.gz, and flat files
 necessary for downstream analysis
 }
 \description{
-This function follows the STARalign function.
+This function follows the alignment function.
 It is a wrapper for several scripts that impose checks and
 balances on the mapping quality, consensus nature of splice
-sites etc
+sites, and annotated start and end sites per transcript.
 }
 \seealso{
-STARalign
+\code{\link{STARalign}} \code{\link{MMalign}}
 }

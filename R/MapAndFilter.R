@@ -21,7 +21,7 @@
 #' @usage MapAndAlign('LRoutput','gencode.vM21.annotation.gtf.gz',16)
 #' @export
 #'
-MapAndAlign <- function(outputDir = 'LRProcessingOutput/', annoGZ, numThreads = 12,
+MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ, numThreads = 12,
                         filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
                         cp_distance = 50){
 

@@ -1,8 +1,9 @@
 #' Conducts gene set enrichment analysis of significantly spliced genes
 #' @description An easy way to look for enriched genes in the differential
-#' splicing analysis. Uses the \code{\link[ClusterProfiler]} package to compare geneset
+#' splicing analysis. Uses the ClusterProfiler package to compare geneset
 #' against the reference genome and outputs an .Robj file along with .pdf
 #' network graphs
+#' @seealso \url{https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html}
 #' @param working_directory where the OutputGO folder should be created
 #' @param comparisonsDir location of TreeTraversal folder containing output
 #' files from differential isoform expression analysis
