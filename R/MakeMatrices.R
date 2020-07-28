@@ -32,7 +32,7 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
     system(run_cell)
 
     if(convertTo10XoutputFormat == TRUE){
-      isoMat <- read.table("Matrices/AllIsoformsXAllCells_matrix.csv")
+      isoMat <- utils::read.table("Matrices/AllIsoformsXAllCells_matrix.csv")
       geneNames <- data.frame("gene"=unlist(strsplit(rownames(isoMat),"_"))[c(TRUE,FALSE)])
       isoID <- as.vector(unlist(strsplit(rownames(isoMat),"_"))[c(FALSE,TRUE)])
 

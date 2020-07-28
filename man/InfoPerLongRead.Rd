@@ -5,10 +5,10 @@
 \alias{LongReadInfo}
 \title{Combine all information per read to a flat file}
 \usage{
-InfoPerLongRead(barcodeOutput, mapAndFilterOut, minTimesIsoObserve = 5)
+InfoPerLongRead(barcodeOutputFile, mapAndFilterOut, minTimesIsoObserve = 5)
 }
 \arguments{
-\item{barcodeOutput}{.csv file containing barcode and cell-type information
+\item{barcodeOutputFile}{.csv file containing barcode and cell-type information
 per read from the output of \code{\link{GetBarcodes}}}
 
 \item{mapAndFilterOut}{output directory of the mapping function. If full-length
