@@ -1,6 +1,6 @@
 #' Conducts gene set enrichment analysis of significantly spliced genes
 #' @description An easy way to look for enriched genes in the differential
-#' splicing analysis. Uses the ClusterProfiler package to compare geneset
+#' splicing analysis. Uses the \code{\link[ClusterProfiler]} package to compare geneset
 #' against the reference genome and outputs an .Robj file along with .pdf
 #' network graphs
 #' @param working_directory where the OutputGO folder should be created
