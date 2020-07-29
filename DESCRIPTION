@@ -4,11 +4,12 @@ Title: Processes long reads for differential isoform analysis
 Version: 0.1.0
 Author: Anoushka Joglekar
 Maintainer: Anoushka Joglekar <anj2026@med.cornell.edu>
-Description: For anybody interested in case-control studies of alternative splicing,
-    ScISOrSeqR is the one stop shop for analyzing single-cell long read data. The linux 
-    based package includes functions for barcode deconvolution, integration with STARlong
-    alignment tool, mapping and filtering of high confidence, spliced reads, and several
-    methods to conduct and visualize differential splicing analysis.
+Description: For any comparative (e.g. case-control) studies of alternative splicing,
+    scisorseqr is the one stop shop for analyzing single-cell long read data. The linux 
+    based package includes functions for barcode deconvolution from fastqs,
+    integration with long read alignment tools like STARlong and minimap2,
+    mapping and filtering of high confidence full-length spliced reads, and some
+    handy tools to conduct and visualize differential splicing analysis.
 License: Weill Cornell Medicine
 Encoding: UTF-8
 LazyData: true
