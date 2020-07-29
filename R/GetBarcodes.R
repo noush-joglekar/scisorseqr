@@ -10,13 +10,17 @@
 #' @param outputFolder OPTIONAL Path to working directory. Defaults to current
 #' @param numProcesses Number of chunks to split processing into. Defaults to 10
 #' @param concatenate OPTIONAL Concatenate output from all files in the folder
+#' @param filterReads OPTIONAL logical indicating whether the barcoded reads should be
+#' filtered into a separate file. Will make the downstream analysis faster if you expect
+#' few barcoded reads (~40% of total) at the cost of a slow (single-threaded) filtering process
 #' @return OutputRaw folder containing a .csv file and summary stats for each
 #' input fastq.gz file
 #' @return OutputFiltered Filtered file with one line for each read containing
 #' a barcode. Option to concatenate into one file per input folder
-#' @usage GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,concatenate = FALSE)
+#' @usage GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,concatenate = FALSE,filterReads = FALSE)
 #' @export
-GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10, concatenate = TRUE) {
+GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10,
+                        concatenate = TRUE, filterReads = FALSE) {
   if(!dir.exists(outputFolder))
     dir.create(outputFolder)
   # Checks for working directory as stated in input, by default will use
@@ -45,6 +49,6 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
 
   # Calls next function automatically once all files have been analyzed and
   # .csv files created.
-  scisorseqr::FilterBCOutput(outputFolder, raw_Output, concatenate = TRUE)
+  scisorseqr::FilterBCOutput(outputFolder, raw_Output, concatenate = TRUE, filterReads = FALSE, fqFolder)
 }
 
