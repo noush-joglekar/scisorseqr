@@ -12,6 +12,12 @@
 #' genes. Defaults to 25
 #' @param typeOfTest Exon, TSS, PolyA or Isoform test conducted
 #' depending on input. Defaults to Iso
+#' @param is.hier OPTIONAL logical indicating hierarchical structure
+#' @param region1 string containing comparison1 for parsing if is.hier
+#' is TRUE
+#' @param region2 string containing comparison2 for parsing if is.hier
+#' is TRUE
+#' @param yamlFile .yaml file indicating hierarchical structure
 #' @return Output folder with results for each line of config
 #' file, i.e. for each set of comparisons
 #' @return Result file with gene, uncorrected pval, deltaPI, FDR
