@@ -4,7 +4,8 @@
 #' against the reference genome and outputs an .Robj file along with .pdf
 #' network graphs
 #' @seealso \url{https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html}
-#' @param working_directory where the OutputGO folder should be created
+#' @param working_directory where the OutputGO folder should be created. Defaults to current
+#' working directory
 #' @param comparisonsDir location of TreeTraversal folder containing output
 #' files from differential isoform expression analysis
 #' @return OutputGO containing folders for Molecular Function, Biological

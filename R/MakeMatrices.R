@@ -5,14 +5,14 @@
 #' or by barcode.
 #' @seealso \code{\link{IsoQuant}}
 #' @param isoQuantOutDir output directory of IsoQuant
-#' function
+#' function. Defaults to IsoQuantOutput
 #' @param groupBy String indicating group for matrix output.
 #' Current options involve "Cell" or "Celltype", and defaults
 #' to "Cell"
 #' @param ensemblToClear A mapping of gene-names from
 #' ENSEMBL ids to human readable gene names for downstream
 #' analysis. Defaults to mm10 gencode v21 annotation.
-#' @param convertTo10XoutputFormat If grouped by cell,
+#' @param convertTo10XoutputFormat OPTIONAL If grouped by cell,
 #' logical inputt indicating whether
 #' or not matrix should be converted into a format similar to 10X
 #' cellranger output for downstream analysis. Defaults to TRUE

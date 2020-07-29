@@ -26,7 +26,7 @@
 #' @return file with numbers per gene and isoform tested in each group
 #' @usage DiffSplicingAnalysis('config',10,25,'Exon',is.hier=FALSE)
 #'
-#' @seealso IsoQuant
+#' @seealso \code{\link{IsoQuant}}
 #'
 #' @export
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",

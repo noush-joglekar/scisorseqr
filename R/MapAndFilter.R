@@ -9,12 +9,12 @@
 #' that will be created during this process
 #' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
 #' @param numThreads number of threads for parallel processes. Defaults to 12
-#' @param filterFullLength logical indicating whether reads should be filtered
+#' @param filterFullLength OPTIONAL logical indicating whether reads should be filtered
 #' for having start and end sites falling into annotated cage peaks or polyA
 #' sites. Defaults to FALSE
-#' @param cageBed bed.gz file containing annotated CAGE peaks
-#' @param polyABed bed.gz file containing annotated polyA sites
-#' @param cp_distance distance from annotated CAGE peak or polyA site
+#' @param cageBed OPTIONAL bed.gz file containing annotated CAGE peaks
+#' @param polyABed OPTIONAL bed.gz file containing annotated polyA sites
+#' @param cp_distance OPTIONAL distance from annotated CAGE peak or polyA site
 #' for a read to be considered full-length. Defaults to 50
 #' @return directory containing several bam, gff.gz, and flat files
 #' necessary for downstream analysis

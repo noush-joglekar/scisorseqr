@@ -10,15 +10,15 @@
 #' is calculated based on the entire input.
 #' @param Iso Logical indicating whether to conduct analysis for full-length
 #' isoforms. Defaults to TRUE
-#' @param TSS Logical indicating whether to conduct analysis for transcription
+#' @param TSS OPTIONAL logical indicating whether to conduct analysis for transcription
 #' start sites (TSS). Defaults to FALSE
-#' @param PolyA Logical indicating whether to conduct analysis for end sites
+#' @param PolyA OPTIONAL logical indicating whether to conduct analysis for end sites
 #' (PolyA). Defaults to FALSE
 #' @return IsoQuantOutput folder containing all useful files for downstream
 #' analysis
 #'
 #' @usage IsoQuant('AllInfo',Iso=TRUE, TSS=FALSE, PolyA=FALSE)
-#' @seealso DiffSplicingAnalysis
+#' @seealso \code{\link{DiffSplicingAnalysis}}
 #'
 #' @export
 IsoQuant <- function(AllInfoFile, Iso=TRUE, TSS=FALSE, PolyA=FALSE) {
