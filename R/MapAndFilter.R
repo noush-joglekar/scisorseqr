@@ -42,8 +42,8 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
   miscFolder <- 'Misc/'
   mainFile <- system.file("bash", "mapAndAlignReads.sh", package = "scisorseqr")
 
-  fastqGuide <- paste0(miscFolder,fastqGuide)
-  bamGuide <- paste0(miscFolder,bamGuide)
+  fastqGuide <- paste0(miscFolder,'fastqGuide')
+  bamGuide <- paste0(miscFolder,'bamGuide')
 
   tmpFolder <- 'tmpDir'
   if(!dir.exists(tmpFolder)){dir.create(tmpFolder)}
