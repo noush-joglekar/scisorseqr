@@ -9,6 +9,7 @@
 #' that will be created during this process
 #' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
 #' @param numThreads number of threads for parallel processes. Defaults to 12
+#' @seqDir seqDir directory containing chromosome.fa.gz files
 #' @param filterFullLength OPTIONAL logical indicating whether reads should be filtered
 #' for having start and end sites falling into annotated cage peaks or polyA
 #' sites. Defaults to FALSE

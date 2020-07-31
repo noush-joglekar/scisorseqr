@@ -131,7 +131,7 @@ collectCommand="cat "
 rmCommand="rm "
 for i in `cat $outdir"/mapping.bestperRead.noRiboRNA.introns.gff" | awk '{if(!($1 in s))print $1;s[$1]=1;}' | sort -u`; do
     seqfile=$seqDirectory"/"$i".fa.gz";
-    f2tFunc="/athena/tilgnerlab/scratch/anj2026/2020_03_11_LinearPCR_SpikedSequins/04_03_Testing/f2t.sh"
+    f2tFunc=$scriptDir/"f2t.sh"
     echo $seqfile >&2;
     str="source "$f2tFunc"; zcat "$seqfile" | FastaToTbl | awk -v chr="$i" \
 -v file="$outdir"/mapping.bestperRead.noRiboRNA.introns.gff -f \
@@ -152,6 +152,7 @@ echo $collectCommand;
 echo $rmCommand;
 `$collectCommand > $outdir"/mapping.bestperRead.RNAdirection.introns.type.gff"`;
 `$rmCommand`;
+
 time gzip $outdir"/mapping.bestperRead.RNAdirection.introns.type.gff"
 
 else
