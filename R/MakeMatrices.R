@@ -21,11 +21,11 @@
 MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
                          ensemblToClear = NULL, convertTo10XoutputFormat = TRUE) {
 
-  devtools::use_package('utils')
-  devtools::use_package('plyr')
-  devtools::use_package('tidyr')
-  devtools::use_package('methods')
-  devtools::use_package('DropletUtils','Suggests')
+  usethis::use_package('utils')
+  usethis::use_package('plyr')
+  usethis::use_package('tidyr')
+  usethis::use_package('methods')
+  usethis::use_package('DropletUtils','Suggests')
 
 
   py_file1 <- system.file("python", "AllIsoformsXCell_sparseMatrix.py", package = "scisorseqr")

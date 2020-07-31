@@ -1,7 +1,7 @@
 ## By Anoushka Joglekar 2019. Edited 07/2020
 
-devtools::use_package('clusterProfiler','Suggests')
-devtools::use_package('enrichplot','Suggests')
+usethis::use_package('clusterProfiler','Suggests')
+usethis::use_package('enrichplot','Suggests')
 
 args <- commandArgs(trailingOnly=TRUE)
 current_dir <- args[1]

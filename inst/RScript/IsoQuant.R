@@ -1,6 +1,6 @@
 ## By Anoushka Joglekar 2019. Edited 03/2020
-devtools::use_package('data.table')
-devtools::use_package('tidyr')
+usethis::use_package('data.table')
+usethis::use_package('tidyr')
 
 args <- commandArgs(trailingOnly=TRUE)
 
