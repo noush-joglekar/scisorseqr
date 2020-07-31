@@ -33,7 +33,7 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
   filterOut <- system.file("bash", "FilterBCReads.sh", package = "scisorseqr")
 
   # Creates subdirectory for unfiltered output and summary files
-  dir.create(raw_Output)
+  if(!dir.exists(raw_Output)){dir.create(raw_Output)}
   files <- list.files(fqFolder)[grep(pattern = "q.gz",list.files(fqFolder))]
 
   # Iterates through each file, activating necessary scripts for

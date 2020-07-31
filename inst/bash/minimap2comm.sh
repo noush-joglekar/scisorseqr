@@ -18,7 +18,7 @@ for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) \
 ## Running minimap2 over all files listed in the guide
 n=`cat Misc/fastqGuide | wc -l` ; for i in `seq 1 $n` ; do name=`cat Misc/fastqGuide \
 | head -$i | tail -1 | awk '{print $1;}'` ; \
-echo "### treating "$name >> $mmOut/REPORT.minimap ; \
+echo "### treating "$name >> $mmOut/REPORT.minimap2 ; \
 file=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $2}'` ; \
 $progPath -t $numThreads -ax splice --secondary=no $annotation \
 $file > $mmOut/$name.sam ; done &>> $mmOut/REPORT.minimap2

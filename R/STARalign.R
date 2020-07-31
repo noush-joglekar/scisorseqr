@@ -31,7 +31,7 @@ STARalign <- function(fqFolder, starProgPath, refGenome, numThreads=8) {
   if(!dir.exists(miscFolder)){dir.create(miscFolder)}
   if(!dir.exists(starOut)){dir.create(starOut)}
 
-
+  print("Aligning with STAR")
   runIt <- paste("sh", starComm, fqFolder, starOut, starProgPath, refGenome, numThreads)
   system(runIt)
 

@@ -31,7 +31,7 @@ MMalign <- function(fqFolder, mmProgPath, annoGZ, numThreads=8) {
   if(!dir.exists(miscFolder)){dir.create(miscFolder)}
   if(!dir.exists(mmOut)){dir.create(mmOut)}
 
-
+  print("Aligning with minimap2")
   runIt <- paste("sh", mmComm, fqFolder, mmOut, mmProgPath, annoGZ, numThreads)
   system(runIt)
 
