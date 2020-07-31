@@ -22,7 +22,7 @@
 #' @export
 #'
 MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,
-                        filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
+                        seqDir, filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
                         cp_distance = 50){
 
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
@@ -55,7 +55,7 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
   awkScriptDir <- system.file("bash", package = "scisorseqr")
 
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
-                      annoGZ, bamGuide, awkScriptDir)
+                      seqDir, annoGZ, bamGuide, awkScriptDir)
   system(runCommand)
 
   if(filterFullLength == TRUE){
