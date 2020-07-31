@@ -16,6 +16,11 @@
 #' @export
 GO.Reference <- function(working_directory = './',comparisonsDir = 'TreeTraversal_Iso/') {
 
+  if (!requireNamespace("clusterProfiler", quietly = TRUE)) {
+    stop("Package \"clusterProfiler\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
   go_folder <- 'OutputGO/'
   if(!dir.exists(paste0(working_directory,'/',go_folder))){
     dir.create(paste0(working_directory,'/',go_folder))

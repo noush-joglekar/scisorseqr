@@ -1,4 +1,8 @@
 ## By Anoushka Joglekar 2019. Edited 04/2020, 07/2020
+devtools::use_package('dplyr')
+devtools::use_package('tidyr')
+devtools::use_package('parallel')
+
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -28,6 +32,14 @@ if(is.hier == TRUE){
     print("Aborting")
     stop()
   } else {
+    devtools::use_package('yaml','Suggests')
+    devtools::use_package('data.tree', 'Suggests')
+
+    if (!requireNamespace("yaml", quietly = TRUE)) {
+      stop("Packages \"yaml\" and \"data.tree\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+
     h <- yaml::yaml.load_file(args[10])
     hier <- data.tree::as.Node(h)
     region <- c(args[11],args[12])

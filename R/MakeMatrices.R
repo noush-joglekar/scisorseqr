@@ -20,6 +20,14 @@
 #' @export
 MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
                          ensemblToClear = NULL, convertTo10XoutputFormat = TRUE) {
+
+  devtools::use_package('utils')
+  devtools::use_package('plyr')
+  devtools::use_package('tidyr')
+  devtools::use_package('methods')
+  devtools::use_package('DropletUtils','Suggests')
+
+
   py_file1 <- system.file("python", "AllIsoformsXCell_sparseMatrix.py", package = "scisorseqr")
   py_file2 <- system.file("python", "Get_IsoformXClusterMat.py", package = "scisorseqr")
 
@@ -32,6 +40,12 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
     system(run_cell)
 
     if(convertTo10XoutputFormat == TRUE){
+
+      if (!requireNamespace("DropletUtils", quietly = TRUE)) {
+        stop("Package \"DropletUtils\" needed for this function to work. Please install it.",
+             call. = FALSE)
+      }
+
       isoMat <- utils::read.table("Matrices/AllIsoformsXAllCells_matrix.csv")
       geneNames <- data.frame("gene"=unlist(strsplit(rownames(isoMat),"_"))[c(TRUE,FALSE)])
       isoID <- as.vector(unlist(strsplit(rownames(isoMat),"_"))[c(FALSE,TRUE)])
