@@ -7,6 +7,8 @@
 #' --- Shorthand comparison2 of interest,
 #' --- comma separated cell-types included
 
+devtools::use_package('dplyr')
+devtools::use_package('data.table')
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -31,6 +33,7 @@ if(is.hier == TRUE){
     print("Aborting")
     stop()
   } else {
+    devtools::use_package('yaml')
     inum <- as.integer(args[7])
     threshold = as.integer(args[8])
     h <- yaml::yaml.load_file(args[9])
