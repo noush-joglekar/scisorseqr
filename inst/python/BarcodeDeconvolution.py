@@ -80,14 +80,14 @@ def prelim(args):
 	if os.path.isfile('%sPolyT_BCDetection_%s_.csv' %(args.outDir, file_name)):
 		os.system('rm %sPolyT_BCDetection_%s_.csv' %(args.outDir,file_name))
 
-  # If secondary output file for reads that are too short already exists, delete it.
+        # If secondary output file for reads that are too short already exists, delete it.
 	if os.path.isfile('%sTooShort.csv' %(args.outDir)):
 		os.system('rm %sTooShort.csv' %(args.outDir))
 
 	bc_file = args.bcClust.replace(u'\xa0', u'')
 
-	barcodes = [x.strip('\n').split('\t')[0] for x in open(bc_file).readlines()][1:]        ## Barcode and cluster columns need to be flipped when running Ishaan's data
-	cluster_id = [x.strip('\n').split('\t')[1] for x in open(bc_file).readlines()][1:]
+	barcodes = [x.strip('\n').split('\t')[0] for x in open(bc_file).readlines()]
+	cluster_id = [x.strip('\n').split('\t')[1] for x in open(bc_file).readlines()]
 	return()
 
 def addToDict(d, line, rn):
@@ -272,13 +272,13 @@ def chunkAndProcess(args,d,tooShort):
 	sim_processes = args.numProc
 	print("Number of simultaneous processes: ", sim_processes)
 
-  readCount = sum(1 for i in gzip.open(args.fq, 'rb')) // 4
-  print("Number of reads in fastq file: ", readCount)
+	readCount = sum(1 for i in gzip.open(args.fq, 'rb')) // 4
+#	print("Number of reads in fastq file: ", readCount)
 
 	toFork = (readCount // sim_processes) + 1
-  print("Number of reads per process: ", toFork) ## test
+#	print("Number of reads per process: ", toFork) ## test
 
-  # Set childNo to 1 to give first child that childNo.
+        # Set childNo to 1 to give first child that childNo.
 	childNo = 1
 
 	while readCount >= 1:
@@ -331,9 +331,11 @@ def writeTooShort(args, tooShort, childNo):
 	# cannot know when each process will write to the output file.
 
 	os.system('cat %stoo_short%d | tr -d "[ ]\'" >> %sTooShort.csv' %(args.outDir, childNo, args.outDir))
+	#print("Writing too short %d data to output file" %(childNo)) #test
 
-	# Remove unnecessary tmp files
+	# Remove unnecessary tmp file because it has already been written to the output file.
 	if os.path.isfile("%stoo_short%d" %(args.outDir, childNo)):
+	#print("Removing too_short%d" %(childNo)) #test
 		os.system('rm %stoo_short%d' %(args.outDir, childNo))
 	return()
 
