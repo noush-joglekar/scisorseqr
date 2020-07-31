@@ -56,6 +56,7 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
 
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
                       annoGZ, bamGuide, awkScriptDir)
+  system(runCommand)
 
   if(filterFullLength == TRUE){
     cageGZ <- cageBed
@@ -63,6 +64,7 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
     filterFL_script <- system.file("bash", "cagePolyA.sh", package = "scisorseqr")
     filterFLcomm <- paste("sh", filterFL_script, "zcat", outputDir,
                           cageGZ, polyaGZ, awkScriptDir, cp_distance)
+    system(filterFLcomm)
   }
 
 }
