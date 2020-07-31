@@ -53,9 +53,12 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
   }
 
   awkScriptDir <- system.file("bash", package = "scisorseqr")
+  pyScriptDir <- system.file("python", package = "scisorseqr")
+
+  if(!dir.exists(outputDir)){dir.create(outputDir)}
 
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
-                      seqDir, annoGZ, bamGuide, awkScriptDir)
+                      seqDir, annoGZ, bamGuide, awkScriptDir, pyScriptDir)
   system(runCommand)
 
   if(filterFullLength == TRUE){

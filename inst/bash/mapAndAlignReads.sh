@@ -36,6 +36,7 @@ echo "mappingBAMGuide="$mappingBAMGuide
 scriptDir=${8}
 echo "scriptDir="$scriptDir
 
+pyScriptDir=${9}
 
 echo "++++++++++++++++++ 1b. deduced from arguments";
 tmpdir1=$tmpDir"/tmp."$$
@@ -144,7 +145,7 @@ cat $outdir"/parallel.comp.anno.guide.3.siteSeq" | shuf > $outdir"/tmp";
 mv $outdir"/tmp" $outdir"/parallel.comp.anno.guide.3.siteSeq"
 
 echo "+++++++++++++++ 3a2b execution ";
-time python $scriptDir/v0.2.executeInParallel.py --commandFile $outdir"/parallel.comp.anno.guide.3.siteSeq" --n $numThreads
+time python $pyScriptDir/v0.2.executeInParallel.py --commandFile $outdir"/parallel.comp.anno.guide.3.siteSeq" --n $numThreads
 
 echo "+++++++++++++++ 3a2c collecting results and removing temporary files";
 echo $collectCommand;
