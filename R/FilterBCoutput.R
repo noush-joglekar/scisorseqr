@@ -10,7 +10,7 @@
 #' to the same sample. Defaults to TRUE
 #' @export
 
-FilterBCOutput <- function(outputFolder, raw_Output,  concatenate = TRUE) {
+FilterBCOutput <- function(outputFolder, raw_Output,  concatenate, filterReads, fqFolder) {
   filterOut <- system.file("bash", "FilterBCReads.sh", package = "scisorseqr")
 
   filt_Output <- paste0(outputFolder, "/OutputFiltered/")
@@ -19,10 +19,10 @@ FilterBCOutput <- function(outputFolder, raw_Output,  concatenate = TRUE) {
   # Maybe can add feature to randomize selection of one read per barcode-UMI pair
   # code in KLa's folder
   if (concatenate == TRUE){
-    filterAndConcat <- paste("sh", filterOut, raw_Output, filt_Output, TRUE)
+    filterAndConcat <- paste("sh", filterOut, raw_Output, filt_Output, TRUE, filterReads, fqFolder)
     system(filterAndConcat)
   } else {
-    filterOnly <- paste("sh", filterOut, raw_Output, filt_Output, FALSE)
+    filterOnly <- paste("sh", filterOut, raw_Output, filt_Output, FALSE, filterReads, fqFolder)
     system(filterOnly)
   }
 }

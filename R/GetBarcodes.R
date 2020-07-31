@@ -12,7 +12,7 @@
 #' @param concatenate OPTIONAL Concatenate output from all files in the folder
 #' @param filterReads OPTIONAL logical indicating whether the barcoded reads should be
 #' filtered into a separate file. Will make the downstream analysis faster if you expect
-#' few barcoded reads (~40% of total) at the cost of a slow (single-threaded) filtering process
+#' few barcoded reads (~40 of total) at the cost of a slow (single-threaded) filtering process
 #' @return OutputRaw folder containing a .csv file and summary stats for each
 #' input fastq.gz file
 #' @return OutputFiltered Filtered file with one line for each read containing
@@ -21,13 +21,14 @@
 #' @export
 GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10,
                         concatenate = TRUE, filterReads = FALSE) {
-  if(!dir.exists(outputFolder))
-    dir.create(outputFolder)
+
+  if(!dir.exists(outputFolder)){dir.create(outputFolder)}
+
   # Checks for working directory as stated in input, by default will use
   # current directory
   raw_Output <- paste0(outputFolder, "/OutputRaw/")
   # Python and bash files are included in package
-  py_file <- system.file("python", "polyA_barcode_UMI_detection.py", package = "scisorseqr")
+  py_file <- system.file("python", "BarcodeDeconvolution.py", package = "scisorseqr")
   simConcat <- system.file("bash", "concat_ParallelizedBC.sh", package = "scisorseqr")
   filterOut <- system.file("bash", "FilterBCReads.sh", package = "scisorseqr")
 
@@ -49,6 +50,6 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
 
   # Calls next function automatically once all files have been analyzed and
   # .csv files created.
-  scisorseqr::FilterBCOutput(outputFolder, raw_Output, concatenate = TRUE, filterReads = FALSE, fqFolder)
+  scisorseqr::FilterBCOutput(outputFolder, raw_Output, concatenate, filterReads, fqFolder)
 }
 

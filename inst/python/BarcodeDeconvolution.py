@@ -1,5 +1,5 @@
-## By Anoushka Joglekar 09/2018
-## Modified by AS, AJ 09/2019
+## By Anoushka Joglekar
+## Created 2018. Edited AS 2019. Edited AJ 2020
 
 import sys
 import argparse
