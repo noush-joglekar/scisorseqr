@@ -21,13 +21,6 @@
 MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
                          ensemblToClear = NULL, convertTo10XoutputFormat = TRUE) {
 
-  usethis::use_package('utils')
-  usethis::use_package('plyr')
-  usethis::use_package('tidyr')
-  usethis::use_package('methods')
-  usethis::use_package('DropletUtils','Suggests')
-
-
   py_file1 <- system.file("python", "AllIsoformsXCell_sparseMatrix.py", package = "scisorseqr")
   py_file2 <- system.file("python", "Get_IsoformXClusterMat.py", package = "scisorseqr")
 

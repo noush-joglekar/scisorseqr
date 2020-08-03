@@ -17,7 +17,8 @@
 #' input fastq.gz file
 #' @return OutputFiltered Filtered file with one line for each read containing
 #' a barcode. Option to concatenate into one file per input folder
-#' @usage GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,concatenate = FALSE,filterReads = FALSE)
+#' @usage GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,
+#' concatenate = FALSE,filterReads = FALSE)
 #' @export
 GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10,
                         concatenate = TRUE, filterReads = FALSE) {

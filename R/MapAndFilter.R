@@ -9,7 +9,7 @@
 #' that will be created during this process
 #' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
 #' @param numThreads number of threads for parallel processes. Defaults to 12
-#' @seqDir seqDir directory containing chromosome.fa.gz files
+#' @param seqDir directory containing chromosome.fa.gz files
 #' @param filterFullLength OPTIONAL logical indicating whether reads should be filtered
 #' for having start and end sites falling into annotated cage peaks or polyA
 #' sites. Defaults to FALSE
@@ -19,7 +19,7 @@
 #' for a read to be considered full-length. Defaults to 50
 #' @return directory containing several bam, gff.gz, and flat files
 #' necessary for downstream analysis
-#' @usage MapAndAlign('LRoutput','gencode.vM21.annotation.gtf.gz',16)
+#' @usage MapAndFilter('LRoutput','gencode.vM21.annotation.gtf.gz',16)
 #' @export
 #'
 MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,

@@ -1,6 +1,4 @@
 ## By Anoushka Joglekar 2019. Edited 03/2020
-usethis::use_package('data.table')
-usethis::use_package('tidyr')
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -20,7 +18,7 @@ if(is.tss != FALSE || is.polya != FALSE ) {
 
 if(is.iso != FALSE){
 	ids1 <- all_info %>% group_by(Gene) %>% count(Isoform) %>% arrange(-n, .by_group=TRUE) %>% mutate(iso.id = row_number()-1)
-	df1 <- inner_join(all_info,ids1, by = c("Gene","Isoform")) %>% select(-n, -Isoform)
+	df1 <- dplyr::inner_join(all_info,ids1, by = c("Gene","Isoform")) %>% select(-n, -Isoform)
 	write.table(ids1,file=paste0(isoDir,"Iso-IsoID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
@@ -28,7 +26,7 @@ if(is.iso != FALSE){
 
 if(is.tss != FALSE){
 	ids2 <- data_df %>% group_by(Gene) %>% count(TSS) %>% arrange(-n, .by_group=TRUE) %>% mutate(tss.id = row_number()-1)
-	data_df <- inner_join(data_df,ids2, by = c("Gene","TSS")) %>% select(-n, -TSS)
+	data_df <- dplyr::inner_join(data_df,ids2, by = c("Gene","TSS")) %>% select(-n, -TSS)
 	write.table(ids2,file=paste0(isoDir,"TSS-ID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
@@ -36,14 +34,14 @@ if(is.tss != FALSE){
 
 if(is.polya != FALSE){
 	ids3 <- data_df %>% group_by(Gene) %>% count(PolyA) %>% arrange(-n, .by_group=TRUE) %>% mutate(polya.id = row_number()-1)
-	data_df <- inner_join(data_df,ids3, by = c("Gene","PolyA")) %>% select(-n, -PolyA)
+	data_df <- dplyr::inner_join(data_df,ids3, by = c("Gene","PolyA")) %>% select(-n, -PolyA)
 	write.table(ids3,file=paste0(isoDir,"PolyA-PolyID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
 if(exists("data_df")){
 tS <- colnames(data_df)[c(1, grep("id",colnames(data_df)))]
 data_df <- data_df %>% select(tS)
-outDF <- inner_join(df1,data_df)
+outDF <- dplyr::inner_join(df1,data_df)
 } else {outDF <- df1}
 
 

@@ -7,8 +7,6 @@
 #' --- Shorthand comparison2 of interest,
 #' --- comma separated cell-types included
 
-usethis::use_package('dplyr')
-usethis::use_package('data.table')
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -33,8 +31,10 @@ if(is.hier == TRUE){
     print("Aborting")
     stop()
   } else {
-    usethis::use_package('yaml')
-    usethis::use_package('data.tree')
+    if (!requireNamespace("yaml", quietly = TRUE)) {
+      stop("Packages \"yaml\" and \"data.tree\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
     inum <- as.integer(args[7])
     threshold = as.integer(args[8])
     h <- yaml::yaml.load_file(args[9])

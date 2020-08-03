@@ -19,6 +19,7 @@
 #'
 #' @usage IsoQuant('AllInfo',Iso=TRUE, TSS=FALSE, PolyA=FALSE)
 #' @seealso \code{\link{DiffSplicingAnalysis}}
+#' @import dplyr
 #'
 #' @export
 IsoQuant <- function(AllInfoFile, Iso=TRUE, TSS=FALSE, PolyA=FALSE) {

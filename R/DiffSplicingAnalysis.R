@@ -4,7 +4,7 @@
 #' splicing differences between any two groups
 #' based on the full splice-form, exons,
 #' the transcription start site (TSS) or end site (polyA).
-#' @param config File in a .tsv format with four columns
+#' @param configFile File in a .tsv format with four columns
 #' specifying the comparisons to be made
 #' @param numIsoforms Cap on the number of sites to test
 #' per gene. Defaults to 10
