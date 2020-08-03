@@ -1,5 +1,8 @@
 ## By Anoushka Joglekar 2019. Edited 04/2020, 07/2020
 #' @import dplyr
+#' @importFrom magrittr %>%
+
+`%>%` <- magrittr::`%>%`
 
 args <- commandArgs(trailingOnly=TRUE)
 
