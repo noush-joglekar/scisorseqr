@@ -95,7 +95,7 @@ coresToUse <- parallel::detectCores()/2
 
 numIsoPerCluster <- numIsoPerCluster[numIsoPerCluster$V2 %in% comparisons]
 colnames(numIsoPerCluster) <- c("Isoform","CellType","NumTranscripts")
-data_df <- separate(numIsoPerCluster, Isoform, into=c("Gene","IsoID"), sep="_")
+data_df <- tidyr::separate(numIsoPerCluster, Isoform, into=c("Gene","IsoID"), sep="_")
 
 rm(numIsoPerCluster)
 
