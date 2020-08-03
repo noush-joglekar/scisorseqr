@@ -21,11 +21,11 @@
 #' @seealso \code{\link{DiffSplicingAnalysis}}
 #' @import dplyr
 #' @importFrom magrittr %>%
-#' @name %>%
-#' @rdname pipe
 #'
 #' @export
 IsoQuant <- function(AllInfoFile, Iso=TRUE, TSS=FALSE, PolyA=FALSE) {
+
+  `%>%` <- magrittr::`%>%`
 
   R_file <- system.file("RScript", "IsoQuant.R", package = "scisorseqr")
   sh_file <- system.file("bash","isoQuant_ds.sh",package = "scisorseqr")
