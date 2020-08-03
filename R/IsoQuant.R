@@ -21,6 +21,8 @@
 #' @seealso \code{\link{DiffSplicingAnalysis}}
 #' @import dplyr
 #' @importFrom magrittr %>%
+#' @name %>%
+#' @rdname pipe
 #'
 #' @export
 IsoQuant <- function(AllInfoFile, Iso=TRUE, TSS=FALSE, PolyA=FALSE) {
