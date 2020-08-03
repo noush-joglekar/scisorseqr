@@ -4,7 +4,7 @@
 \alias{FilterBCOutput}
 \title{Filter unbarcoded reads}
 \usage{
-FilterBCOutput(outputFolder, raw_Output, concatenate = TRUE)
+FilterBCOutput(outputFolder, raw_Output, concatenate, filterReads, fqFolder)
 }
 \arguments{
 \item{outputFolder}{automatically sourced from GetBarcodes script}

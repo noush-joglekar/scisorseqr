@@ -4,7 +4,7 @@
 \alias{MapAndFilter}
 \title{Extract isoform information from aligned reads}
 \usage{
-MapAndAlign('LRoutput','gencode.vM21.annotation.gtf.gz',16)
+MapAndFilter('LRoutput','gencode.vM21.annotation.gtf.gz',16)
 }
 \arguments{
 \item{outputDir}{location within the working directory for files
@@ -14,15 +14,17 @@ that will be created during this process}
 
 \item{numThreads}{number of threads for parallel processes. Defaults to 12}
 
-\item{filterFullLength}{logical indicating whether reads should be filtered
+\item{seqDir}{directory containing chromosome.fa.gz files}
+
+\item{filterFullLength}{OPTIONAL logical indicating whether reads should be filtered
 for having start and end sites falling into annotated cage peaks or polyA
 sites. Defaults to FALSE}
 
-\item{cageBed}{bed.gz file containing annotated CAGE peaks}
+\item{cageBed}{OPTIONAL bed.gz file containing annotated CAGE peaks}
 
-\item{polyABed}{bed.gz file containing annotated polyA sites}
+\item{polyABed}{OPTIONAL bed.gz file containing annotated polyA sites}
 
-\item{cp_distance}{distance from annotated CAGE peak or polyA site
+\item{cp_distance}{OPTIONAL distance from annotated CAGE peak or polyA site
 for a read to be considered full-length. Defaults to 50}
 }
 \value{

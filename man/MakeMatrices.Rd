@@ -13,7 +13,7 @@ MakeMatrices(
 }
 \arguments{
 \item{isoQuantOutDir}{output directory of IsoQuant
-function}
+function. Defaults to IsoQuantOutput}
 
 \item{groupBy}{String indicating group for matrix output.
 Current options involve "Cell" or "Celltype", and defaults
@@ -23,7 +23,7 @@ to "Cell"}
 ENSEMBL ids to human readable gene names for downstream
 analysis. Defaults to mm10 gencode v21 annotation.}
 
-\item{convertTo10XoutputFormat}{If grouped by cell,
+\item{convertTo10XoutputFormat}{OPTIONAL If grouped by cell,
 logical inputt indicating whether
 or not matrix should be converted into a format similar to 10X
 cellranger output for downstream analysis. Defaults to TRUE}

@@ -10,10 +10,10 @@ IsoQuant('AllInfo',Iso=TRUE, TSS=FALSE, PolyA=FALSE)
 \item{Iso}{Logical indicating whether to conduct analysis for full-length
 isoforms. Defaults to TRUE}
 
-\item{TSS}{Logical indicating whether to conduct analysis for transcription
+\item{TSS}{OPTIONAL logical indicating whether to conduct analysis for transcription
 start sites (TSS). Defaults to FALSE}
 
-\item{PolyA}{Logical indicating whether to conduct analysis for end sites
+\item{PolyA}{OPTIONAL logical indicating whether to conduct analysis for end sites
 (PolyA). Defaults to FALSE}
 
 \item{AllInfo}{Merged file of Gene, Barcode, UMI, Cluster,
@@ -31,5 +31,5 @@ TSS, or PolyA sites, this function annotates and counts up
 transcripts expressed in the given set of samples
 }
 \seealso{
-DiffSplicingAnalysis
+\code{\link{DiffSplicingAnalysis}}
 }

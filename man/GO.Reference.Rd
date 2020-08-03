@@ -7,7 +7,8 @@
 GO.Reference('./','TreeTraversal_Iso/')
 }
 \arguments{
-\item{working_directory}{where the OutputGO folder should be created}
+\item{working_directory}{where the OutputGO folder should be created. Defaults to current
+working directory}
 
 \item{comparisonsDir}{location of TreeTraversal folder containing output
 files from differential isoform expression analysis}

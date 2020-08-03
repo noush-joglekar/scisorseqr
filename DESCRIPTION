@@ -16,17 +16,20 @@ LazyData: true
 RoxygenNote: 7.1.1
 Depends: R (>= 3.5.0)
 Suggests:
-	data.table,
-	parallel,
-	tibble,
-	data.tree,
-	yaml,
-	clusterProfiler,
-	org.Mm.eg.db,
-	DropletUtils,
-	plyr,
-	utils,
-	methods
+    data.table,
+    parallel,
+    data.tree,
+    yaml,
+    clusterProfiler,
+    org.Mm.eg.db,
+    DropletUtils,
+    plyr,
+    utils,
+    methods,
+    spelling
 Imports:
-  dplyr,
-  tidyr
+    dplyr,
+    tidyr,
+    magrittr,
+    tibble
+Language: en-US

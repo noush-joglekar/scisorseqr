@@ -8,6 +8,9 @@
 DiffSplicingAnalysis('config',10,25,'Exon',is.hier=FALSE)
 }
 \arguments{
+\item{configFile}{File in a .tsv format with four columns
+specifying the comparisons to be made}
+
 \item{numIsoforms}{Cap on the number of sites to test
 per gene. Defaults to 10}
 
@@ -17,8 +20,15 @@ genes. Defaults to 25}
 \item{typeOfTest}{Exon, TSS, PolyA or Isoform test conducted
 depending on input. Defaults to Iso}
 
-\item{config}{File in a .tsv format with four columns
-specifying the comparisons to be made}
+\item{is.hier}{OPTIONAL logical indicating hierarchical structure}
+
+\item{region1}{string containing comparison1 for parsing if is.hier
+is TRUE}
+
+\item{region2}{string containing comparison2 for parsing if is.hier
+is TRUE}
+
+\item{yamlFile}{.yaml file indicating hierarchical structure}
 }
 \value{
 Output folder with results for each line of config
@@ -39,5 +49,5 @@ based on the full splice-form, exons,
 the transcription start site (TSS) or end site (polyA).
 }
 \seealso{
-IsoQuant
+\code{\link{IsoQuant}}
 }

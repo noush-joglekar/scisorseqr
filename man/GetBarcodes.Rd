@@ -4,7 +4,8 @@
 \alias{GetBarcodes}
 \title{Get single-cell barcodes from long read files}
 \usage{
-GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,concatenate = FALSE)
+GetBarcodes("FastqFolder","Barcode-Clust","~/MyDir/",6,
+concatenate = FALSE,filterReads = FALSE)
 }
 \arguments{
 \item{fqFolder}{Path to a folder containing fastq.gz files}
@@ -17,6 +18,10 @@ and cluster in column 2}
 \item{numProcesses}{Number of chunks to split processing into. Defaults to 10}
 
 \item{concatenate}{OPTIONAL Concatenate output from all files in the folder}
+
+\item{filterReads}{OPTIONAL logical indicating whether the barcoded reads should be
+filtered into a separate file. Will make the downstream analysis faster if you expect
+few barcoded reads (~40 of total) at the cost of a slow (single-threaded) filtering process}
 }
 \value{
 OutputRaw folder containing a .csv file and summary stats for each
