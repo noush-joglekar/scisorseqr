@@ -1,6 +1,8 @@
 ## By Anoushka Joglekar 2019. Edited 03/2020
 
 #' @importFrom magrittr %>%
+#' @name %>%
+#' @rdname pipe
 #' @import dplyr
 
 args <- commandArgs(trailingOnly=TRUE)
