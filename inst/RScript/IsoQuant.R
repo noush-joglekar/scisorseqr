@@ -1,5 +1,8 @@
 ## By Anoushka Joglekar 2019. Edited 03/2020
 
+#' @importFrom magrittr %>%
+#' @import dplyr
+
 args <- commandArgs(trailingOnly=TRUE)
 
 print("Reading in file, this might take a while")
