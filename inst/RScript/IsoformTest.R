@@ -128,7 +128,7 @@ processedDF = data_df %>% dplyr::group_by(Gene, CellType, IsoID) %>%
 	tidyr::spread(CellType,Sum) %>% replace(is.na(.), 0) %>%
   dplyr::mutate(pi1 = Group1/sum(Group1),
 	pi2 = Group2/sum(Group2), delta = pi1-pi2) %>%
-	arrange(delta, .by_group = TRUE) %>% as.data.frame()
+	dplyr::arrange(delta, .by_group = TRUE) %>% as.data.frame()
 
 PerGene = split(processedDF,processedDF$Gene)
 
@@ -147,7 +147,7 @@ output_DF$FDR <- p.adjust(output_DF$pvals, method = "BH")*hierLevel
 output_DF$dPI <- as.numeric(output_DF$dPI)
 
 nums <- processedDF %>% select(Gene, IsoID, Group1, Group2) %>% group_by(Gene) %>%
-	arrange(IsoID, .by_group=TRUE) %>% as.data.frame()
+	dplyr::arrange(IsoID, .by_group=TRUE) %>% as.data.frame()
 colnames(nums)[3:4] <- comps
 
 cat("Total genes tested:",nrow(output_DF),"\n")
