@@ -20,30 +20,33 @@ if(is.tss != FALSE || is.polya != FALSE ) {
 
 
 if(is.iso != FALSE){
-	ids1 <- all_info %>% group_by(Gene) %>% count(Isoform) %>% arrange(-n, .by_group=TRUE) %>% mutate(iso.id = row_number()-1)
-	df1 <- dplyr::inner_join(all_info,ids1, by = c("Gene","Isoform")) %>% select(-n, -Isoform)
+	ids1 <- all_info %>% dplyr::group_by(Gene) %>% dplyr::count(Isoform) %>%
+	  dplyr::arrange(-n, .by_group=TRUE) %>% dplyr::mutate(iso.id = row_number()-1)
+	df1 <- dplyr::inner_join(all_info,ids1, by = c("Gene","Isoform")) %>% dplyr::select(-n, -Isoform)
 	write.table(ids1,file=paste0(isoDir,"Iso-IsoID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
 ###
 
 if(is.tss != FALSE){
-	ids2 <- data_df %>% group_by(Gene) %>% count(TSS) %>% arrange(-n, .by_group=TRUE) %>% mutate(tss.id = row_number()-1)
-	data_df <- dplyr::inner_join(data_df,ids2, by = c("Gene","TSS")) %>% select(-n, -TSS)
+	ids2 <- data_df %>% dplyr::group_by(Gene) %>% dplyr::count(TSS) %>%
+	  dplyr::arrange(-n, .by_group=TRUE) %>% dplyr::mutate(tss.id = row_number()-1)
+	data_df <- dplyr::inner_join(data_df,ids2, by = c("Gene","TSS")) %>% dplyr::select(-n, -TSS)
 	write.table(ids2,file=paste0(isoDir,"TSS-ID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
 ###
 
 if(is.polya != FALSE){
-	ids3 <- data_df %>% group_by(Gene) %>% count(PolyA) %>% arrange(-n, .by_group=TRUE) %>% mutate(polya.id = row_number()-1)
-	data_df <- dplyr::inner_join(data_df,ids3, by = c("Gene","PolyA")) %>% select(-n, -PolyA)
+	ids3 <- data_df %>% dplyr::group_by(Gene) %>% dplyr::count(PolyA) %>%
+	  dplyr::arrange(-n, .by_group=TRUE) %>% dplyr::mutate(polya.id = row_number()-1)
+	data_df <- dplyr::inner_join(data_df,ids3, by = c("Gene","PolyA")) %>% dplyr::select(-n, -PolyA)
 	write.table(ids3,file=paste0(isoDir,"PolyA-PolyID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
 if(exists("data_df")){
 tS <- colnames(data_df)[c(1, grep("id",colnames(data_df)))]
-data_df <- data_df %>% select(tS)
+data_df <- data_df %>% dplyr::select(tS)
 outDF <- dplyr::inner_join(df1,data_df)
 } else {outDF <- df1}
 
