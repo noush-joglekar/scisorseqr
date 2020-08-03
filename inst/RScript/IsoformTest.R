@@ -21,6 +21,7 @@ inum <- as.integer(args[6])
 threshold <- as.integer(args[7])
 
 typeOfTest <- args[8]
+is.hier <- args[9]
 
 if(is.hier == TRUE){
   if(length(args) < 12){
