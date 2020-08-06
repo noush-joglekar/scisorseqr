@@ -75,7 +75,7 @@ deltaPI <- function(mat,gene){
   change=max(pos,neg)
   if (pos >= neg){
     x = c(rev(mat$delta[mat$delta > 0]),0)[1:2]
-    y = mat %>% dplyr::filter(delta %in% x) %>% dplyr::select(IsoID) %>% as.matri()
+    y = mat %>% dplyr::filter(delta %in% x) %>% dplyr::select(IsoID) %>% as.matrix()
     return(list(change,y[1],y[2]))}
   else {
     x = c(mat$delta[mat$delta < 0],0,0)[1:2]
@@ -121,7 +121,7 @@ data_df$IsoID[data_df$IsoID >= inum] <- inum
 
 
 processedDF = data_df %>% dplyr::group_by(Gene, CellType, IsoID) %>%
-  dplyr::summarise(Sum = sum(NumTranscripts)) %>%
+  dplyr::summarise(Sum = sum(NumTranscripts), .groups='drop' ) %>%
   dplyr::filter(sum(Sum) >= threshold & length(Sum) >= 2) %>%
   dplyr::ungroup() %>% dplyr::group_by(Gene) %>%
   dplyr::filter(length(unique(CellType)) == 2) %>%
@@ -146,7 +146,7 @@ colnames(output_DF) <- c("pvals","dPI","maxDeltaPI_ix1","maxDeltaPI_ix2")
 output_DF$FDR <- p.adjust(output_DF$pvals, method = "BH")*hierLevel
 output_DF$dPI <- as.numeric(output_DF$dPI)
 
-nums <- processedDF %>% select(Gene, IsoID, Group1, Group2) %>% group_by(Gene) %>%
+nums <- processedDF %>% dplyr::select(Gene, IsoID, Group1, Group2) %>% dplyr::group_by(Gene) %>%
 	dplyr::arrange(IsoID, .by_group=TRUE) %>% as.data.frame()
 colnames(nums)[3:4] <- comps
 
