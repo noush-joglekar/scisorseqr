@@ -76,11 +76,11 @@ deltaPI <- function(mat,gene){
   if (pos >= neg){
     x = c(rev(mat$delta[mat$delta > 0]),0)[1:2]
     y = mat %>% dplyr::filter(delta %in% x) %>% dplyr::select(IsoID) %>% as.matrix()
-    return(list(change,y[1],y[2]))}
+    return(c(change,y[1],y[2]))}
   else {
     x = c(mat$delta[mat$delta < 0],0,0)[1:2]
     y = mat %>% dplyr::filter(delta %in% x) %>% dplyr::select(IsoID) %>% as.matrix()
-    return(list(-change,y[1],y[2]))}
+    return(c(-change,y[1],y[2]))}
 }
 
 Get_Pval_DeltaPI <- function(mat){
