@@ -25,10 +25,8 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
 
   if(!dir.exists(outputFolder)){dir.create(outputFolder)}
 
-  # Checks for working directory as stated in input, by default will use
-  # current directory
   raw_Output <- paste0(outputFolder, "/OutputRaw/")
-  # Python and bash files are included in package
+
   py_file <- system.file("python", "BarcodeDeconvolution.py", package = "scisorseqr")
   simConcat <- system.file("bash", "concat_ParallelizedBC.sh", package = "scisorseqr")
   filterOut <- system.file("bash", "FilterBCReads.sh", package = "scisorseqr")
