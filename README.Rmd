@@ -18,38 +18,32 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of scisorseqr is to ...
+For any comparative (e.g. case-control) studies of alternative splicing,
+scisorseqr is the one stop shop for analyzing single-cell long read data. The linux 
+based package includes functions for barcode deconvolution from fastqs,
+integration with long read alignment tools like STARlong and minimap2,
+mapping and filtering of high confidence full-length spliced reads, and some
+handy tools to conduct and visualize differential splicing analysis.
+
+![scisorseqr workflow]('~/Documents/TilgnerLab/GitLab/spatialViz/www/scisorseqR_schematic.pdf'){width=65%}
 
 ## Installation
 
-You can install the released version of scisorseqr from [CRAN](https://CRAN.R-project.org) with:
+The easiest way to install scisorseqr is through [Github](https://github.com) with:
 
 ``` r
-devtools::install('scisorseqr')
-install.packages("scisorseqr")
+devtools::install_github('noush-joglekar/scisorseqr')
 ```
 
-## Example
+## Workflow
 
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(scisorseqr)
+GetBarcodes('FastqFiles/','userInput/BarcodeCluster_Assignments', concatenate=TRUE, 
+            filterReads=FALSE, numProcesses=24)
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
