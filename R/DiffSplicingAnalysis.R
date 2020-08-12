@@ -29,7 +29,6 @@
 #' @seealso \code{\link{IsoQuant}}
 #'
 #' @export
-
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",
                                  is.hier = FALSE, region1 = NULL, region2 = NULL, yamlFile = NULL) {
   R_file <- system.file("RScript", "IsoformTest.R", package = "scisorseqr")
