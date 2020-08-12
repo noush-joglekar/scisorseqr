@@ -13,43 +13,70 @@ knitr::opts_chunk$set(
 )
 ```
 
-# scisorseqr
+## scisorseqr - a comparative analysis of alternative splicing patterns
 
-<!-- badges: start -->
-<!-- badges: end -->
+```{r pressure, echo=FALSE, out.width = '25%', out.extra='style="float:left; padding:20px"'}
+knitr::include_graphics("./scisorseqr.png")
+```
 
-The goal of scisorseqr is to ...
+scisorseqr is a linux based R-package for analyzing differential isoform expression in single cells. 
+The methods are based on our preprint [Joglekar et al. (2020)]() and the [scISOrSeq workflow](https://www.nature.com/articles/nbt.4259?draft=marketing)
 
+Any comparative studies of alternative splicing can be performed with scisorseqr. The
+package includes functions for barcode deconvolution from fastqs,
+integration with long read alignment tools, mapping and filtering of high confidence, 
+full-length spliced reads, and some
+handy tools to conduct differential expression analysis.
+
+The tools are also applicable to long-read spatial transcriptomics, and can be used to resolve exon
+expression at the [spatial](www.isoformatlas.com) level
+
+
+## Hardware / software requirements
+The package has only been tested on a CentOS x86_64 machine. For alignment and mapping, we recommend
+
+* [STARlong](https://github.com/alexdobin/STAR/) software installation for PacBio reads
+* [Minimap2](https://github.com/lh3/minimap2) installation for Oxford Nanopore (or PacBio) reads
+* samtools
+* bedtools
+* python version 3.7
+ 
 ## Installation
 
-You can install the released version of scisorseqr from [CRAN](https://CRAN.R-project.org) with:
+The easiest way to install scisorseqr is through [Github](https://github.com) with:
 
 ``` r
-devtools::install('scisorseqr')
-install.packages("scisorseqr")
+devtools::install_github('noush-joglekar/scisorseqr')
 ```
 
-## Example
+## Workflow
 
-This is a basic example which shows you how to solve a common problem:
+```{r flow, echo=FALSE, fig.width=10}
+DiagrammeR::mermaid("graph TB;
+    A[Directory with fastq.gz files]-->B(Barcode deconvolution);
+    B-->E;
+    A-->C(Alignment);
+    C-->D(Mapping and filtering for full-length, spliced reads);
+    D---E[Concatenating info];
+    E-->F[Isoform/TSS/PolyA-site quantification];
+    E-->G[Exon quantification];
+    F-->H(Differential isoform/TSS/polyA-site usage);
+    G-->I(Differential exon expression);
+    H-->J(Visualization);
+    I-->J((Visualization));
+    ")
 
-```{r example}
+```
+
+These steps are available as functions in the package. For example, barcode deconvolution 
+can be done using the following command
+
+``` r 
 library(scisorseqr)
-## basic example code
+GetBarcodes('FastqFiles/','userInput/BarcodeCluster_Assignments', concatenate=TRUE, 
+  filterReads=FALSE, numProcesses=24)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Support
+We appreciate any and all inputs for improving scisorseqr. Feel free to send us an [email](anj2026@med.cornell.edu). 
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
