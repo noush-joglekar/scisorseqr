@@ -60,4 +60,4 @@ GetBarcodes('FastqFiles/','userInput/BarcodeCluster_Assignments', concatenate=TR
 ## Support
 
 We appreciate any and all inputs for improving scisorseqr. Feel free to
-send us an [email](anj2026@med.cornell.edu).
+send us an [email](mailto:anj2026@med.cornell.edu).
