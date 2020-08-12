@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ## scisorseqr - a comparative analysis of alternative splicing patterns
 
 ```{r pressure, echo=FALSE, out.width = '25%', out.extra='style="float:left; padding:20px"'}
-knitr::include_graphics("./scisorseqr.png")
+knitr::include_graphics("man/figures/scisorseqr.png")
 ```
 
 scisorseqr is a linux based R-package for analyzing differential isoform expression in single cells. 
@@ -31,6 +31,7 @@ handy tools to conduct differential expression analysis.
 The tools are also applicable to long-read spatial transcriptomics, and can be used to resolve exon
 expression at the [spatial](www.isoformatlas.com) level
 
+* * *
 
 ## Hardware / software requirements
 The package has only been tested on a CentOS x86_64 machine. For alignment and mapping, we recommend

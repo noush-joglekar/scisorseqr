@@ -3,7 +3,7 @@
 
 ## scisorseqr - a comparative analysis of alternative splicing patterns
 
-<img src="./scisorseqr.png" width="25%" style="float:left; padding:20px" />
+<img src="man/figures/scisorseqr.png" width="25%" style="float:left; padding:20px" />
 
 scisorseqr is a linux based R-package for analyzing differential isoform
 expression in single cells. The methods are based on our preprint
@@ -19,6 +19,8 @@ tools to conduct differential expression analysis.
 The tools are also applicable to long-read spatial transcriptomics, and
 can be used to resolve exon expression at the
 [spatial](www.isoformatlas.com) level
+
+-----
 
 ## Hardware / software requirements
 
