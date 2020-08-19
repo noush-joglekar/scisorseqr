@@ -32,7 +32,12 @@ ExonQuantOutput/InclusionExclusionCounts.tsv
 This function groups reads by either the celltype
 or cell-barcode to count inclusion and exclusion of exons. Inputs
 to this function are based on previous preprocessing steps
+
+For ONT data we recomment \url{https://github.com/ablab/IsoQuant.git}
+which allows for non-exact splice-site matching
 }
 \seealso{
-\code{\link{MapAndFilter}} \code{\link{InfoPerLongRead}}
+\code{\link{MapAndFilter}}
+
+\code{\link{InfoPerLongRead}}
 }
