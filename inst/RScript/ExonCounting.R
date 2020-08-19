@@ -31,15 +31,15 @@ print(paste0("About to start processing exons per ",groupingFactor))
 
 calcPSI <- function(x){		## x for line in uniqExons
 	geneDF <- edges %>% dplyr::filter(Gene == uniqExons$Gene[x]) %>% dplyr::group_by(.dots = groupingFactor) %>%
-	  dplyr::filter(s <= uniqExons$start[x] & e >= uniqExons$end[x]) %>% dplyr::as.data.frame()
+	  dplyr::filter(s <= uniqExons$start[x] & e >= uniqExons$end[x]) %>% as.data.frame()
 	numReads <- geneDF %>% dplyr::group_by(.dots = groupingFactor, Read) %>% dplyr::select(Read,groupingFactor) %>%
 	  dplyr::ungroup() %>% dplyr::group_by(.dots = groupingFactor) %>% dplyr::distinct() %>%
-	  dplyr::add_count() %>% dplyr::filter(n>=threshold) %>% dplyr::as.data.frame()
-	geneDF <- geneDF %>% dplyr::filter(Read %in% numReads$Read)  %>% dplyr::as.data.frame()
+	  dplyr::add_count() %>% dplyr::filter(n>=threshold) %>% as.data.frame()
+	geneDF <- geneDF %>% dplyr::filter(Read %in% numReads$Read)  %>% as.data.frame()
 	u_gf <- geneDF %>% dplyr::select(groupingFactor) %>% dplyr::distinct()	## make list of unique grouping factors
 	psiGF <- NULL
 	for(gf in u_gf[,1]){	## If total reads spanning exon more than sampling rate, extract those reads
-		reads <- geneDF %>% filter(get(groupingFactor) == gf)
+		reads <- geneDF %>% dplyr::filter(get(groupingFactor) == gf)
 		psi = NULL
 		sr <- reads %>% dplyr::select(Read) %>% dplyr::distinct()
 		inc <- reads %>% dplyr::filter(Read %in% sr$Read) %>%
@@ -56,10 +56,8 @@ calcPSI <- function(x){		## x for line in uniqExons
 }
 
 
-
 #sampledPSI <- parallel::mclapply(1:nrow(uniqExons), function(x) calcPSI(x), mc.cores=28)
 sampledPSI <- parallel::mclapply(1:200, function(x) calcPSI(x), mc.cores=28) ## testing purposes
-
 
 print("Converting to dataframe")
 psiDF <- dplyr::bind_rows(sampledPSI) %>% dplyr::select(exon,Gene,groupingFactor,inclusion,exclusion,psi)
