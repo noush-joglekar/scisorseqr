@@ -52,17 +52,17 @@ devtools::install_github('noush-joglekar/scisorseqr')
 
 ## Workflow
 
-```{r flow, echo=FALSE, fig.width=10}
-DiagrammeR::mermaid("graph TB;
-    A[Directory with fastq.gz files]-->B(Barcode deconvolution);
+```{r flow, echo=FALSE}
+DiagrammeR::mermaid("graph TD;
+    A[Directory with fastq.gz files]-->B(GetBarcodes);
     B-->E;
-    A-->C(Alignment);
-    C-->D(Mapping and filtering for full-length, spliced reads);
-    D---E[Concatenating info];
-    E-->F[Isoform/TSS/PolyA-site quantification];
-    E-->G[Exon quantification];
-    F-->H(Differential isoform/TSS/polyA-site usage);
-    G-->I(Differential exon expression);
+    A-->C(STARalign);
+    C-->D(MapAndFilter);
+    D---E[InfoPerLongRead];
+    E-->F[IsoQuant];
+    E-->G[ExonQuant];
+    F-->H(DiffSplicingAnalysis);
+    G-->I(DiffSplicingAnalysis);
     H-->J(Visualization);
     I-->J((Visualization));
     ")
