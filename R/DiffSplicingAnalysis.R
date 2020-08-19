@@ -41,7 +41,7 @@ DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25,
   } else if (typeOfTest == "PolyA"){
     inputFile = "IsoQuantOutput/NumPolyAPerCluster"
   } else if (typeOfTest == "Exon"){
-    inputFile = "ExonInfo/InclusionExclusionCounts.tsv"
+    inputFile = "ExonQuantOutput/InclusionExclusionCounts.tsv"
   }
 
   if (typeOfTest != "Exon"){

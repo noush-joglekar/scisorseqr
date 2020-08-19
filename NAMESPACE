@@ -2,6 +2,7 @@
 
 export("%>%")
 export(DiffSplicingAnalysis)
+export(ExonQuant)
 export(FilterBCOutput)
 export(GO.Reference)
 export(GetBarcodes)
