@@ -61,7 +61,7 @@ if(is.hier == TRUE){
 
 
 inclusionFile <- inclusionFile[inclusionFile$V3 %in% comparisons]
-colnames(inclusionFile) <- c("Exon","Gene","Celltype","inclusion","exclusion")
+colnames(inclusionFile) <- c("Exon","Gene","Celltype","inclusion","exclusion","psi")
 
 ##### Check if hierarchical analysis is true
 if(is.hier == TRUE){
