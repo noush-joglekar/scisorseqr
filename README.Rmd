@@ -52,21 +52,24 @@ devtools::install_github('noush-joglekar/scisorseqr')
 
 ## Workflow
 
-```{r flow, echo=FALSE}
-DiagrammeR::mermaid("graph TD;
-    A[Directory with fastq.gz files]-->B(GetBarcodes);
-    B-->E;
-    A-->C(STARalign);
-    C-->D(MapAndFilter);
-    D---E[InfoPerLongRead];
-    E-->F[IsoQuant];
-    E-->G[ExonQuant];
-    F-->H(DiffSplicingAnalysis);
-    G-->I(DiffSplicingAnalysis);
-    H-->J(Visualization);
-    I-->J((Visualization));
-    ")
+```{r flow, echo=FALSE, dev='pdf'}
+# DiagrammeR::mermaid("graph TD;
+#    A[Directory with fastq.gz files]-->B(GetBarcodes);
+#    B-->E;
+#    A-->C(STARalign);
+#    C-->D(MapAndFilter);
+#    D---E[InfoPerLongRead];
+#    E-->F[IsoQuant];
+#    E-->G[ExonQuant];
+#    F-->H(DiffSplicingAnalysis);
+#    G-->I(DiffSplicingAnalysis);
+#    H-->J(Visualization);
+#    I-->J((Visualization));
+#    ")
+```
 
+``` {r prettyGraph, echo=FALSE, out.width = '60%'}
+knitr::include_graphics("man/figures/README-flow-1.png")
 ```
 
 These steps are available as functions in the package. For example, barcode deconvolution 
