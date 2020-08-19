@@ -29,7 +29,7 @@ full-length spliced reads, and some
 handy tools to conduct differential expression analysis.
 
 The tools are also applicable to long-read spatial transcriptomics, and can be used to resolve exon
-expression at the [spatial](www.isoformatlas.com) level
+expression at the [spatial](https://isoformatlas.com/) level
 
 * * *
 

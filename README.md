@@ -18,7 +18,7 @@ tools to conduct differential expression analysis.
 
 The tools are also applicable to long-read spatial transcriptomics, and
 can be used to resolve exon expression at the
-[spatial](www.isoformatlas.com) level
+[spatial](https://isoformatlas.com/) level
 
 -----
 
