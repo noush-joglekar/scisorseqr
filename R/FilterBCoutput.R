@@ -16,8 +16,6 @@ FilterBCOutput <- function(outputFolder, raw_Output,  concatenate, filterReads, 
   filt_Output <- paste0(outputFolder, "/OutputFiltered/")
   dir.create(filt_Output)
 
-  # Maybe can add feature to randomize selection of one read per barcode-UMI pair
-  # code in KLa's folder
   if (concatenate == TRUE){
     filterAndConcat <- paste("sh", filterOut, raw_Output, filt_Output, TRUE, filterReads, fqFolder)
     system(filterAndConcat)

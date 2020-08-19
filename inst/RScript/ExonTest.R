@@ -6,7 +6,10 @@
 #' --- comma separated cell-types included,
 #' --- Shorthand comparison2 of interest,
 #' --- comma separated cell-types included
+#' @import dplyr
+#' @importFrom magrittr %>%
 
+`%>%` <- magrittr::`%>%`
 
 args <- commandArgs(trailingOnly=TRUE)
 
@@ -82,8 +85,8 @@ cat("Starting exon level analysis in",comps[1],"vs",comps[2],"\n")
 
 
 ### Group by same cell-type and add counts (eg: hippEN has 3 contributing cell-subtypes)
-condensedDF <- as.data.frame(inclusionFile %>% group_by(Exon,Gene,Celltype) %>%
-                               dplyr::summarise(Inclusion = sum(inclusion),Exclusion= sum(exclusion)) %>%
+condensedDF <- as.data.frame(inclusionFile %>% dplyr::group_by(Exon,Gene,Celltype) %>%
+                               dplyr::summarise(Inclusion = sum(inclusion),Exclusion = sum(exclusion)) %>%
                                dplyr::group_by(Exon) %>% dplyr::filter( n() > 1 ))
 
 numExons <- dim(condensedDF)[1]/2
