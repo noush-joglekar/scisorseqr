@@ -16,7 +16,7 @@ geneInfo <- allInfo %>% select(Read,Gene,groupingFactor)
 
 print("Reading in GFF file, will take a while")
 
-exonGFF <- read.table(args[2])[,-c(2,3,6,8,9,11)]	## GFF file with exon info
+exonGFF <- read.table(gzfile(args[2]))[,-c(2,3,6,8,9,11)]	## GFF file with exon info
 colnames(exonGFF) <- c("chr","start","end","strand","readname")
 exonGFF <- exonGFF %>% separate(readname,into=c("Read","path"),sep=".path") %>%
         select(-path) %>% unite(exon, c(chr,start,end,strand),sep="_",remove=FALSE)
@@ -26,7 +26,7 @@ threshold <- as.integer(args[3])
 
 tic()
 uniqExons <- exonGFF %>% select(-c(Read,groupingFactor)) %>% distinct()		## Get unique exons to iterate over
-edges <- exonGFF %>% group_by(Read) %>% mutate(s=min(start),e=max(end)) %>% 
+edges <- exonGFF %>% group_by(Read) %>% mutate(s=min(start),e=max(end)) %>%
 	select(Read,Gene,s,e,exon,groupingFactor) %>% distinct() %>% as.data.frame()
 toc()
 print(paste0("About to start processing exons per ",groupingFactor))
@@ -34,8 +34,8 @@ print(paste0("About to start processing exons per ",groupingFactor))
 calcPSI <- function(x){		## x for line in uniqExons
 	geneDF <- edges %>% filter(Gene == uniqExons$Gene[x]) %>% group_by(.dots = groupingFactor) %>%
 			filter(s <= uniqExons$start[x] & e >= uniqExons$end[x]) %>% as.data.frame()
-	numReads <- geneDF %>% group_by(.dots = groupingFactor, Read) %>% select(Read,groupingFactor) %>% 
-			ungroup() %>% group_by(.dots = groupingFactor) %>% distinct() %>% 
+	numReads <- geneDF %>% group_by(.dots = groupingFactor, Read) %>% select(Read,groupingFactor) %>%
+			ungroup() %>% group_by(.dots = groupingFactor) %>% distinct() %>%
 			add_count() %>% filter(n>=threshold) %>% as.data.frame()
 	geneDF <- geneDF %>% filter(Read %in% numReads$Read)  %>% as.data.frame()
 	u_gf <- geneDF %>% select(groupingFactor) %>% distinct()	## make list of unique grouping factors
@@ -44,7 +44,7 @@ calcPSI <- function(x){		## x for line in uniqExons
 		reads <- geneDF %>% filter(get(groupingFactor) == gf)
 		psi = NULL
 		sr <- reads %>% select(Read) %>% distinct()
-		inc <- reads %>% filter(Read %in% sr$Read) %>% 
+		inc <- reads %>% filter(Read %in% sr$Read) %>%
 			filter(exon == uniqExons$exon[x]) %>% nrow()
 		psi <- inc/nrow(sr)	## Total reads spanning the exon = sr
 		psi <- as.data.frame(psi)
