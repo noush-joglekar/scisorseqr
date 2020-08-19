@@ -21,11 +21,12 @@ comps <- c(args[2],args[4])
 type1 <- unlist(strsplit(args[3],","))
 type2 <- unlist(strsplit(args[5],","))
 
-inclusionFile$Celltype[inclusionFile$Celltype %in% type1] = args[2]	## rename cell-subtype to comparison name
-inclusionFile$Celltype[inclusionFile$Celltype %in% type2] = args[4]
+inclusionFile$V3[inclusionFile$V3 %in% type1] = args[2]	## rename cell-subtype to comparison name
+inclusionFile$V3[inclusionFile$V3 %in% type2] = args[4]
 comparisons <- comps
 
 is.hier <- args[6]
+print("0")
 
 if(is.hier == TRUE){
   if(length(args) < 11){
@@ -61,10 +62,14 @@ if(is.hier == TRUE){
     dir.create(out_dir)}
 }
 
+print("1")
 
-inclusionFile <- inclusionFile[inclusionFile$Celltype %in% comparisons]
-colnames(inclusionFile)[1] <- "Exon"
+head(inclusionFile)
+inclusionFile <- inclusionFile[inclusionFile$V3 %in% comparisons]
+head(inclusionFile)
+colnames(inclusionFile) <- c("Exon","Gene","Celltype","inclusion","exclusion")
 
+print("2")
 ##### Check if hierarchical analysis is true
 if(is.hier == TRUE){
 	cellGroup <- unlist(strsplit(comps[1],region[1]))[2]
@@ -82,12 +87,16 @@ sink(paste0(out_dir,"REPORT.txt"), append=TRUE, split=TRUE)
 Sys.time()
 cat("Starting exon level analysis in",comps[1],"vs",comps[2],"\n")
 
+
+print("3")
 ### Group by same cell-type and add counts (eg: hippEN has 3 contributing cell-subtypes)
 condensedDF <- as.data.frame(inclusionFile %>% dplyr::group_by(Exon,Gene,Celltype) %>%
                                dplyr::summarise(Inclusion = sum(inclusion),Exclusion = sum(exclusion)) %>%
-                               dplyr::group_by(Exon) %>% dplyr::filter( dplyr::n() > 1 ))
+                               dplyr::group_by(Exon) %>% dplyr::filter( n() > 1 ))
 
 numExons <- dim(condensedDF)[1]/2
+head(condensedDF)
+
 pval <- geneL <- exonL <- dpsi <- psi1 <- psi2 <- c()
 
 ## dataframe is sorted so two lines correspond to our comparisons of interest

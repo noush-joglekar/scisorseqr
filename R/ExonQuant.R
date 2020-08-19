@@ -20,11 +20,11 @@ ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo',
                            exon.gff = 'LRProcessingOutput/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz',
                            groupingFactor = "Celltype",threshold = 10) {
 
-  if(!dir.exists('ExonInfo')){dir.create("ExonInfo/")}
+  if(!dir.exists('ExonQuantOutput')){dir.create("ExonQuantOutput/")}
 
   R_file <- system.file("RScript", "ExonCounting.R", package = "scisorseqr")
 
-  countExons <- paste("Rscript", allInfoFile, exon.gff, threshold, groupingFactor)
+  countExons <- paste("Rscript", R_file, allInfoFile, exon.gff, threshold, groupingFactor)
   system(countExons)
 
 }
