@@ -56,8 +56,8 @@ calcPSI <- function(x){		## x for line in uniqExons
 }
 
 
-#sampledPSI <- parallel::mclapply(1:nrow(uniqExons), function(x) calcPSI(x), mc.cores=28)
-sampledPSI <- parallel::mclapply(1:200, function(x) calcPSI(x), mc.cores=28) ## testing purposes
+sampledPSI <- parallel::mclapply(1:nrow(uniqExons), function(x) calcPSI(x), mc.cores=28)
+#sampledPSI <- parallel::mclapply(1:200, function(x) calcPSI(x), mc.cores=28) ## testing purposes
 
 print("Converting to dataframe")
 psiDF <- dplyr::bind_rows(sampledPSI) %>% dplyr::select(exon,Gene,groupingFactor,inclusion,exclusion,psi)
