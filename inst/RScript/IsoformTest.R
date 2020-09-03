@@ -119,9 +119,8 @@ if(is.hier == TRUE){
 data_df$IsoID <- as.integer(data_df$IsoID)
 data_df$IsoID[data_df$IsoID >= inum] <- inum
 
-
 processedDF = data_df %>% dplyr::group_by(Gene, CellType, IsoID) %>%
-  dplyr::summarise(Sum = sum(NumTranscripts), .groups='drop' ) %>%
+  dplyr::summarise(Sum = sum(NumTranscripts)) %>%
   dplyr::filter(sum(Sum) >= threshold & length(Sum) >= 2) %>%
   dplyr::ungroup() %>% dplyr::group_by(Gene) %>%
   dplyr::filter(length(unique(CellType)) == 2) %>%
