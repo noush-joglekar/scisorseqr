@@ -27,17 +27,20 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
   matricesFolder <- "Matrices/"
   if(!dir.exists(matricesFolder)){dir.create(matricesFolder)}
 
+  if(convertTo10XoutputFormat == TRUE){
+
+    if (!requireNamespace("DropletUtils", quietly = TRUE)) {
+      stop("Package \"DropletUtils\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
+  }
+
   if(groupBy == "Cell"){
     isoXcell <- file.path(isoQuantOutDir,'IsoXNumInCell')
     run_cell <- paste("python3", py_file1, isoXcell)
     system(run_cell)
 
     if(convertTo10XoutputFormat == TRUE){
-
-      if (!requireNamespace("DropletUtils", quietly = TRUE)) {
-        stop("Package \"DropletUtils\" needed for this function to work. Please install it.",
-             call. = FALSE)
-      }
 
       isoMat <- utils::read.table("Matrices/AllIsoformsXAllCells_matrix.csv")
       geneNames <- data.frame("gene"=unlist(strsplit(rownames(isoMat),"_"))[c(TRUE,FALSE)])
