@@ -21,7 +21,7 @@
 #' concatenate = FALSE,filterReads = FALSE)
 #' @export
 GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10,
-                        concatenate = TRUE, filterReads = FALSE) {
+                        chemistry = "v2", concatenate = TRUE, filterReads = FALSE) {
 
   if(!dir.exists(outputFolder)){dir.create(outputFolder)}
 
@@ -41,7 +41,8 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
     input_file <- paste0(fqFolder, file)
     f_name <- unlist(strsplit(file,".fastq|.fq"))[1]
     run_bc_deConv <- paste("python3", py_file, input_file, BCClustAssignFile,
-                           "--outDir", raw_Output, "--numProc", numProcesses)
+                           "--outDir", raw_Output, "--numProc", numProcesses,
+                           "--chemistry",chemistry)
     run_concatSimProc <- paste("bash", simConcat, f_name, raw_Output)
     system(run_bc_deConv)
     system(run_concatSimProc)
