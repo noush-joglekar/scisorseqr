@@ -9,6 +9,7 @@
 #' and cluster in column 2
 #' @param outputFolder OPTIONAL Path to working directory. Defaults to current
 #' @param numProcesses Number of chunks to split processing into. Defaults to 10
+#' @param chemistry UMI length differs with 10x chemistry. Defaults to "v2"
 #' @param concatenate OPTIONAL Concatenate output from all files in the folder
 #' @param filterReads OPTIONAL logical indicating whether the barcoded reads should be
 #' filtered into a separate file. Will make the downstream analysis faster if you expect
@@ -21,7 +22,7 @@
 #' concatenate = FALSE,filterReads = FALSE)
 #' @export
 GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProcesses = 10,
-                        concatenate = TRUE, filterReads = FALSE) {
+                        chemistry = "v2", concatenate = TRUE, filterReads = FALSE) {
 
   if(!dir.exists(outputFolder)){dir.create(outputFolder)}
 
@@ -41,7 +42,8 @@ GetBarcodes <- function(fqFolder, BCClustAssignFile, outputFolder = ".", numProc
     input_file <- paste0(fqFolder, file)
     f_name <- unlist(strsplit(file,".fastq|.fq"))[1]
     run_bc_deConv <- paste("python3", py_file, input_file, BCClustAssignFile,
-                           "--outDir", raw_Output, "--numProc", numProcesses)
+                           "--outDir", raw_Output, "--numProc", numProcesses,
+                           "--chemistry",chemistry)
     run_concatSimProc <- paste("bash", simConcat, f_name, raw_Output)
     system(run_bc_deConv)
     system(run_concatSimProc)

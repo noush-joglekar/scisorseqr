@@ -51,7 +51,7 @@ def TDetectRev(rev_seq):        ## If it was actually the reverse strand then it
                 return(rev_ix)
 
 
-def TSODetectFwd(end_seq):      ## Looks for T9 in the forward strand
+def TSODetectFwd(end_seq):      ## Looks for middle 15 bases of TSO in the forward strand
         tso = 'TGGTATCAACGCAGA'
         try:
                 fwdTSO_ix = len(end_seq) - end_seq.index(revComp(tso))
@@ -72,6 +72,7 @@ def TSODetectRev(revEnd_seq):   ## If it was actually the reverse strand then it
 def prelim(args):
 	global barcodes
 	global cluster_id
+	global umiLength
 
 	file_name = re.split('/|.fq.gz|.fastq.gz',args.fq)[-2]
 	print(file_name)
@@ -88,6 +89,12 @@ def prelim(args):
 
 	barcodes = [x.strip('\n').split('\t')[0] for x in open(bc_file).readlines()]
 	cluster_id = [x.strip('\n').split('\t')[1] for x in open(bc_file).readlines()]
+	
+	if args.chemistry == "v2":
+	  umiLength = 10
+	elif args.chemistry == "v3":
+	  umiLength = 12
+	  
 	return()
 
 def addToDict(d, line, rn):
@@ -151,7 +158,7 @@ def addToDict(d, line, rn):
 			else:
 				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found.get('bc_intersect')]])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+26
+				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(rev_seq[UMI_start:UMI_end])
 				#bc_count += 1
 		else:
@@ -184,7 +191,7 @@ def addToDict(d, line, rn):
 			else:
 				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found.get('bc_intersect')]])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+26
+				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(seq[UMI_start:UMI_end])
 				#bc_count += 1
 		else:
@@ -236,7 +243,7 @@ def addToDict(d, line, rn):
 			else:
 				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found_f.get('bc_intersect')]])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+26
+				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(seq[UMI_start:UMI_end])
 				#bc_count += 1
 		elif bc_found_r and not bc_found_f:     ## Barcode found in reverse strand, fwd T9 was a false positive
@@ -251,7 +258,7 @@ def addToDict(d, line, rn):
 			else:
 				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found_f.get('bc_intersect')]])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+26
+				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(rev_seq[UMI_start:UMI_end])
 				#bc_count += 1
 		else:
@@ -347,6 +354,7 @@ def parse_args():
         parser.add_argument('bcClust', type=str, help='single cell barcode-cluster assignment')
         parser.add_argument('--outDir', default="./", type=str, help='directory to put output in')
         parser.add_argument('--numProc', default=10,type=int, help='number of simultaneous processes')
+        parser.add_argument('--chemistry', default="v2", type=str, help="10x chemistry version - v2 or v3")
         args = parser.parse_args()
         return args
 
