@@ -17,6 +17,8 @@ and cluster in column 2}
 
 \item{numProcesses}{Number of chunks to split processing into. Defaults to 10}
 
+\item{chemistry}{UMI length differs with 10x chemistry. Defaults to "v2"}
+
 \item{concatenate}{OPTIONAL Concatenate output from all files in the folder}
 
 \item{filterReads}{OPTIONAL logical indicating whether the barcoded reads should be
