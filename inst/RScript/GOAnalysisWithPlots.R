@@ -26,7 +26,7 @@ for (file in files){
   sigGenes <- unlist(strsplit(as.vector(result_file$Gene[sig_ix]),"[.]"))[c(TRUE,FALSE)]
   ego_MF <- clusterProfiler::enrichGO(sigGenes,OrgDb = org.Mm.eg.db,keyType= 'ENSEMBL',ont = "MF")
   ego_BP <- clusterProfiler::enrichGO(sigGenes,OrgDb = org.Mm.eg.db,keyType= 'ENSEMBL',ont = "BP")
-  ego_CC <- clusterProfiler::enrichGO(sigGenes,OrgDb = org.Mm.eg.db,keyType= 'ENSEMBL',ont = "CCC")
+  ego_CC <- clusterProfiler::enrichGO(sigGenes,OrgDb = org.Mm.eg.db,keyType= 'ENSEMBL',ont = "CC")
 
   mf[name] <- ego_MF
   bp[name] <- ego_BP
