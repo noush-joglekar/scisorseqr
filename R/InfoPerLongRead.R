@@ -23,7 +23,8 @@ InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObser
 
   if(file.exists(file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz'))){
     stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz')
-  } else {file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/stretches.gz')}
+  } else {
+    stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/stretches.gz')}
 
   if(file.exists(file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz'))){
     geneFile <- file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
