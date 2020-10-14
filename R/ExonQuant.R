@@ -14,6 +14,8 @@
 #' counting inclusion levels. Defaults to celltype
 #' @param threshold minimum number of reads per grouping factor in order
 #' to consider that exon to be sufficiently expressed. Defaults to 10
+#' @param threads number of threads to parallelize the function. Defaults
+#' to 4
 #' @seealso \code{\link{MapAndFilter}}
 #' @seealso \code{\link{InfoPerLongRead}}
 #' @return ExonQuantOutput/InclusionExclusionCounts.tsv
@@ -22,7 +24,7 @@
 
 ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo',
                            exon.gff = 'LRProcessingOutput/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz',
-                           groupingFactor = "Celltype",threshold = 10) {
+                           groupingFactor = "Celltype",threshold = 10, threads = 4) {
 
   if(!dir.exists('ExonQuantOutput')){dir.create("ExonQuantOutput/")}
 
