@@ -22,6 +22,7 @@ exonGFF <- exonGFF %>% tidyr::separate(readname,into=c("Read","path"),sep=".path
 exonGFF <- dplyr::right_join(exonGFF,geneInfo) ## Merge gene information with GFF in case of multi-mapping exons
 
 threshold <- as.integer(args[3])
+numThreads <- as.integer(args[5])
 
 
 uniqExons <- exonGFF %>% dplyr::select(-c(Read,groupingFactor)) %>% dplyr::distinct()		## Get unique exons to iterate over
@@ -56,7 +57,7 @@ calcPSI <- function(x){		## x for line in uniqExons
 }
 
 
-sampledPSI <- parallel::mclapply(1:nrow(uniqExons), function(x) calcPSI(x), mc.cores=28)
+sampledPSI <- parallel::mclapply(1:nrow(uniqExons), function(x) calcPSI(x), mc.cores=numThreads)
 #sampledPSI <- parallel::mclapply(1:200, function(x) calcPSI(x), mc.cores=28) ## testing purposes
 
 print("Converting to dataframe")
