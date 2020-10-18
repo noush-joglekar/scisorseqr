@@ -1,0 +1,84 @@
+---
+title: "scisorseqr usage"
+author: "Anoushka Jogleekar"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The scisorseqr package allows you to go from a table of barcode - cluster assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
+
+## All the user specified input for the various functions of this package are outlined here:
+
+ - Tab separated Barcode-Celltype file 
+ - Directory containing fastq.gz files 
+ - gene annotation file (gencode mouse v21 already included)
+ - chromosome.fa files for aligning to the genome
+ - bed files containing annotated CAGE and/or PolyA sites
+ - config file specifying comparisons to be made
+ 
+## Software required 
+
+ - STARlong (and corresponding genome index file)
+ - Minimap2 if not using STARlong
+ - samtools
+ - bedtools
+ - python version >= 3.7
+   - pandas
+   -multiprocessing
+ 
+
+The first step is to deconvolve barcodes from either the PacBio or ONT fastq output
+For that the user needs to specify
+
+ - Tab separated Barcode-Celltype file
+ - Directory containing fastq.gz files
+ 
+### Create a barcode - celltype file assuming analysis using Seurat
+```{r makeBCfile, eval=FALSE, echo=TRUE}
+
+library(Seurat)
+library(tidyr)
+library(dplyr)
+
+bc <- data.frame("Barcode"=rownames(my_object@meta.data),
+                 "Celltype"=my_object@meta.data$celltype) %>% 
+  separate(Barcode,into=c("BC","suffix"),sep="-") %>% 
+  select(-suffix) %>% as.data.frame()
+
+write.table(bc, file = "PATH_TO_FILE", sep="\t", row.names = FALSE,
+            col.names = FALSE, quote = FALSE)
+```
+
+The table should look something like this
+```{r, echo=FALSE}
+bc_clust <- read.table(system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr"), 
+                       header = FALSE, sep = "\t")
+knitr::kable(head(bc_clust))
+```
+
+### Use that file to deconvolve barcodes from the fastq files
+```{r getBarcodes, eval=FALSE, echo=TRUE}
+bc_clust <- system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr")
+fastqFolder <- system.file("extdata/", "FastqFiles", package = "scisorseqr")
+
+## run command
+GetBarcodes(fqFolder = fastqFolder, BCClustAssignFile = bc_clust, 
+            chemistry = "v2", concatenate = TRUE, filterReads = FALSE)
+```
+
+### Align your fastq files to the reference genome
+```{r STARalign, eval = FALSE, echo = TRUE}
+
+```
+
