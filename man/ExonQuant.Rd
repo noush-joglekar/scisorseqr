@@ -9,7 +9,8 @@ ExonQuant(
  
     exon.gff = "LRProcessingOutput/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz",
   groupingFactor = "Celltype",
-  threshold = 10
+  threshold = 10,
+  numThreads = 4
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ counting inclusion levels. Defaults to celltype}
 
 \item{threshold}{minimum number of reads per grouping factor in order
 to consider that exon to be sufficiently expressed. Defaults to 10}
+
+\item{threads}{number of threads to parallelize the function. Defaults
+to 4}
 }
 \value{
 ExonQuantOutput/InclusionExclusionCounts.tsv
