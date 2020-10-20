@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Anoushka Joglekar" />
+
+<meta name="date" content="2020-10-20" />
+
+<title>scisorseqr usage</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">scisorseqr usage</h1>
+<h4 class="author">Anoushka Joglekar</h4>
+<h4 class="date">2020-10-20</h4>
+
+
+
+<p>The scisorseqr package allows you to go from short-read, single cell assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns.</p>
+<div id="software-required" class="section level2">
+<h2>Software required</h2>
+<ul>
+<li>STARlong (and corresponding genome index file)</li>
+<li>Minimap2 if not using STARlong</li>
+<li>samtools</li>
+<li>bedtools</li>
+<li>python version &gt;= 3.7 with the following libraries
+<ul>
+<li>pandas</li>
+<li>multiprocessing</li>
+</ul></li>
+</ul>
+</div>
+<div id="step1-barcode-deconvolution" class="section level2">
+<h2>Step1: Barcode deconvolution</h2>
+<p>The first step is to deconvolve barcodes from either the PacBio or ONT fastq output For that the user needs to specify</p>
+<ul>
+<li>Tab separated Barcode-Celltype file</li>
+<li>Directory containing fastq.gz files</li>
+</ul>
+<div id="create-a-barcode---celltype-file-assuming-analysis-using-seurat" class="section level3">
+<h3>Create a barcode - celltype file assuming analysis using Seurat</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(Seurat)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">bc &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;Barcode&quot;</span>=<span class="kw">rownames</span>(my_object<span class="op">@</span>meta.data),</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">                 <span class="st">&quot;Celltype&quot;</span>=my_object<span class="op">@</span>meta.data<span class="op">$</span>celltype) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="st">  </span><span class="kw">separate</span>(Barcode,<span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;BC&quot;</span>,<span class="st">&quot;suffix&quot;</span>),<span class="dt">sep=</span><span class="st">&quot;-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>suffix) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">write.table</span>(bc, <span class="dt">file =</span> <span class="st">&quot;PATH_TO_FILE&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">            <span class="dt">col.names =</span> <span class="ot">FALSE</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>The table should look something like this</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="left">V2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AAACCTGGTTTGTTGG</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+<tr class="even">
+<td align="left">AAACGGGTCCACGACG</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+<tr class="odd">
+<td align="left">AAACGGGTCCCAAGTA</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+<tr class="even">
+<td align="left">AAAGATGAGTGTTAGA</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+<tr class="odd">
+<td align="left">AAAGATGCACACTGCG</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+<tr class="even">
+<td align="left">AAAGATGCATCGGGTC</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="use-that-file-to-locate-barcodes-from-the-fastq-files" class="section level3">
+<h3>Use that file to locate barcodes from the fastq files</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">bc_clust &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="st">&quot;bc_celltype_assignments&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;scisorseqr&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">fastqFolder &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="st">&quot;FastqFiles&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;scisorseqr&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## run command</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">GetBarcodes</span>(<span class="dt">fqFolder =</span> fastqFolder, <span class="dt">BCClustAssignFile =</span> bc_clust, </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">            <span class="dt">chemistry =</span> <span class="st">&quot;v2&quot;</span>, <span class="dt">concatenate =</span> <span class="ot">TRUE</span>, <span class="dt">filterReads =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>You will see two output directories</p>
+<ul>
+<li>OutputRaw
+<ul>
+<li>file.CSV (One line per read)</li>
+<li>file_summary (Stats for run)</li>
+</ul></li>
+<li>OutputFiltered
+<ul>
+<li>file.CSV (One line per barcoded read with the following structure:)</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col width="12%"></col>
+<col width="7%"></col>
+<col width="4%"></col>
+<col width="3%"></col>
+<col width="20%"></col>
+<col width="3%"></col>
+<col width="14%"></col>
+<col width="12%"></col>
+<col width="11%"></col>
+<col width="3%"></col>
+<col width="5%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">ReadName</th>
+<th align="left">T9_Status</th>
+<th align="left">Strand</th>
+<th align="left">T9_position</th>
+<th align="left">Barcodes</th>
+<th align="left">Barcode_position</th>
+<th align="left">Cluster</th>
+<th align="left">UMI</th>
+<th align="left">TSO_Status</th>
+<th align="left">TSO_position</th>
+<th align="left">Length</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+<div id="step2-align-your-fastq-files-to-the-reference" class="section level2">
+<h2>Step2: Align your fastq files to the reference</h2>
+<p>We have made two aligners available and compatible with our package</p>
+<ul>
+<li>STARlong</li>
+<li>Minimap2</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">STARalign</span>(<span class="st">'FastqFiles/'</span>,<span class="st">'~/bin/Linux_x86_64/STARlong'</span>,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">          <span class="dt">refGenome=</span><span class="st">'~/starIndex_gencode10_sequins/'</span>,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">          <span class="dt">numThreads=</span><span class="dv">24</span>)</a></code></pre></div>
+<p>This process will convert all the aligned sam files to bam files, and dump the output into <em>STARoutput</em></p>
+</div>
+<div id="step3-map-and-filter-for-full-length-spliced-reads" class="section level2">
+<h2>Step3: Map and filter for full-length, spliced reads</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">MapAndFilter</span>(<span class="dt">annoGZ=</span><span class="st">'[PATH_TO_annotation.gtf.gz]'</span>,<span class="dt">numThreads=</span><span class="dv">24</span>, </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">             <span class="dt">seqDir =</span> <span class="st">'[PATH_TO_DIR/chr*.fa.gz]'</span>,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">             <span class="dt">filterFullLength=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">             <span class="dt">cageBed =</span> <span class="st">'[PATH_TO_Cage.bed.gz]'</span>,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">             <span class="dt">polyABed =</span> <span class="st">'[PATH_TO_PolyA.bed.gz]'</span>,</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">             <span class="dt">cp_distance=</span><span class="dv">50</span>)</a></code></pre></div>
+<p>This will result in multiple files being stored in yet another output directory: <em>LRProcessingOutput</em></p>
+</div>
+<div id="step5-concatenate-all-the-information-collected-so-far" class="section level2">
+<h2>Step5: Concatenate all the information collected so far</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"> </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">InfoPerLongRead</span>(<span class="dt">barcodeOutputFile =</span> <span class="st">'OutputFiltered/FilteredDeconvBC_AllFiles.csv'</span>,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                <span class="dt">mapAndFilterOut =</span> <span class="st">'LRProcessingOutput/'</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                <span class="dt">minTimesIsoObserve =</span> <span class="dv">3</span>)</a></code></pre></div>
+<p>This will yield a directory <em>LongReadInfo</em> with file <strong>AllInfo</strong> which has the following structure</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ReadName</th>
+<th align="left">Gene</th>
+<th align="left">Celltype</th>
+<th align="left">Barcode</th>
+<th align="left">UMI</th>
+<th align="left">IntronChain</th>
+<th align="left">Status</th>
+<th align="left"># Introns</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+<div id="step6-quantify-the-various-isoforms-observed-in-your-data" class="section level2">
+<h2>Step6: Quantify the various isoforms observed in your data</h2>
+<p>If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique cage and polyA sites per gene. Otherwise the default option is False</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">IsoQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">          <span class="dt">Iso =</span> <span class="ot">TRUE</span>, <span class="dt">TSS =</span> <span class="ot">TRUE</span>, <span class="dt">PolyA =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Depending on which modality you chose as <em>TRUE</em>, you will see the following files in the <em>IsoQuantOutput</em> folder:</p>
+<ul>
+<li><em>Modality</em>-<em>Modality</em>ID.csv</li>
+<li>Num<em>Modality</em>PerCluster</li>
+</ul>
+<p>These will be used for the differential splicing analysis step</p>
+</div>
+<div id="step6b-optional-quantify-the-various-exons-observed-in-your-data" class="section level2">
+<h2>Step6b: [OPTIONAL] Quantify the various exons observed in your data</h2>
+<p>For ONT reads we don’t have too much confidence in this method and recommend using our sister package IsoQuant.</p>
+<p>This function however, works for annotated as well as novel exons</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ExonQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">          <span class="dt">groupingFactor =</span> <span class="st">&quot;Celltype&quot;</span>, <span class="dt">threshold =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p>This will output the quantifications to a separate folder <em>ExonQuantOutput</em></p>
+</div>
+<div id="step7-differential-isoform-analysis" class="section level2">
+<h2>Step7: Differential isoform analysis</h2>
+<p>This step can be done using various settings for various modalities. Options include</p>
+<ul>
+<li>Full-length isoform (Iso)</li>
+<li>TSS</li>
+<li>PolyA</li>
+<li>Exon (Refer to step 6b)</li>
+</ul>
+<p>Depending on the modality chosen, this function automatically detects the input</p>
+<p>It also requires a tab-separated config file in the following format to be provided by the user</p>
+<p><strong>NOTE</strong>: Header here just for demonstration</p>
+<table>
+<colgroup>
+<col width="10%"></col>
+<col width="47%"></col>
+<col width="10%"></col>
+<col width="31%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Comparison1</th>
+<th align="left">Celltypes</th>
+<th align="left">Comparison2</th>
+<th align="left">Celltypes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HippNeuron</td>
+<td align="left">Hipp_ExciteNecduron,Hipp_InhibNeuron,Hipp_GranuleNB</td>
+<td align="left">PFCNeuron</td>
+<td align="left">PFC_ExciteNeuron,PFC_InhibNeuron</td>
+</tr>
+<tr class="even">
+<td align="left">HippInhib</td>
+<td align="left">Hipp_InhibNeuron</td>
+<td align="left">PFCInhib</td>
+<td align="left">PFC_InhibNeuron</td>
+</tr>
+<tr class="odd">
+<td align="left">HippExcite</td>
+<td align="left">Hipp_ExciteNeuron</td>
+<td align="left">HippInhib</td>
+<td align="left">Hipp_InhibNeuron</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">config &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="st">&quot;config&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;scisorseqr&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">DiffSplicingAnalysis</span>(<span class="dt">configFile =</span> config, <span class="dt">typeOfTest =</span> <span class="st">'Iso'</span>, <span class="dt">minNumReads =</span> <span class="dv">25</span>, <span class="dt">is.hier =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>Assuming you run this command, each comparison (line in the config file) yields a separate sub-directory in the folder <em>TreeTraveral_Iso</em></p>
+<p>The most important file in that output directory is the results file, which has the following structure:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Gene</th>
+<th align="left">pvals</th>
+<th align="left">dPI</th>
+<th align="left">maxDeltaPI_ix1</th>
+<th align="left">maxDeltaPI_ix2</th>
+<th align="left">FDR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ENSMUSG00000000001.4</td>
+<td align="left">0.563702861650773</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">ENSMUSG00000000078.7</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSMUSG00000000088.7</td>
+<td align="left">1</td>
+<td align="left">0.0714285714285714</td>
+<td align="left">1</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">ENSMUSG00000000326.13</td>
+<td align="left">0.343030146138244</td>
+<td align="left">0.666666666666667</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NOTE</strong> Deeper data will yield significant values. These ^ are just a product of the example data subset we have provided with the package</p>
+<div id="done" class="section level3">
+<h3>Done!</h3>
+<p>You can use the above output to plot your significant genes</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

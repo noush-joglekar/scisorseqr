@@ -1,6 +1,6 @@
 ---
 title: "scisorseqr usage"
-author: "Anoushka Jogleekar"
+author: "Anoushka Joglekar"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,28 +16,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-The scisorseqr package allows you to go from a table of barcode - cluster assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
+The scisorseqr package allows you to go from short-read, single cell assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
 
-## All the user specified input for the various functions of this package are outlined here:
-
- - Tab separated Barcode-Celltype file 
- - Directory containing fastq.gz files 
- - gene annotation file (gencode mouse v21 already included)
- - chromosome.fa files for aligning to the genome
- - bed files containing annotated CAGE and/or PolyA sites
- - config file specifying comparisons to be made
- 
 ## Software required 
 
- - STARlong (and corresponding genome index file)
- - Minimap2 if not using STARlong
- - samtools
- - bedtools
- - python version >= 3.7
-   - pandas
-   -multiprocessing
+ * STARlong (and corresponding genome index file)
+ * Minimap2 if not using STARlong
+ * samtools
+ * bedtools
+ * python version >= 3.7 with the following libraries
+   * pandas
+   * multiprocessing
  
-
+## Step1: Barcode deconvolution 
 The first step is to deconvolve barcodes from either the PacBio or ONT fastq output
 For that the user needs to specify
 
@@ -67,7 +58,7 @@ bc_clust <- read.table(system.file("extdata/", "bc_celltype_assignments", packag
 knitr::kable(head(bc_clust))
 ```
 
-### Use that file to deconvolve barcodes from the fastq files
+### Use that file to locate barcodes from the fastq files
 ```{r getBarcodes, eval=FALSE, echo=TRUE}
 bc_clust <- system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr")
 fastqFolder <- system.file("extdata/", "FastqFiles", package = "scisorseqr")
@@ -77,8 +68,130 @@ GetBarcodes(fqFolder = fastqFolder, BCClustAssignFile = bc_clust,
             chemistry = "v2", concatenate = TRUE, filterReads = FALSE)
 ```
 
-### Align your fastq files to the reference genome
+You will see two output directories
+
+- OutputRaw
+    - file.CSV (One line per read)
+    - file_summary (Stats for run)
+- OutputFiltered
+    - file.CSV (One line per barcoded read with the following structure:)
+    
+|ReadName |T9_Status |Strand|T9_position|Barcodes|Barcode_position|Cluster|UMI|TSO_Status|TSO_position|Length|
+|:----------|:-----|:---|:--|:----------------|:--|:-----------|:----------|:---------|:--|:----|
+
+## Step2: Align your fastq files to the reference
+
+We have made two aligners available and compatible with our package
+
+* STARlong
+* Minimap2
+
 ```{r STARalign, eval = FALSE, echo = TRUE}
+STARalign('FastqFiles/','~/bin/Linux_x86_64/STARlong',
+          refGenome='~/starIndex_gencode10_sequins/',
+          numThreads=24)
+```
+
+This process will convert all the aligned sam files to bam files, and dump the output into *STARoutput*
+
+## Step3: Map and filter for full-length, spliced reads
+```{r MapAndFilter, eval = FALSE, echo = TRUE}
+
+MapAndFilter(annoGZ='[PATH_TO_annotation.gtf.gz]',numThreads=24, 
+             seqDir = '[PATH_TO_DIR/chr*.fa.gz]',
+             filterFullLength=TRUE,
+             cageBed = '[PATH_TO_Cage.bed.gz]',
+             polyABed = '[PATH_TO_PolyA.bed.gz]',
+             cp_distance=50)
 
 ```
 
+This will result in multiple files being stored in yet another output directory: *LRProcessingOutput*
+
+## Step5: Concatenate all the information collected so far
+
+```{r InfoPerLongRead, eval=FALSE, echo=TRUE}
+ 
+InfoPerLongRead(barcodeOutputFile = 'OutputFiltered/FilteredDeconvBC_AllFiles.csv',
+                mapAndFilterOut = 'LRProcessingOutput/',
+                minTimesIsoObserve = 3)
+
+```
+
+This will yield a directory *LongReadInfo* with file **AllInfo** which has the following structure
+
+|ReadName|Gene|Celltype|Barcode|UMI|IntronChain|Status|# Introns|
+|:-------|:---|:-------|:------|:--|:----------|:-----|:--------|
+
+
+## Step6: Quantify the various isoforms  observed in your data
+If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique 
+cage and polyA sites per gene. Otherwise the default option is False
+
+```{r IsoQuant, echo = TRUE, eval= FALSE}
+IsoQuant(AllInfoFile = 'LongReadInfo/AllInfo',
+          Iso = TRUE, TSS = TRUE, PolyA = TRUE)
+
+```
+
+Depending on which modality you chose as *TRUE*, you will see the following files in the  *IsoQuantOutput* folder:
+
+- *Modality*-*Modality*ID.csv
+- Num*Modality*PerCluster
+
+These will be used for the differential splicing analysis step
+
+## Step6b: [OPTIONAL]  Quantify the various exons observed in your data
+For ONT reads we don't have too much confidence in this method and recommend using 
+our sister package IsoQuant. 
+
+This function however, works for annotated as well as novel exons
+```{r ExonQuant, echo = TRUE, eval= FALSE}
+ExonQuant(AllInfoFile = 'LongReadInfo/AllInfo', 
+          groupingFactor = "Celltype", threshold = 10)
+```
+This will output the quantifications to a separate folder *ExonQuantOutput*
+
+## Step7: Differential isoform analysis
+
+This step can be done using various settings for various modalities. Options include
+
+- Full-length isoform (Iso)
+- TSS 
+- PolyA
+- Exon (Refer to step 6b)
+
+Depending on the modality chosen, this function automatically detects the input
+
+It also requires a tab-separated config file in the following format to be provided by the user
+
+**NOTE**: Header here just for demonstration
+
+|Comparison1 | Celltypes | Comparison2 | Celltypes | 
+|:----------|:--------------------------------------------------|:----------|:---------------------------------|
+|HippNeuron | Hipp_ExciteNecduron,Hipp_InhibNeuron,Hipp_GranuleNB | PFCNeuron | PFC_ExciteNeuron,PFC_InhibNeuron | 
+|HippInhib  | Hipp_InhibNeuron | PFCInhib | PFC_InhibNeuron | 
+|HippExcite | Hipp_ExciteNeuron	| HippInhib | Hipp_InhibNeuron | 
+
+
+```{r DiffSplicing, eval=FALSE, echo=TRUE}
+config <- system.file("extdata/", "config", package = "scisorseqr")
+DiffSplicingAnalysis(configFile = config, typeOfTest = 'Iso', minNumReads = 25, is.hier = FALSE)
+```
+
+Assuming you run this command, each comparison (line in the config file) yields a separate sub-directory in the folder *TreeTraveral_Iso*
+
+The most important file in that output directory is the results file, which has the following structure:
+
+|Gene|pvals|dPI|maxDeltaPI_ix1|maxDeltaPI_ix2|FDR|
+|:---|:----|:---|:------------|:-------------|:--|
+|ENSMUSG00000000001.4| 0.563702861650773|0|0|NA|1|
+|ENSMUSG00000000078.7|1|0|0|NA|1|
+|ENSMUSG00000000088.7|1|0.0714285714285714|1|NA|1|
+|ENSMUSG00000000326.13|0.343030146138244|0.666666666666667|1|3|1|
+
+**NOTE** Deeper data will yield significant values. These ^ are just a product of the example data subset we have provided with the package
+
+### Done!
+
+You can use the above output to plot your significant genes
