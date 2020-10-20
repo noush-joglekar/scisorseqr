@@ -26,10 +26,13 @@ Suggests:
     plyr,
     utils,
     methods,
-    spelling
+    spelling,
+    knitr, 
+    rmarkdown
 Imports:
     dplyr,
     tidyr,
     magrittr,
     tibble
 Language: en-US
+VignetteBuilder: knitr
