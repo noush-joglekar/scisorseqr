@@ -1,5 +1,5 @@
 ---
-title: "scisorseqr usage"
+title: "scisorseqr_standardWorkflow"
 author: "Anoushka Joglekar"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
