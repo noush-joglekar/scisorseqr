@@ -54,14 +54,18 @@ devtools::install_github('noush-joglekar/scisorseqr')
 
 ```{r flow, echo=FALSE, dev='pdf'}
 # DiagrammeR::mermaid("graph TD;
+#    a[barcode-cluster assignments]-->B(GetBarcodes);
 #    A[Directory with fastq.gz files]-->B(GetBarcodes);
 #    B-->E;
 #    A-->C(STARalign);
 #    C-->D(MapAndFilter);
+#    c[Cage + PolyA peaks]-->D(MapAndFilter);
 #    D---E[InfoPerLongRead];
 #    E-->F[IsoQuant];
 #    E-->G[ExonQuant];
 #    F-->H(DiffSplicingAnalysis);
+#    f[config file]-->H(DiffSplicingAnalysis);
+#    f[config file]-->I(DiffSplicingAnalysis);
 #    G-->I(DiffSplicingAnalysis);
 #    H-->J(Visualization);
 #    I-->J((Visualization));
@@ -69,7 +73,7 @@ devtools::install_github('noush-joglekar/scisorseqr')
 ```
 
 ``` {r prettyGraph, echo=FALSE, out.width = '60%'}
-knitr::include_graphics("man/figures/README-flow-1.png")
+ knitr::include_graphics("man/figures/README-flow-2.png")
 ```
 
 These steps are available as functions in the package. For example, barcode deconvolution 

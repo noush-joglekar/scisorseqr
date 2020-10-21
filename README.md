@@ -48,7 +48,7 @@ devtools::install_github('noush-joglekar/scisorseqr')
 
 ## Workflow
 
-<img src="man/figures/README-flow-1.png" width="60%" />
+<img src="man/figures/README-flow-2.png" width="60%" />
 
 These steps are available as functions in the package. For example,
 barcode deconvolution can be done using the following command
