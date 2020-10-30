@@ -14,8 +14,8 @@ numThreads=$5;
 
 
 ## Create a fastq guide
-for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) \
-'{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path"/"$1}' ; done > Misc/fastqGuide
+for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(realpath $i) \
+'{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path}' ; done > Misc/fastqGuide
 
 ## Running STAR program over all files listed in the guide
 n=`cat Misc/fastqGuide | wc -l`; \
@@ -49,4 +49,4 @@ done
 
 
 ## Create a bam guide for further processing
-for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(pwd) '{print path"/"$1}' ; done > Misc/bamGuide
+for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(realpath $i) '{print path"/"$1}' ; done > Misc/bamGuide
