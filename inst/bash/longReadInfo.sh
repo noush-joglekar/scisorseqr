@@ -31,13 +31,14 @@ checkForFile $BarcodeOutput
 checkForFile $GeneGZ
 checkForFile $StretchesGZ
 
+
 awk -v gGZ=$GeneGZ -v bcO=$BarcodeOutput 'BEGIN{comm="zcat <"gGZ; while(comm|getline) \
 {if($2!="none" && $3=="fineRead" && $4=="fineGene") {gene[$1]=$2;}} \
 comm="cat "bcO; while(comm|getline) {split($1,rN,"@"); {if(rN[2]".path1" in gene) \
 {print $0"\t"gene[rN[2]".path1"]}}}}' | grep -v "@;@" > LongReadInfo/Mapped_Barcoded
 
 
-if [[ $stretchesGZ == *$compStr*  ]];
+if [[ $StretchesGZ == *$compStr*  ]];
 then
 
 awk -v sGZ=$StretchesGZ -v mTO=$minTimesObserve 'BEGIN{comm="zcat <"sGZ; \
@@ -47,6 +48,7 @@ for(i in name){if(stretch[i] in Uiso && Uiso[stretch[i]]>=mTO) \
 {print name[i],num[i],nov[i],stretch[i]}} }' > LongReadInfo/tmp
 
 else
+
 awk -v sGZ=$StretchesGZ -v mTO=$minTimesObserve 'BEGIN{comm="zcat <"sGZ; \
 while(comm|getline) {split($3,rN,/=|.path1/); \
 {name[rN[2]]=rN[2];num[rN[2]]=$1;nov[rN[2]]=$2;stretch[rN[2]]=$4;!Uiso[$4]++;}} \

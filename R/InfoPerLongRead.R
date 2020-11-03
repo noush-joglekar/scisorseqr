@@ -15,7 +15,6 @@
 #' dataset. Defaults to 5
 #' @export
 InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObserve = 5) {
-
   longReadInfo_sh <- system.file("bash", "longReadInfo.sh", package = "scisorseqr")
 
   longReadInfoFolder <- "LongReadInfo/"
@@ -25,6 +24,7 @@ InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObser
     stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz')
   } else {
     stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/stretches.gz')}
+
 
   if(file.exists(file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz'))){
     geneFile <- file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
