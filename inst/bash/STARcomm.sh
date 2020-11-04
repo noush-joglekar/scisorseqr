@@ -8,10 +8,6 @@ progPath=$3;
 refGenome=$4;
 numThreads=$5;
 
-### For testing:
-# /athena/tilgnerlab/store/hut2006/soft/src/star-mapper/2.5.2b/STAR-2.5.2b/bin/Linux_x86_64/STARlong
-# /athena/tilgnerlab/store/hut2006/data/seq/genomes/M.musculus/mm10/wholeGenomeUnzipped/starIndex_gencode10_sequins/
-
 
 ## Create a fastq guide
 for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(realpath $i) \
