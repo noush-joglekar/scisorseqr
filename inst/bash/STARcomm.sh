@@ -45,4 +45,4 @@ done
 
 
 ## Create a bam guide for further processing
-for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(realpath $i) '{print path"/"$1}' ; done > Misc/bamGuide
+for i in $(ls $starOut/*.bam) ; do echo $i | awk -v path=$(realpath $i) '{print path}' ; done > Misc/bamGuide
