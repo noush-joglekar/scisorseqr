@@ -40,10 +40,11 @@ alignment and mapping, we recommend
 ## Installation
 
 The easiest way to install scisorseqr is through
-[Github](https://github.com) with:
+[Github](https://github.com)
+with:
 
 ``` r
-devtools::install_github('noush-joglekar/scisorseqr')
+devtools::install_github('noush-joglekar/scisorseqr',build_vignettes = TRUE)
 ```
 
 ## Workflow
