@@ -10,7 +10,8 @@
 #' @usage triHeatmap('TreeTraversal_Iso/','neuronal_cellTypes','NeuronSubtype')
 #' @import dplyr
 #' @importFrom magrittr %>%
-#'
+#' @import ggplot2
+#' @import cowplot
 #' @export
 
 triHeatmap <- function(treeDir, comparisonList, outName = "triHeatmap") {

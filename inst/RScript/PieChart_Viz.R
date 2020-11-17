@@ -33,7 +33,7 @@ for (gene in sig_ix$Gene){
 
   cneg <- numsFile %>% dplyr::filter(Gene==gene) %>%
     dplyr::mutate(delta=Group1/sum(Group1)-Group2/sum(Group2)) %>%
-    dplyr::arrange(delta) %>% filter(delta<=0) %>%
+    dplyr::arrange(delta) %>% dplyr::filter(delta<=0) %>%
     dplyr::mutate(cneg=cumsum(abs(delta))) %>% dplyr::select(cneg)
 
   if(length(cpos$cpos) >= 2 && length(cneg$cneg) >= 2){
