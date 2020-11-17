@@ -38,11 +38,11 @@ g = ggplot2::ggplot(data = mS, ggplot2::aes(x=Var1, y=Var2, fill=as.numeric(valu
   ggplot2::geom_tile(color = "white") +
   ggplot2::scale_fill_viridis_c(option = "inferno") +
   cowplot::theme_cowplot() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1,
+  ggplot2::theme(axis.text.x = element_text(angle = 45, vjust = 1,
                                    size = 12, hjust = 1))+
-  coord_fixed()+labs(title=paste0("Percentage significant genes\n",args[2]),
+  ggplot2::coord_fixed()+ggplot2::labs(title=paste0("Percentage significant genes\n",args[2]),
                      x ="CellType1", y = "CellType2") +
-  ggplot2::geom_text(data = mS, 
+  ggplot2::geom_text(data = mS,
 	ggplot2::aes(Var1, Var2, label = round(as.numeric(value)*100,digits = 1)),
 	color = "black", size = 4)
 
