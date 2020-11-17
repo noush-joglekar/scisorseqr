@@ -1,7 +1,4 @@
-#' @import dplyr
-#' @importFrom magrittr %>%
-#' @import ggplot2
-#' @import cowplot
+#' @import dplyr ' @importFrom magrittr %>% ' @import ggplot2 ' @import cowplot
 
 `%>%` <- magrittr::`%>%`
 
@@ -37,15 +34,17 @@ upper_tri <- get_upper_tri(summaryMat)
 mS <- reshape2::melt(upper_tri,na.rm = TRUE)
 
 
-g = ggplot2::ggplot(data = mS, aes(x=Var1, y=Var2, fill=as.numeric(value)*100)) +
-  geom_tile(color = "white") +
-  scale_fill_viridis_c(option = "inferno") +
+g = ggplot2::ggplot(data = mS, ggplot2::aes(x=Var1, y=Var2, fill=as.numeric(value)*100)) +
+  ggplot2::geom_tile(color = "white") +
+  ggplot2::scale_fill_viridis_c(option = "inferno") +
   cowplot::theme_cowplot() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1,
                                    size = 12, hjust = 1))+
   coord_fixed()+labs(title=paste0("Percentage significant genes\n",args[2]),
                      x ="CellType1", y = "CellType2") +
-  geom_text(aes(Var1, Var2, label = round(as.numeric(value)*100,digits = 1)), color = "black", size = 4)
+  ggplot2::geom_text(data = mS, 
+	ggplot2::aes(Var1, Var2, label = round(as.numeric(value)*100,digits = 1)),
+	color = "black", size = 4)
 
 
 pdf(paste0("Visualizations/",args[3],".pdf"),12,8,useDingbats=FALSE)
