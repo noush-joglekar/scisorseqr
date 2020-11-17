@@ -1,4 +1,6 @@
 #' @import dplyr
+#' @import ggplot2
+#' @import scales
 #' @importFrom magrittr %>%
 
 `%>%` <- magrittr::`%>%`
@@ -8,6 +10,7 @@ workingDir <- args[1]
 print(paste0("Plotting for ",workingDir))
 
 name = rev(unlist(strsplit(workingDir,"/")))[1]
+print(name)
 
 files = list.files(workingDir)
 
@@ -63,6 +66,6 @@ final_pie <- ggplot2::ggplot(df, aes(x="", y=value, fill=breakup)) +
   scale_fill_manual("",values=cols)
 
 
-pdf(file=file.path("Visualizations/PieCharts_BreakUp_",name,".pdf"),8,6)
+pdf(file=paste0("Visualizations/PieCharts_BreakUp_",name,".pdf"),8,6)
 print(final_pie)
 dev.off()

@@ -7,7 +7,10 @@
 #' the breakup of number of isoforms needed to cross deltaPI threshold
 #' of pairwise comparisons containing cell groups provided in input
 #' @usage sigSplitPie('compDir/')
+#'
 #' @import dplyr
+#' @import ggplot2
+#' @import scales
 #' @importFrom magrittr %>%
 #'
 #' @export
@@ -18,7 +21,7 @@ sigSplitPie <- function(compDir) {
 
   R_file <- system.file("RScript", "PieChart_Viz.R", package = "scisorseqr")
 
-  outDir <- "Plots/"
+  outDir <- "Visualizations/"
   dir.create(outDir)
 
   run_prog <- paste("Rscript", R_file, compDir)
