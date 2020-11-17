@@ -40,7 +40,7 @@ g = ggplot2::ggplot(data = mS, ggplot2::aes(x=Var1, y=Var2, fill=as.numeric(valu
   cowplot::theme_cowplot() +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1,
                                    size = 12, hjust = 1))+
-  ggplot2::coord_fixed()+ggplot2::labs(title=paste0("Percentage significant genes\n",args[2]),
+  ggplot2::coord_fixed()+ggplot2::labs(title=paste0("Percentage significant genes\n",args[3]),
                      x ="CellType1", y = "CellType2") +
   ggplot2::geom_text(data = mS,
 	ggplot2::aes(Var1, Var2, label = round(as.numeric(value)*100,digits = 1)),
