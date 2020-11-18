@@ -99,6 +99,19 @@ while(comm|getline){split($3,a,/\=|\@/); \
 if(a[2] in r2r){print $1,$2,a[1]"="r2r[a[2]]"@"a[3],$4,TSS[r2r[a[2]]], polyA[r2r[a[2]]]; }}}' | \
 gzip -c > $outputDir/newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz
 
+awk -v unzipCommand=$unzipCommand -v inputDir=$inputDir -v distance=$distance \
+-v outputDir=$outputDir 'BEGIN{comm=unzipCommand" "\
+outputDir"mapping.bestperRead.RNAdirection.withConsensIntrons.cageRecordTSS.tab.gz"; \
+while(comm|getline) {d=1000; if(substr($1,1,1)=="#"){continue;} \
+if($2<=distance){d=$2; TSS[$1]=$3; }  if($4<=distance && $4<d){TSS[$1]=$5;} \
+if($2>distance && $4>distance){TSS[$1]="NoTSS"}} comm=unzipCommand" "\
+outputDir"mapping.bestperRead.RNAdirection.withConsensIntrons.polyAsiteRecordPA.tab.gz"; \
+while(comm|getline){d=1000; if(substr($1,1,1)=="#"){continue;} if($4<=distance){d=$4; polyA[$1]=$5;} \
+if($2<=distance && $2<d){polyA[$1]=$3;} if($2>distance && $4>distance){polyA[$1]="NoPolyA"} } \
+comm=unzipCommand" "inputDir"/newIsoforms_vs_Anno_ignoreAnno/stretches.gz"; OFS="\t"; \
+while(comm|getline){split($3,a,/\=|\@/); {print $1,$2,$3,$4,TSS[a[2]], polyA[a[2]]; }} }' | \
+gzip -c > $outputDir/newIsoforms_vs_Anno_ignoreAnno/incompleteStretches.gz
+
 echo "++++++++++++++++++++++ 3.b transcriptWiseGenes";
 $unzipCommand $inputDir/mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz | \
 awk -v unzipCommand=$unzipCommand -v outputDir=$outputDir \

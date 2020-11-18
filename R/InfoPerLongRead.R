@@ -22,15 +22,15 @@ InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObser
 
   if(file.exists(file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz'))){
     stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/CagePolyA.complete.stretches.gz')
+    incompFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/incompleteStretches.gz')
   } else {
-    stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/stretches.gz')}
+    stretchesFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/stretches.gz')
+    incompFile <- ""
+  }
 
+  geneFile <- file.path(mapAndFilterOut,'mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
 
-  if(file.exists(file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz'))){
-    geneFile <- file.path(mapAndFilterOut,'CagePolyA.complete.mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
-  } else {geneFile <- file.path(mapAndFilterOut,'mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')}
-
-  longReadInfoComm <- paste(longReadInfo_sh, barcodeOutputFile, geneFile, stretchesFile, minTimesIsoObserve)
+  longReadInfoComm <- paste(longReadInfo_sh, barcodeOutputFile, geneFile, stretchesFile, minTimesIsoObserve,incompFile)
   system(longReadInfoComm)
 
 }
