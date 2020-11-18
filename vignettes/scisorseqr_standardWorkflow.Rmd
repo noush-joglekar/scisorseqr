@@ -247,3 +247,4 @@ knitr::include_graphics("../man/figures/examplePie.png")
 **NOTE** Percentage labels do not always arrange themselves neatly in the figure (requires editing by hand)
 
 ## Done!
+

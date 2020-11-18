@@ -77,3 +77,17 @@ knitr::kable(head(bc_clust))
 #                       minNumReads = 25,
 #                       is.hier = FALSE)
 
+## ----TriHeatmap, echo = TRUE, eval= FALSE-------------------------------------
+#  triHeatmap(treeDir = 'TreeTraversal_Iso/',
+#             comparisonList ='condensedCellTypes',
+#             outName ="condensedCellTypes")
+
+## ----heatmap, out.width = '60%', echo=F---------------------------------------
+knitr::include_graphics("../man/figures/condensedCellTypes.png")
+
+## ----PieChart, echo = TRUE, eval= FALSE---------------------------------------
+#  sigSplitPie(compDir = 'Uniq_TreeTraversal_Iso/Astro_ExcitNeuron_10/')
+
+## ----pie, out.width = '60%', echo=F-------------------------------------------
+knitr::include_graphics("../man/figures/examplePie.png")
+
