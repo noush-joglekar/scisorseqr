@@ -78,6 +78,7 @@ You will see two output directories
     
 |ReadName |T9_Status |Strand|T9_position|Barcodes|Barcode_position|Cluster|UMI|TSO_Status|TSO_position|Length|
 |:----------|:-----|:---|:--|:----------------|:--|:-----------|:----------|:---------|:--|:----|
+|ReadX|poly_T_found|rev|47|GTCGGGTTCCAAAGTC|22|Hipp_GranuleNB|ATGGCGGGAT|TSO_found|26|583|
 
 ## Step2: Align your fastq files to the reference
 
@@ -108,11 +109,12 @@ MapAndFilter(annoGZ='[PATH_TO_annotation.gtf.gz]',numThreads=24,
 
 This will result in multiple files being stored in yet another output directory: *LRProcessingOutput*
 
-## Step5: Concatenate all the information collected so far
+## Step4: Concatenate all the information collected so far
 
 ```{r InfoPerLongRead, eval=FALSE, echo=TRUE}
  
-InfoPerLongRead(barcodeOutputFile = 'OutputFiltered/FilteredDeconvBC_AllFiles.csv',
+InfoPerLongRead(barcodeOutputFile = 
+                  'OutputFiltered/FilteredDeconvBC_AllFiles.csv',
                 mapAndFilterOut = 'LRProcessingOutput/',
                 minTimesIsoObserve = 3)
 
@@ -124,7 +126,7 @@ This will yield a directory *LongReadInfo* with file **AllInfo** which has the f
 |:-------|:---|:-------|:------|:--|:----------|:-----|:--------|
 
 
-## Step6: Quantify the various isoforms  observed in your data
+## Step5a: Quantify the various isoforms  observed in your data
 If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique 
 cage and polyA sites per gene. Otherwise the default option is False
 
@@ -141,7 +143,7 @@ Depending on which modality you chose as *TRUE*, you will see the following file
 
 These will be used for the differential splicing analysis step
 
-## Step6b: [OPTIONAL]  Quantify the various exons observed in your data
+## Step5b: [OPTIONAL]  Quantify the various exons observed in your data
 For ONT reads we don't have too much confidence in this method and recommend using 
 our sister package IsoQuant. 
 
@@ -152,7 +154,7 @@ ExonQuant(AllInfoFile = 'LongReadInfo/AllInfo',
 ```
 This will output the quantifications to a separate folder *ExonQuantOutput*
 
-## Step7: Differential isoform analysis
+## Step6: Differential isoform analysis
 
 This step can be done using various settings for various modalities. Options include
 
@@ -175,8 +177,18 @@ It also requires a tab-separated config file in the following format to be provi
 
 
 ```{r DiffSplicing, eval=FALSE, echo=TRUE}
-config <- system.file("extdata/", "config", package = "scisorseqr")
-DiffSplicingAnalysis(configFile = config, typeOfTest = 'Iso', minNumReads = 25, is.hier = FALSE)
+config <- system.file("extdata/", "config", 
+                      package = "scisorseqr")
+
+DiffSplicingAnalysis(configFile = config, 
+                     typeOfTest = 'Iso', 
+                     minNumReads = 25, is.hier = FALSE)
+
+## or for exons
+DiffSplicingAnalysis(configFile = config, 
+                     typeOfTest = 'Exon', 
+                     minNumReads = 25, 
+                     is.hier = FALSE)
 ```
 
 Assuming you run this command, each comparison (line in the config file) yields a separate sub-directory in the folder *TreeTraveral_Iso*
@@ -192,6 +204,46 @@ The most important file in that output directory is the results file, which has 
 
 **NOTE** Deeper data will yield significant values. These ^ are just a product of the example data subset we have provided with the package
 
-### Done!
-
 You can use the above output to plot your significant genes
+
+## Step7: Visualizations
+
+### Triangular Heatmap
+This function plots a triangular heatmap of percentage DIE genes of pairwise comparisons in a directory
+It also takes in an untitled file list of cell types to be plotted as follows:
+
+||
+|:-----|
+|Hipp_Astro|
+|Hipp_ChorPlex|
+|Hipp_DivOligo|
+|Hipp_Ependymal|
+|.|
+|.|
+
+```{r TriHeatmap, echo = TRUE, eval= FALSE}
+triHeatmap(treeDir = 'TreeTraversal_Iso/',
+           comparisonList ='condensedCellTypes', 
+           outName ="condensedCellTypes")
+```
+
+**NOTE** Cell-type labels should correspond to the barcode-celltype list. If you input a cell-type for which pairwise DIE has not been calculated, it will output all zeros 
+(e.g. DivOligo in this case)
+
+```{r heatmap, out.width = '60%', echo=F}
+knitr::include_graphics("../man/figures/condensedCellTypes.png")
+```
+
+### Pie Chart breaking down the significant genes
+
+```{r PieChart, echo = TRUE, eval= FALSE}
+sigSplitPie(compDir = 'Uniq_TreeTraversal_Iso/Astro_ExcitNeuron_10/')
+```
+
+```{r pie, out.width = '60%', echo=F}
+knitr::include_graphics("../man/figures/examplePie.png")
+```
+
+**NOTE** Percentage labels do not always arrange themselves neatly in the figure (requires editing by hand)
+
+## Done!

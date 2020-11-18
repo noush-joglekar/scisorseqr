@@ -12,7 +12,7 @@
 
 <meta name="author" content="Anoushka Joglekar" />
 
-<meta name="date" content="2020-10-20" />
+<meta name="date" content="2020-11-06" />
 
 <title>scisorseqr_standardWorkflow</title>
 
@@ -301,7 +301,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">scisorseqr_standardWorkflow</h1>
 <h4 class="author">Anoushka Joglekar</h4>
-<h4 class="date">2020-10-20</h4>
+<h4 class="date">2020-11-06</h4>
 
 
 
@@ -454,12 +454,13 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb4-7" data-line-number="7">             <span class="dt">cp_distance=</span><span class="dv">50</span>)</a></code></pre></div>
 <p>This will result in multiple files being stored in yet another output directory: <em>LRProcessingOutput</em></p>
 </div>
-<div id="step5-concatenate-all-the-information-collected-so-far" class="section level2">
-<h2>Step5: Concatenate all the information collected so far</h2>
+<div id="step4-concatenate-all-the-information-collected-so-far" class="section level2">
+<h2>Step4: Concatenate all the information collected so far</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"> </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">InfoPerLongRead</span>(<span class="dt">barcodeOutputFile =</span> <span class="st">'OutputFiltered/FilteredDeconvBC_AllFiles.csv'</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">                <span class="dt">mapAndFilterOut =</span> <span class="st">'LRProcessingOutput/'</span>,</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">                <span class="dt">minTimesIsoObserve =</span> <span class="dv">3</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">InfoPerLongRead</span>(<span class="dt">barcodeOutputFile =</span> </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                  <span class="st">'OutputFiltered/FilteredDeconvBC_AllFiles.csv'</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                <span class="dt">mapAndFilterOut =</span> <span class="st">'LRProcessingOutput/'</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                <span class="dt">minTimesIsoObserve =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p>This will yield a directory <em>LongReadInfo</em> with file <strong>AllInfo</strong> which has the following structure</p>
 <table>
 <thead>
@@ -478,8 +479,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tbody>
 </table>
 </div>
-<div id="step6-quantify-the-various-isoforms-observed-in-your-data" class="section level2">
-<h2>Step6: Quantify the various isoforms observed in your data</h2>
+<div id="step5a-quantify-the-various-isoforms-observed-in-your-data" class="section level2">
+<h2>Step5a: Quantify the various isoforms observed in your data</h2>
 <p>If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique cage and polyA sites per gene. Otherwise the default option is False</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">IsoQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">          <span class="dt">Iso =</span> <span class="ot">TRUE</span>, <span class="dt">TSS =</span> <span class="ot">TRUE</span>, <span class="dt">PolyA =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
@@ -490,16 +491,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul>
 <p>These will be used for the differential splicing analysis step</p>
 </div>
-<div id="step6b-optional-quantify-the-various-exons-observed-in-your-data" class="section level2">
-<h2>Step6b: [OPTIONAL] Quantify the various exons observed in your data</h2>
+<div id="step5b-optional-quantify-the-various-exons-observed-in-your-data" class="section level2">
+<h2>Step5b: [OPTIONAL] Quantify the various exons observed in your data</h2>
 <p>For ONT reads we don’t have too much confidence in this method and recommend using our sister package IsoQuant.</p>
 <p>This function however, works for annotated as well as novel exons</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ExonQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>, </a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">          <span class="dt">groupingFactor =</span> <span class="st">&quot;Celltype&quot;</span>, <span class="dt">threshold =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>This will output the quantifications to a separate folder <em>ExonQuantOutput</em></p>
 </div>
-<div id="step7-differential-isoform-analysis" class="section level2">
-<h2>Step7: Differential isoform analysis</h2>
+<div id="step6-differential-isoform-analysis" class="section level2">
+<h2>Step6: Differential isoform analysis</h2>
 <p>This step can be done using various settings for various modalities. Options include</p>
 <ul>
 <li>Full-length isoform (Iso)</li>
@@ -546,8 +547,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">config &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="st">&quot;config&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;scisorseqr&quot;</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">DiffSplicingAnalysis</span>(<span class="dt">configFile =</span> config, <span class="dt">typeOfTest =</span> <span class="st">'Iso'</span>, <span class="dt">minNumReads =</span> <span class="dv">25</span>, <span class="dt">is.hier =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">config &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="st">&quot;config&quot;</span>, </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">                      <span class="dt">package =</span> <span class="st">&quot;scisorseqr&quot;</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">DiffSplicingAnalysis</span>(<span class="dt">configFile =</span> config, </a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                     <span class="dt">typeOfTest =</span> <span class="st">'Iso'</span>, </a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">                     <span class="dt">minNumReads =</span> <span class="dv">25</span>, <span class="dt">is.hier =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## or for exons</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="kw">DiffSplicingAnalysis</span>(<span class="dt">configFile =</span> config, </a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">                     <span class="dt">typeOfTest =</span> <span class="st">'Exon'</span>, </a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">                     <span class="dt">minNumReads =</span> <span class="dv">25</span>, </a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">                     <span class="dt">is.hier =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Assuming you run this command, each comparison (line in the config file) yields a separate sub-directory in the folder <em>TreeTraveral_Iso</em></p>
 <p>The most important file in that output directory is the results file, which has the following structure:</p>
 <table>

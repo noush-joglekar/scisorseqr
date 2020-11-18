@@ -48,7 +48,8 @@ knitr::kable(head(bc_clust))
 
 ## ----InfoPerLongRead, eval=FALSE, echo=TRUE-----------------------------------
 #  
-#  InfoPerLongRead(barcodeOutputFile = 'OutputFiltered/FilteredDeconvBC_AllFiles.csv',
+#  InfoPerLongRead(barcodeOutputFile =
+#                    'OutputFiltered/FilteredDeconvBC_AllFiles.csv',
 #                  mapAndFilterOut = 'LRProcessingOutput/',
 #                  minTimesIsoObserve = 3)
 #  
@@ -63,6 +64,16 @@ knitr::kable(head(bc_clust))
 #            groupingFactor = "Celltype", threshold = 10)
 
 ## ----DiffSplicing, eval=FALSE, echo=TRUE--------------------------------------
-#  config <- system.file("extdata/", "config", package = "scisorseqr")
-#  DiffSplicingAnalysis(configFile = config, typeOfTest = 'Iso', minNumReads = 25, is.hier = FALSE)
+#  config <- system.file("extdata/", "config",
+#                        package = "scisorseqr")
+#  
+#  DiffSplicingAnalysis(configFile = config,
+#                       typeOfTest = 'Iso',
+#                       minNumReads = 25, is.hier = FALSE)
+#  
+#  ## or for exons
+#  DiffSplicingAnalysis(configFile = config,
+#                       typeOfTest = 'Exon',
+#                       minNumReads = 25,
+#                       is.hier = FALSE)
 
