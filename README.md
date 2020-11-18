@@ -60,6 +60,13 @@ GetBarcodes('FastqFiles/','userInput/BarcodeCluster_Assignments', concatenate=TR
   filterReads=FALSE, numProcesses=24)
 ```
 
+A step-by-step outline of the various functions is available as a
+vignette. To access it, run
+
+``` r
+browseVignettes("scisorseqr")
+```
+
 ## Support
 
 We appreciate any and all inputs for improving scisorseqr. Feel free to
