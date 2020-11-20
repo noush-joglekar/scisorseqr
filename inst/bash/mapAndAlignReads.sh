@@ -226,6 +226,10 @@ echo "++++++++++++++++++++++ 5b. RNAseq";
 time zcat $outdir"/mapping.bestperRead.RNAdirection.withConsensIntrons.introns.gff.gz" | \
 sort -k1,1 -gk4,4 | gzip -c > $tmpdir1"/rnaSeq.introns.gff.gz"
 
+time zcat $outdir"/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz" | \
+awk '{exon=$1"_"$4"_"$5"_"$7; if(!a[$10]) {a[$10]=$10"\t;%;"exon} else {a[$10]=a[$10]";%;"exon} }END \
+{for(i in a) {print a[i]}}' | \
+gzip -c > $outdir"/newIsoforms_vs_Anno_ignoreAnno/exonStretches.gz"
 
 echo "++++++++++++++++++++++ 5c. comparison";
 awk -v keyword=intron -v anno=$tmpdir1"/anno.introns.gff.gz" -v pred=$tmpdir1"/rnaSeq.introns.gff.gz" \

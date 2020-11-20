@@ -29,8 +29,10 @@ InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObser
   }
 
   geneFile <- file.path(mapAndFilterOut,'mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
+  exonFile <- file.path(mapAndFilterOut,'newIsoforms_vs_Anno_ignoreAnno/exonStretches.gz')
 
-  longReadInfoComm <- paste(longReadInfo_sh, barcodeOutputFile, geneFile, stretchesFile, minTimesIsoObserve,incompFile)
+  longReadInfoComm <- paste(longReadInfo_sh, barcodeOutputFile, geneFile, stretchesFile, 
+          exonFile, minTimesIsoObserve, incompFile)
   system(longReadInfoComm)
 
 }

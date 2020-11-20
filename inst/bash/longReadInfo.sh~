@@ -80,26 +80,17 @@ name[a[2]]=a[2];bc[a[2]]=$5;ct[a[2]]=$7;umi[a[2]]=$8;ensGene[a[2]]=$12;next} \
 $1 in name {print $0,bc[$1],ct[$1],ensGene[$1],umi[$1]}' \
 LongReadInfo/Mapped_Barcoded LongReadInfo/tmp_2 > LongReadInfo/XX_2
 
-awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
-<(zcat $exonStretches) LongReadInfo/XX_2 > a
+cat LongReadInfo/XX_2 | awk 'BEGIN {OFS="\t"} {print $1,$9,$8,$7,$10,$5,$4,$6,$3,$2}' > LongReadInfo/AllInfo_IncompleteReads
 
-mv a LongReadInfo/XX_2
-
-cat LongReadInfo/XX_2 | awk 'BEGIN {OFS="\t"} {print $1,$9,$8,$7,$10,$5,$4,$6,$11,$3,$2}' > LongReadInfo/AllInfo_IncompleteReads
-
-#rm LongReadInfo/tmp_2
+rm LongReadInfo/tmp_2
 #rm LongReadInfo/XX_2
 
 fi
 
-awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
-<(zcat $exonStretches) LongReadInfo/XX > a
 
-mv a LongReadInfo/XX
+cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$3,$2}' > LongReadInfo/AllInfo
 
-cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$9,$3,$2}' > LongReadInfo/AllInfo
-
-#rm LongReadInfo/tmp
+rm LongReadInfo/tmp
 #rm LongReadInfo/XX
 
 
