@@ -5,11 +5,8 @@
 fastqDir=$1;
 mmOut=$2;
 progPath=$3;
-annotation=$4;
+genomeFa=$4;
 numThreads=$5;
-
-### For testing:
-# /athena/tilgnerlab/store/hut2006/data/annotations/M.Musculus/mm10/gencode.vM21.annotation.gtf.gz
 
 ## Create a fastq guide
 for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) \
@@ -20,7 +17,7 @@ n=`cat Misc/fastqGuide | wc -l` ; for i in `seq 1 $n` ; do name=`cat Misc/fastqG
 | head -$i | tail -1 | awk '{print $1;}'` ; \
 echo "### treating "$name >> $mmOut/REPORT.minimap2 ; \
 file=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $2}'` ; \
-$progPath -t $numThreads -ax splice --secondary=no $annotation \
+$progPath -t $numThreads -ax splice --secondary=no $genomeFa \
 $file > $mmOut/$name.sam ; done &>> $mmOut/REPORT.minimap2
 
 for i in $(ls $mmOut/*.sam) ; \

@@ -8,14 +8,14 @@
 #' @param fqFolder fastq.gz files from a single sample or replicate,
 #' or barcoded output
 #' @param mmProgPath path to Minimap2 aligner
-#' @param annoGZ annotation.gtf.gz file. Defaults to v21 mm10
+#' @param refGenome path to reference genome.fa
 #' @param numThreads number of parallel threads to use, Defaults to 8
 #' @return MMoutput folder containing minimap2 aligned files and report
 #' @usage MMalign('FastqFiles/','~/minimap2',
-#' '~/gencode.vM21.annotation.gtf.gz',32)
+#' '~/mm10.fa',32)
 #' @export
 
-MMalign <- function(fqFolder, mmProgPath, annoGZ, numThreads=8) {
+MMalign <- function(fqFolder, mmProgPath, refGenome, numThreads=8) {
 
   # Check that bedtools and samtools are correctly installed and loaded.
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
@@ -32,7 +32,7 @@ MMalign <- function(fqFolder, mmProgPath, annoGZ, numThreads=8) {
   if(!dir.exists(mmOut)){dir.create(mmOut)}
 
   print("Aligning with minimap2")
-  runIt <- paste("sh", mmComm, fqFolder, mmOut, mmProgPath, annoGZ, numThreads)
+  runIt <- paste("sh", mmComm, fqFolder, mmOut, mmProgPath, refGenome, numThreads)
   system(runIt)
 
 }
