@@ -9,13 +9,13 @@
 #' @param fqFolder fastq.gz files from a single sample or replicate,
 #' or barcoded output
 #' @param starProgPath path to STARlong aligner
-#' @param refGenome location of reference genome. Defaults to mouse mm10
+#' @param refGenomeIndex location of STAR reference genome index.
 #' @param numThreads number of parallel threads to use, Defaults to 8
 #' @return STARoutput Folder containing star output files and reports
 #' @usage STARalign('FastqFiles/','~/STARlong','~/starIndex_gencode10_sequins/',32)
 #' @export
 
-STARalign <- function(fqFolder, starProgPath, refGenome, numThreads=8) {
+STARalign <- function(fqFolder, starProgPath, refGenomeIndex, numThreads=8) {
 
   # Check that bedtools and samtools are correctly installed and loaded.
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
@@ -32,7 +32,7 @@ STARalign <- function(fqFolder, starProgPath, refGenome, numThreads=8) {
   if(!dir.exists(starOut)){dir.create(starOut)}
 
   print("Aligning with STAR")
-  runIt <- paste("sh", starComm, fqFolder, starOut, starProgPath, refGenome, numThreads)
+  runIt <- paste("sh", starComm, fqFolder, starOut, starProgPath, refGenomeIndex, numThreads)
   system(runIt)
 
 }

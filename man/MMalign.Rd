@@ -6,7 +6,7 @@
 \title{Align fastq.gz files with Minimap2}
 \usage{
 MMalign('FastqFiles/','~/minimap2',
-'~/gencode.vM21.annotation.gtf.gz',32)
+'~/mm10.fa',32)
 }
 \arguments{
 \item{fqFolder}{fastq.gz files from a single sample or replicate,
@@ -14,7 +14,7 @@ or barcoded output}
 
 \item{mmProgPath}{path to Minimap2 aligner}
 
-\item{annoGZ}{annotation.gtf.gz file. Defaults to v21 mm10}
+\item{refGenome}{path to reference genome.fa}
 
 \item{numThreads}{number of parallel threads to use, Defaults to 8}
 }

@@ -13,7 +13,7 @@ or barcoded output}
 
 \item{starProgPath}{path to STARlong aligner}
 
-\item{refGenome}{location of reference genome. Defaults to mouse mm10}
+\item{refGenomeIndex}{location of STAR reference genome index.}
 
 \item{numThreads}{number of parallel threads to use, Defaults to 8}
 }
