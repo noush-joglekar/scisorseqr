@@ -19,22 +19,36 @@ knitr::opts_chunk$set(
 #              col.names = FALSE, quote = FALSE)
 
 ## ---- echo=FALSE--------------------------------------------------------------
-bc_clust <- read.table(system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr"), 
+bc_clust <- read.table(system.file("extdata/", "userInput/bc_celltype_assignments", 
+                                   package = "scisorseqr"), 
                        header = FALSE, sep = "\t")
-knitr::kable(head(bc_clust))
+knitr::kable(bc_clust[sample(nrow(bc_clust),8,replace = FALSE),], 
+             row.names = FALSE)
 
 ## ----getBarcodes, eval=FALSE, echo=TRUE---------------------------------------
-#  bc_clust <- system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr")
-#  fastqFolder <- system.file("extdata/", "FastqFiles", package = "scisorseqr")
+#  
+#  bc_clust <- system.file("extdata/", "userInput/bc_celltype_assignments",
+#                          package = "scisorseqr")
+#  fastqFolder <- system.file("extdata/", "userInput/FastqFiles",
+#                             package = "scisorseqr")
 #  
 #  ## run command
 #  GetBarcodes(fqFolder = fastqFolder, BCClustAssignFile = bc_clust,
 #              chemistry = "v2", concatenate = TRUE, filterReads = FALSE)
 
 ## ----STARalign, eval = FALSE, echo = TRUE-------------------------------------
-#  STARalign('FastqFiles/','~/bin/Linux_x86_64/STARlong',
-#            refGenome='~/starIndex_gencode10_sequins/',
-#            numThreads=24)
+#  
+#  ## Load example data
+#  fastqFolder <- system.file("extdata/", "userInput/FastqFiles",
+#                             package = "scisorseqr")
+#  
+#  STARalign(fqFolder = fastqFolder, starProgPath = '~/bin/Linux_x86_64/STARlong',
+#            refGenomeIndex = '~/starIndex_gencode10_sequins/',
+#            numThreads = 24)
+#  
+#  MMalign(fqFolder = fastqFolder, mmProgPath = '~/minimap2/minimap2',
+#          refGenome='~/genomes/mm10.fa',
+#          numThreads = 16)
 
 ## ----MapAndFilter, eval = FALSE, echo = TRUE----------------------------------
 #  
@@ -64,7 +78,7 @@ knitr::kable(head(bc_clust))
 #            groupingFactor = "Celltype", threshold = 10)
 
 ## ----DiffSplicing, eval=FALSE, echo=TRUE--------------------------------------
-#  config <- system.file("extdata/", "config",
+#  config <- system.file("extdata/", "userInput/config",
 #                        package = "scisorseqr")
 #  
 #  DiffSplicingAnalysis(configFile = config,
@@ -78,9 +92,13 @@ knitr::kable(head(bc_clust))
 #                       is.hier = FALSE)
 
 ## ----TriHeatmap, echo = TRUE, eval= FALSE-------------------------------------
+#  
+#  condensedCellTypes = system.file("extdata/", "userInput/condensedCellTypes",
+#                        package = "scisorseqr")
+#  
 #  triHeatmap(treeDir = 'TreeTraversal_Iso/',
-#             comparisonList ='condensedCellTypes',
-#             outName ="condensedCellTypes")
+#             comparisonList =condensedCellTypes,
+#             outName =condensedCellTypes)
 
 ## ----heatmap, out.width = '60%', echo=F---------------------------------------
 knitr::include_graphics("../man/figures/condensedCellTypes.png")

@@ -1,10 +1,10 @@
 ---
-title: "scisorseqr_standardWorkflow"
+title: "scisorseqr: Standard Workflow"
 author: "Anoushka Joglekar"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{scisorseqr: Standard Workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The scisorseqr package allows you to go from short-read, single cell assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
+The *scisorseqr* package allows you to go from short-read, single cell assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
 
 ## Software required 
 
@@ -53,15 +53,22 @@ write.table(bc, file = "PATH_TO_FILE", sep="\t", row.names = FALSE,
 
 The table should look something like this
 ```{r, echo=FALSE}
-bc_clust <- read.table(system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr"), 
+bc_clust <- read.table(system.file("extdata/", "userInput/bc_celltype_assignments", 
+                                   package = "scisorseqr"), 
                        header = FALSE, sep = "\t")
-knitr::kable(head(bc_clust))
+knitr::kable(bc_clust[sample(nrow(bc_clust),8,replace = FALSE),], 
+             row.names = FALSE)
 ```
 
+
 ### Use that file to locate barcodes from the fastq files
+Example files included in the package and loaded  as follows:
 ```{r getBarcodes, eval=FALSE, echo=TRUE}
-bc_clust <- system.file("extdata/", "bc_celltype_assignments", package = "scisorseqr")
-fastqFolder <- system.file("extdata/", "FastqFiles", package = "scisorseqr")
+
+bc_clust <- system.file("extdata/", "userInput/bc_celltype_assignments", 
+                        package = "scisorseqr")
+fastqFolder <- system.file("extdata/", "userInput/FastqFiles", 
+                           package = "scisorseqr")
 
 ## run command
 GetBarcodes(fqFolder = fastqFolder, BCClustAssignFile = bc_clust, 
@@ -76,9 +83,13 @@ You will see two output directories
 - OutputFiltered
     - file.CSV (One line per barcoded read with the following structure:)
     
-|ReadName |T9_Status |Strand|T9_position|Barcodes|Barcode_position|Cluster|UMI|TSO_Status|TSO_position|Length|
-|:----------|:-----|:---|:--|:----------------|:--|:-----------|:----------|:---------|:--|:----|
-|ReadX|poly_T_found|rev|47|GTCGGGTTCCAAAGTC|22|Hipp_GranuleNB|ATGGCGGGAT|TSO_found|26|583|
+|ReadName |T9_Status |Strand|T9_position|Barcodes|
+|:----------|:-----|:---|:--|:----------------|
+|ReadX|poly_T_found|rev|47|GTCGGGTTCCAAAGTC|
+
+|Barcode_position|Cluster|UMI|TSO_Status|TSO_position|Length|
+|:--|:-----------|:----------|:---------|:--|:----|
+|22|Hipp_GranuleNB|ATGGCGGGAT|TSO_found|26|583|
 
 ## Step2: Align your fastq files to the reference
 
@@ -88,9 +99,18 @@ We have made two aligners available and compatible with our package
 * Minimap2
 
 ```{r STARalign, eval = FALSE, echo = TRUE}
-STARalign('FastqFiles/','~/bin/Linux_x86_64/STARlong',
-          refGenome='~/starIndex_gencode10_sequins/',
-          numThreads=24)
+
+## Load example data
+fastqFolder <- system.file("extdata/", "userInput/FastqFiles", 
+                           package = "scisorseqr")
+
+STARalign(fqFolder = fastqFolder, starProgPath = '~/bin/Linux_x86_64/STARlong',
+          refGenomeIndex = '~/starIndex_gencode10_sequins/',
+          numThreads = 24)
+
+MMalign(fqFolder = fastqFolder, mmProgPath = '~/minimap2/minimap2',
+        refGenome='~/genomes/mm10.fa',
+        numThreads = 16)
 ```
 
 This process will convert all the aligned sam files to bam files, and dump the output into *STARoutput*
@@ -106,6 +126,9 @@ MapAndFilter(annoGZ='[PATH_TO_annotation.gtf.gz]',numThreads=24,
              cp_distance=50)
 
 ```
+**NOTE**  the parameter seqDir takes in a reference genome broken down by chromosome so
+as to parallelize the process.
+This function has not yet been made generalizable to loading in the full reference
 
 This will result in multiple files being stored in yet another output directory: *LRProcessingOutput*
 
@@ -171,13 +194,13 @@ It also requires a tab-separated config file in the following format to be provi
 
 |Comparison1 | Celltypes | Comparison2 | Celltypes | 
 |:----------|:--------------------------------------------------|:----------|:---------------------------------|
-|HippNeuron | Hipp_ExciteNecduron,Hipp_InhibNeuron,Hipp_GranuleNB | PFCNeuron | PFC_ExciteNeuron,PFC_InhibNeuron | 
+|HippNeuron | Hipp_ExciteNeuron,Hipp_InhibNeuron| PFCNeuron | PFC_ExciteNeuron,PFC_InhibNeuron | 
 |HippInhib  | Hipp_InhibNeuron | PFCInhib | PFC_InhibNeuron | 
 |HippExcite | Hipp_ExciteNeuron	| HippInhib | Hipp_InhibNeuron | 
 
 
 ```{r DiffSplicing, eval=FALSE, echo=TRUE}
-config <- system.file("extdata/", "config", 
+config <- system.file("extdata/", "userInput/config", 
                       package = "scisorseqr")
 
 DiffSplicingAnalysis(configFile = config, 
@@ -222,9 +245,13 @@ It also takes in an untitled file list of cell types to be plotted as follows:
 |.|
 
 ```{r TriHeatmap, echo = TRUE, eval= FALSE}
+
+condensedCellTypes = system.file("extdata/", "userInput/condensedCellTypes", 
+                      package = "scisorseqr")
+
 triHeatmap(treeDir = 'TreeTraversal_Iso/',
-           comparisonList ='condensedCellTypes', 
-           outName ="condensedCellTypes")
+           comparisonList =condensedCellTypes, 
+           outName =condensedCellTypes)
 ```
 
 **NOTE** Cell-type labels should correspond to the barcode-celltype list. If you input a cell-type for which pairwise DIE has not been calculated, it will output all zeros 
