@@ -7,7 +7,7 @@ args <- commandArgs(trailingOnly=TRUE)
 ## arguments : AllInfo file, exonInfo.gff, threshold, grouping factor
 
 
-allInfo <- data.table::fread(args[1],sep="\t")[,-c(7:8)]     ## Read in file with read - gene - celltype assignments
+allInfo <- data.table::fread(args[1],sep="\t")[,-c(7:9)]     ## Read in file with read - gene - celltype assignments
 colnames(allInfo) <- c("Read","Gene","Celltype","Barcode","UMI","Stretch")
 groupingFactor <- args[4]
 
