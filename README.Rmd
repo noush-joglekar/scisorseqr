@@ -91,13 +91,6 @@ A step-by-step outline of the various functions is available as a vignette. To a
 browseVignettes("scisorseqr")
 ```
 
-Alternatively, you can  download a PDF of the vignette at the following link:
-
-```{r, echo = FALSE}
-xfun::embed_file('vignettes/scisorseqr_standardWorkflow.pdf', name = 'scisorseqr_vignette',
-                 text = 'scisorseqr vignette')
-```
-
 ## Support
 We appreciate any and all inputs for improving scisorseqr. Feel free to send us an [email](mailto:anj2026@med.cornell.edu). 
 
