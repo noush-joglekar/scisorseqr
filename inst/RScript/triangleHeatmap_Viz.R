@@ -1,4 +1,7 @@
-#' @import dplyr ' @importFrom magrittr %>% ' @import ggplot2 ' @import cowplot
+#' @import dplyr
+#' @importFrom magrittr %>%
+#' @import ggplot2
+#' @import cowplot
 
 `%>%` <- magrittr::`%>%`
 

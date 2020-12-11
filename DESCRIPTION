@@ -28,7 +28,9 @@ Suggests:
     methods,
     spelling,
     knitr, 
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    cowplot
 Imports:
     dplyr,
     tidyr,
