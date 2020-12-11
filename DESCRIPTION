@@ -35,6 +35,8 @@ Imports:
     dplyr,
     tidyr,
     magrittr,
-    tibble
+    tibble,
+    ggplot2,
+    cowplot
 Language: en-US
 VignetteBuilder: knitr
