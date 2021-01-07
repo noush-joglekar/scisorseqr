@@ -96,7 +96,6 @@ awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 <(zcat $exonStretches) LongReadInfo/XX > a
 
 mv a LongReadInfo/XX
-
 cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$9,$3,$2}' > LongReadInfo/AllInfo
 
 #rm LongReadInfo/tmp
