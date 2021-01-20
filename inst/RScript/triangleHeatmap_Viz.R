@@ -23,8 +23,10 @@ for (file in files){
   f = read.table(paste0(tree_dir,"/",file),header=TRUE,row.names = 1)
   perc <- nrow(f %>% dplyr::filter(FDR <= 0.05 & abs(dPI) >= 0.1))/nrow(f)
   s = unlist(strsplit(file,"_"))[1:2]
-  summaryMat[s[1],s[2]] = perc
-  summaryMat[s[2],s[1]] = perc
+  if(s[1] %in% cT & s[2] %in% cT){
+    summaryMat[s[1],s[2]] = perc
+    summaryMat[s[2],s[1]] = perc
+  }
 }
 
 
