@@ -20,15 +20,15 @@ The *scisorseqr* package allows you to go from short-read, single cell assignmen
 
 ## Software required 
 
- * STARlong (and corresponding genome index file)
- * Minimap2 if not using STARlong
+ * [STARlong](https://github.com/alexdobin/STAR/) (and corresponding genome index file)
+ * [Minimap2](https://github.com/lh3/minimap2) if not using STARlong
  * samtools
  * bedtools
  * python version >= 3.7 with the following libraries
    * pandas
    * multiprocessing
  
-## Step1: Barcode deconvolution 
+## Step 1: Barcode deconvolution 
 The first step is to deconvolve barcodes from either the PacBio or ONT fastq output
 For that the user needs to specify
 
@@ -91,7 +91,7 @@ You will see two output directories
 |:--|:-----------|:----------|:---------|:--|:----|
 |22|Hipp_GranuleNB|ATGGCGGGAT|TSO_found|26|583|
 
-## Step2: Align your fastq files to the reference
+## Step 2: Align your fastq files to the reference
 
 We have made two aligners available and compatible with our package
 
@@ -115,7 +115,8 @@ MMalign(fqFolder = fastqFolder, mmProgPath = '~/minimap2/minimap2',
 
 This process will convert all the aligned sam files to bam files, and dump the output into *STARoutput*
 
-## Step3: Map and filter for full-length, spliced reads
+## Step 3: Map and filter for full-length, spliced reads
+We used annotated [CAGE peaks](https://fantom.gsc.riken.jp/5/datafiles/reprocessed/mm10_latest/extra/CAGE_peaks/) and [PolyA sites](https://polyasite.unibas.ch/atlas) for our study
 ```{r MapAndFilter, eval = FALSE, echo = TRUE}
 
 MapAndFilter(annoGZ='[PATH_TO_annotation.gtf.gz]',numThreads=24, 
@@ -132,7 +133,7 @@ This function has not yet been made generalizable to loading in the full referen
 
 This will result in multiple files being stored in yet another output directory: *LRProcessingOutput*
 
-## Step4: Concatenate all the information collected so far
+## Step 4: Concatenate all the information collected so far
 
 ```{r InfoPerLongRead, eval=FALSE, echo=TRUE}
  
@@ -149,7 +150,7 @@ This will yield a directory *LongReadInfo* with file **AllInfo** which has the f
 |:-------|:---|:-------|:------|:--|:----------|:-----|:--------|
 
 
-## Step5a: Quantify the various isoforms  observed in your data
+## Step 5a: Quantify the various isoforms  observed in your data
 If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique 
 cage and polyA sites per gene. Otherwise the default option is False
 
@@ -166,7 +167,7 @@ Depending on which modality you chose as *TRUE*, you will see the following file
 
 These will be used for the differential splicing analysis step
 
-## Step5b: [OPTIONAL]  Quantify the various exons observed in your data
+## Step 5b: [OPTIONAL]  Quantify the various exons observed in your data
 For ONT reads we don't have too much confidence in this method and recommend using 
 our sister package IsoQuant. 
 
@@ -177,7 +178,7 @@ ExonQuant(AllInfoFile = 'LongReadInfo/AllInfo',
 ```
 This will output the quantifications to a separate folder *ExonQuantOutput*
 
-## Step6: Differential isoform analysis
+## Step 6: Differential isoform analysis
 
 This step can be done using various settings for various modalities. Options include
 
@@ -229,7 +230,7 @@ The most important file in that output directory is the results file, which has 
 
 You can use the above output to plot your significant genes
 
-## Step7: Visualizations
+## Step 7: Visualizations
 
 ### Triangular Heatmap
 This function plots a triangular heatmap of percentage DIE genes of pairwise comparisons in a directory

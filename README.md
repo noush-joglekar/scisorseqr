@@ -6,10 +6,9 @@
 <img src="man/figures/scisorseqr.png" width="25%" style="float:left; padding:20px" />
 
 scisorseqr is a linux based R-package for analyzing differential isoform
-expression in single cells. The methods are based on our preprint
-[Joglekar et
-al. (2020)](https://www.biorxiv.org/content/10.1101/2020.08.27.268730v1)
-and the [scISOrSeq
+expression in single cells. The methods are based on our recent
+[publication](https://www.nature.com/articles/s41467-020-20343-5) and
+the [scISOrSeq
 workflow](https://www.nature.com/articles/nbt.4259?draft=marketing)
 
 Any comparative studies of alternative splicing can be performed with
@@ -40,7 +39,8 @@ alignment and mapping, we recommend
 ## Installation
 
 The easiest way to install scisorseqr is through
-[Github](https://github.com) with:
+[Github](https://github.com)
+with:
 
 ``` r
 devtools::install_github('noush-joglekar/scisorseqr',build_vignettes = TRUE)
