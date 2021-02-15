@@ -39,14 +39,15 @@ echo "scriptDir="$scriptDir
 pyScriptDir=${9}
 
 echo "++++++++++++++++++ 1b. deduced from arguments";
-tmpdir1=$tmpDir"/tmp."$$
-echo $tmpdir1
+tmpdir1=$tmpDir
+if [ ! -d $tmpDir ]
+then
 mkdir $tmpdir1
 echo "tmpdir1="$tmpdir1
-
+fi
 
 echo "++++++++++++++++++ 1c. input check";
-if [ ! -f $tmpDir"/*/mapping.bestperRead.bam" ]
+if [ ! -f $outdir"/mapping.bestperRead.bam" ]
 then
 mappingBAM=$tmpdir1"/mapping.bam";
 samtools merge $mappingBAM `cat $mappingBAMGuide`;
