@@ -17,6 +17,7 @@
 #' @param polyABed OPTIONAL bed.gz file containing annotated polyA sites
 #' @param cp_distance OPTIONAL distance from annotated CAGE peak or polyA site
 #' for a read to be considered full-length. Defaults to 50
+#' @param genomeVersion genome and version for GFF output file. Defaults to mm10
 #' @return directory containing several bam, gff.gz, and flat files
 #' necessary for downstream analysis
 #' @usage MapAndFilter('LRoutput','gencode.vM21.annotation.gtf.gz',16)
@@ -24,7 +25,7 @@
 #'
 MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,
                         seqDir, filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
-                        cp_distance = 50){
+                        cp_distance = 50, genomeVersion = "mm10"){
 
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
   if(system(paste("sh", checkFile)) == 127) {
@@ -67,7 +68,7 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
     polyaGZ <- polyABed
     filterFL_script <- system.file("bash", "cagePolyA.sh", package = "scisorseqr")
     filterFLcomm <- paste("sh", filterFL_script, "zcat", outputDir,
-                          cageGZ, polyaGZ, awkScriptDir, cp_distance)
+                          cageGZ, polyaGZ, awkScriptDir, cp_distance, genomeVersion)
     system(filterFLcomm)
   }
 

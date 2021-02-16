@@ -38,6 +38,8 @@ echo "scriptDir="$scriptDir
 
 pyScriptDir=${9}
 
+genV=${10}
+
 echo "++++++++++++++++++ 1b. deduced from arguments";
 tmpdir1=$tmpDir
 if [ ! -d $tmpDir ]
@@ -78,6 +80,8 @@ echo "+++++++++++++++ 2c2 sam to bam conversion"
 samtools view -b -S $mappingWellMappedSAM > $mappingWellMappedBAM
 
 else
+mappingWellMappedBAM=$outdir"/mapping.bestperRead.bam";
+time zcat $annoGZ | awk '$3=="exon"' | sort -gk4,4 > $tmpdir1"/sortedAnno";
 echo "---> Well mapped bam already exists, moving on to next step"
 fi
 
@@ -103,19 +107,19 @@ echo "+++++++++++++++++++++ 3a. checking consensus";
 if [ ! -f $outdir"/mapping.bestperRead.noRiboRNA.introns.gff.gz" ]
 then
 echo "++++++++++++++++++ 3a1. getting introns and exons in gff format";
-time bedtools bamtobed -i $outdir"/mapping.bestperRead.noRiboRNA.bam" -bed12 | awk 'BEGIN{OFS="\t";}\
-{seen[$4]++; n=split($11,blockLen,","); m=split($12,offset,","); \
+time bedtools bamtobed -i $outdir"/mapping.bestperRead.noRiboRNA.bam" -bed12 | awk -v genV=$genV \
+'BEGIN{OFS="\t";} {seen[$4]++; n=split($11,blockLen,","); m=split($12,offset,","); \
 if(m!=n){print "ERROR after bamtobed:m="m"!=n="n > "/dev/stderr";\
 exit(0);} if(n<2){next;} exEnd=$2+blockLen[1];  for(i=2;i<=n;i++){ exStart=$2+offset[i]+1; \
-print $1,"hg19","intron",exEnd+1,exStart-1,".",$6,".","transcript_id_with_chr="$4".path"seen[$4]"@"$1; \
+print $1,genV,"intron",exEnd+1,exStart-1,".",$6,".","transcript_id_with_chr="$4".path"seen[$4]"@"$1; \
 exEnd=exStart+blockLen[i]-1;}}' > $outdir"/mapping.bestperRead.noRiboRNA.introns.gff"
 
 
-time bedtools bamtobed -i $outdir"/mapping.bestperRead.noRiboRNA.bam" -bed12 | awk 'BEGIN{OFS="\t";}\
-{seen[$4]++; n=split($11,blockLen,","); m=split($12,offset,","); \
+time bedtools bamtobed -i $outdir"/mapping.bestperRead.noRiboRNA.bam" -bed12 | awk -v genV=$genV \
+'BEGIN{OFS="\t";} {seen[$4]++; n=split($11,blockLen,","); m=split($12,offset,","); \
 if(m!=n){print "ERROR after bamtobed:m="m"!=n="n > "/dev/stderr"; exit(0);} \
 for(i=1;i<=n;i++){ exStart=$2+offset[i]+1; exEnd=exStart+blockLen[i]-1; \
-print $1,"hg19","cDNA_match",exStart,exEnd,".",$6,".","read_id \""$4".path"seen[$4]"\";"; }}' \
+print $1,genV,"cDNA_match",exStart,exEnd,".",$6,".","read_id \""$4".path"seen[$4]"\";"; }}' \
  > $outdir"/mapping.bestperRead.noRiboRNA.gff"
 
 else

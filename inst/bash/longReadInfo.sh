@@ -87,8 +87,8 @@ mv a LongReadInfo/XX_2
 
 cat LongReadInfo/XX_2 | awk 'BEGIN {OFS="\t"} {print $1,$9,$8,$7,$10,$5,$4,$6,$11,$3,$2}' > LongReadInfo/AllInfo_IncompleteReads
 
-#rm LongReadInfo/tmp_2
-#rm LongReadInfo/XX_2
+rm LongReadInfo/tmp_2
+rm LongReadInfo/XX_2
 
 fi
 
@@ -98,8 +98,8 @@ awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 mv a LongReadInfo/XX
 cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$9,$3,$2}' > LongReadInfo/AllInfo
 
-#rm LongReadInfo/tmp
-#rm LongReadInfo/XX
+rm LongReadInfo/tmp
+rm LongReadInfo/XX
 
 
 cat LongReadInfo/AllInfo | awk '{if(!seen[$2"_"$4]++){count[$4"~"$3]++$2;}}END {for (c in count) \

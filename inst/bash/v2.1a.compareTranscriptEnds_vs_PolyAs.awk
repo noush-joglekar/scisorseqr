@@ -122,7 +122,7 @@ BEGIN{
 	print "# 4. finding the closest polyA" > "/dev/stderr";
     
     readCounter=0;
-    print "#readID\tminDUpstream\tminDUpstreamPolyA\tminDUpstream\tminDUpstreamPolyA\tGene\treadChrom\treadStrand"; 
+    print "#readID\tminDUpstream\tminDUpstreamPolyA\tminDDownstream\tminDDownstreamPolyA\tGene\treadChrom\treadStrand"; 
     for(r in read2ReadEnd){
 	readCounter++;
 	if(readCounter % 1000000 == 0 && verbose>=2){

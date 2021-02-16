@@ -122,7 +122,7 @@ BEGIN{
 	print "# 4. finding the closest TSS" > "/dev/stderr";
     
     readCounter=0;
-    print "#readID\tminDUpstream\tminDUpstreamTSS\tminDUpstream\tminDUpstreamTSS\tGene\treadChrom\treadStrand"; 
+    print "#readID\tminDUpstream\tminDUpstreamTSS\tminDDownstream\tminDDownstreamTSS\tGene\treadChrom\treadStrand"; 
     for(r in read2ReadEnd){
 	readCounter++;
 	if(readCounter % 1000000 == 0 && verbose>=2){
