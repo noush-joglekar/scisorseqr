@@ -26,6 +26,8 @@ sites. Defaults to FALSE}
 
 \item{cp_distance}{OPTIONAL distance from annotated CAGE peak or polyA site
 for a read to be considered full-length. Defaults to 50}
+
+\item{genomeVersion}{genome and version for GFF output file. Defaults to mm10}
 }
 \value{
 directory containing several bam, gff.gz, and flat files
