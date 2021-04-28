@@ -25,7 +25,7 @@
 #'
 MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,
                         seqDir, filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
-                        cp_distance = 50, genomeVersion = "mm10"){
+                        cp_distance = 50, genomeVersion = NULL){
 
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
   if(system(paste("sh", checkFile)) == 127) {
@@ -54,13 +54,17 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
     annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
   }
 
+  if(is.null(genomeVersion)){
+    genomeVersion <- "mm10"
+  }
+
   awkScriptDir <- system.file("bash", package = "scisorseqr")
   pyScriptDir <- system.file("python", package = "scisorseqr")
 
   if(!dir.exists(outputDir)){dir.create(outputDir)}
 
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
-                      seqDir, annoGZ, bamGuide, awkScriptDir, pyScriptDir)
+                      seqDir, annoGZ, bamGuide, awkScriptDir, pyScriptDir, genomeVersion)
   system(runCommand)
 
   if(filterFullLength == TRUE){
@@ -68,7 +72,7 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
     polyaGZ <- polyABed
     filterFL_script <- system.file("bash", "cagePolyA.sh", package = "scisorseqr")
     filterFLcomm <- paste("sh", filterFL_script, "zcat", outputDir,
-                          cageGZ, polyaGZ, awkScriptDir, cp_distance, genomeVersion)
+                          cageGZ, polyaGZ, awkScriptDir, cp_distance)
     system(filterFLcomm)
   }
 
