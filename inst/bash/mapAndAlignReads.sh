@@ -39,6 +39,7 @@ echo "scriptDir="$scriptDir
 pyScriptDir=${9}
 
 genV=${10}
+echo "genome + version"=$genV
 
 echo "++++++++++++++++++ 1b. deduced from arguments";
 tmpdir1=$tmpDir

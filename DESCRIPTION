@@ -1,11 +1,11 @@
 Package: scisorseqr
 Type: Package
 Title: Processes long reads for differential isoform analysis
-Version: 0.1.1
+Version: 0.1.2
 Author: Anoushka Joglekar
 Maintainer: Anoushka Joglekar <anj2026@med.cornell.edu>
 Description: For any comparative (e.g. case-control) studies of alternative splicing,
-    scisorseqr is the one stop shop for analyzing single-cell long read data. The linux 
+    scisorseqr is the one stop shop for analyzing single-cell long read data. The linux
     based package includes functions for barcode deconvolution from fastqs,
     integration with long read alignment tools like STARlong and minimap2,
     mapping and filtering of high confidence full-length spliced reads, and some
@@ -27,7 +27,7 @@ Suggests:
     utils,
     methods,
     spelling,
-    knitr, 
+    knitr,
     rmarkdown,
     ggplot2,
     cowplot

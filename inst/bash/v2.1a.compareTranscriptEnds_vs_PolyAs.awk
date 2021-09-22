@@ -1,16 +1,4 @@
-# goal: remove polyA-tails and remove revcomp sequence to RNA if necessary
 # by Hagen;
-
-# exampel of ccs read data: 
-#nuvol:~ htilgner$ gzcat /Users/htilgner/data/trios/input/pacBioIsoforms/v1/yorubian/Gm19238/round1/ccs/fa/m120413_003026_00126_c100277812550000001523007807041240_s2_p0.ccs.fasta.gz | head -2
-#>m120413_003026_00126_c100277812550000001523007807041240_s2_p0/57/ccs
-#TTTTTTTTGAAGGTTCTCAGGTCTTTATTTGCTCTCTCAACTTCCAGGAATTGACTTATTTAATTAATCC
-
-# exampel of subread data
-#nuvol:~ htilgner$ gzcat /Users/htilgner/data/trios/input/pacBioIsoforms/v1/yorubian/Gm19238/round1/subreads/fa/GM19238_poly-AcDNA_opt_smrtanalysis_common_jobs_016_016525_data_filtered_subreads.fasta.gz| head -2
-#>m120527_035935_00126_c100333442550000001523018909161283_s1_p0/7/0_334
-#TTTGCGACCTTTCGCCACGACGTCAGCGCGCTTTCCCGGGCAGACGCCTC
-
 
 function max(a,b){
     if(a>b){return(a);}
