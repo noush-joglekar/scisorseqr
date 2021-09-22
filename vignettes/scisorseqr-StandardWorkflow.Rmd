@@ -1,12 +1,8 @@
 ---
-title: 'scisorseqr: Standard Workflow'
-author: "Anoushka Joglekar"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-  html_document:
-    df_print: paged
+title: "scisorseqr-StandardWorkflow"
+output: pdf_document
 vignette: |
-  %\VignetteIndexEntry{scisorseqr: Standard Workflow} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{scisorseqr-StandardWorkflow} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
