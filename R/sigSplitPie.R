@@ -6,6 +6,7 @@
 #' @return Directory labelled 'Visualizations' containing a pie chart containing
 #' the breakup of number of isoforms needed to cross deltaPI threshold
 #' of pairwise comparisons containing cell groups provided in input
+#' Legend indicates the number of isoforms needed to cross the deltaPI = 0.1 threshold
 #' @usage sigSplitPie('compDir/')
 #'
 #' @import dplyr

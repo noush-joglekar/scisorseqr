@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 The *scisorseqr* package allows you to go from short-read, single cell assignments and a set of fastq files to a full-blown cell-type specific analysis of alternative splicing patterns. 
 
-## Software required 
+## Software required
 
  * [STARlong](https://github.com/alexdobin/STAR/) (and corresponding genome index file)
  * [Minimap2](https://github.com/lh3/minimap2) if not using STARlong
@@ -67,7 +67,7 @@ Example files included in the package and loaded  as follows:
 
 bc_clust <- system.file("extdata/", "userInput/bc_celltype_assignments", 
                         package = "scisorseqr")
-fastqFolder <- system.file("extdata/", "userInput/FastqFiles", 
+fastqFolder <- system.file("extdata/", "userInput/FastqFiles/", 
                            package = "scisorseqr")
 
 ## run command
@@ -82,7 +82,7 @@ You will see two output directories
     - file_summary (Stats for run)
 - OutputFiltered
     - file.CSV (One line per barcoded read with the following structure:)
-    
+
 |ReadName |T9_Status |Strand|T9_position|Barcodes|
 |:----------|:-----|:---|:--|:----------------|
 |ReadX|poly_T_found|rev|47|GTCGGGTTCCAAAGTC|
@@ -255,8 +255,9 @@ triHeatmap(treeDir = 'TreeTraversal_Iso/',
            outName =condensedCellTypes)
 ```
 
-**NOTE** Cell-type labels should correspond to the barcode-celltype list. If you input a cell-type for which pairwise DIE has not been calculated, it will output all zeros 
+**NOTE** Cell-type labels should correspond to the barcode-celltype list. If you input a cell-type for which pairwise DIE has not been calculated, it will output all zeros
 (e.g. DivOligo in this case)
+**NOTE** The example data included in this package does not yield the plot below. This is just an example plot generated from the full dataset.
 
 ```{r heatmap, out.width = '60%', echo=F}
 knitr::include_graphics("../man/figures/condensedCellTypes.png")
@@ -271,8 +272,9 @@ sigSplitPie(compDir = 'Uniq_TreeTraversal_Iso/Astro_ExcitNeuron_10/')
 ```{r pie, out.width = '60%', echo=F}
 knitr::include_graphics("../man/figures/examplePie.png")
 ```
-
+Each number in the legend corresponds to the number of isoforms needed to cross the deltaPI = 0.1 threshold
 **NOTE** Percentage labels do not always arrange themselves neatly in the figure (requires editing by hand)
+**NOTE** The example data included in this package does not yield the plot above. This is just an example plot generated from the full dataset.
 
 ## Done!
 

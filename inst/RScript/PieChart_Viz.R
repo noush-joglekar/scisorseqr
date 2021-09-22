@@ -3,6 +3,11 @@
 #' @import scales
 #' @importFrom magrittr %>%
 
+#suppressPackageStartupMessages({
+#  library(dplyr)
+#  library(ggplot2)
+#})
+
 `%>%` <- magrittr::`%>%`
 
 args <- commandArgs(trailingOnly=TRUE)
@@ -51,19 +56,18 @@ nonSig <- length(which(resultsFile$FDR>0.05))
 df <- as.data.frame(table(breakup))
 df$breakup <- as.character(df$breakup)
 df <- rbind(c("NonSig",nonSig),df)
-df$value <- as.numeric(df$Freq)/total
+df$value <- as.numeric(df$Freq)*100/total
 
 
 df <- df %>% dplyr::mutate(ypos = cumsum(value)-0.5*value)
 cols <- c('NonSig'="#F9C6BA",'1'="#930077",'2'="#DD6892",'3'="#3c6f9c",'4'="#29cdb5",'5'="#048998",'6'="#553c8b")
 
-final_pie <- ggplot2::ggplot(df, aes(x="", y=value, fill=breakup)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_void() +
-  theme(legend.position="none") +
-  geom_text(aes(y = ypos, label = percent(value)), color = "white", size=6) +
-  scale_fill_manual("",values=cols)
+final_pie <- ggplot2::ggplot(df, ggplot2::aes(x="", y=value, fill=breakup)) +
+  ggplot2::geom_bar(stat="identity", width=1) +
+  ggplot2::coord_polar("y", start=0) +
+  ggplot2::theme_void() +
+  ggplot2::geom_text(ggplot2::aes(y = ypos, label = format(value,digits=2)), color = "white", size=6) +
+  ggplot2::scale_fill_manual("",values=cols)
 
 
 pdf(file=paste0("Visualizations/PieCharts_BreakUp_",name,".pdf"),8,6)

@@ -6,12 +6,10 @@
 #'
 #' For ONT data we recomment \url{https://github.com/ablab/IsoQuant.git}
 #' which allows for non-exact splice-site matching
-#' @param allInfoFile file containing cell barcode and celltype information
+#' @param allInfoFile file containing barcode, celltype, and exon information
 #' per read. Defaults to output of the InfoPerLongRead function
-#' @param exon.gff gzipped file containing exon mapping information.
-#' Defaults to output from MapAndFilter
 #' @param groupingFactor "Celltype" or "Barcode" to group reads by for
-#' counting inclusion levels. Defaults to celltype
+#' counting inclusion levels. Defaults to Celltype
 #' @param threshold minimum number of reads per grouping factor in order
 #' to consider that exon to be sufficiently expressed. Defaults to 10
 #' @param threads number of threads to parallelize the function. Defaults
@@ -19,18 +17,21 @@
 #' @seealso \code{\link{MapAndFilter}}
 #' @seealso \code{\link{InfoPerLongRead}}
 #' @return ExonQuantOutput/InclusionExclusionCounts.tsv
+#' 
+#' @import dplyr
+#' @import parallel
 #' @export
-#'
 
-ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo',
-                           exon.gff = 'LRProcessingOutput/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz',
+ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo_IncompleteReads',
                            groupingFactor = "Celltype",threshold = 10, numThreads = 4) {
 
   if(!dir.exists('ExonQuantOutput')){dir.create("ExonQuantOutput/")}
+  if(file.exists('ExonQuantOutput/InclusionExclusionCounts.tsv')){
+    file.remove('ExonQuantOutput/InclusionExclusionCounts.tsv')}
 
   R_file <- system.file("RScript", "ExonCounting.R", package = "scisorseqr")
 
-  countExons <- paste("Rscript", R_file, allInfoFile, exon.gff, threshold, groupingFactor, numThreads)
+  countExons <- paste("Rscript", R_file, allInfoFile, groupingFactor, numThreads, threshold)
   system(countExons)
 
 }

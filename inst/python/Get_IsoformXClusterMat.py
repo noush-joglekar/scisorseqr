@@ -7,10 +7,12 @@ import time
 start_time = time.time()
 
 print("Creating Isoform X cell matrix")
-print("Processing file with ",len(all_info)," entries")
 
 input_file = sys.argv[1]
 all_info = [x.strip('\n').split('\t') for x in open(input_file).readlines()][1:]
+
+print("Processing file with ",len(all_info)," entries")
+
 gene_iso_names = [x[0] for x in all_info]
 cluster_names = [x[1] for x in all_info]
 num_iso = [int(x[2]) for x in all_info]

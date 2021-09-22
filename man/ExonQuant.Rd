@@ -5,23 +5,18 @@
 \title{Count exon inclusion and exclusion according to grouping factor}
 \usage{
 ExonQuant(
-  allInfoFile = "LongReadInfo/AllInfo",
- 
-    exon.gff = "LRProcessingOutput/mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz",
+  allInfoFile = "LongReadInfo/AllInfo_IncompleteReads",
   groupingFactor = "Celltype",
   threshold = 10,
   numThreads = 4
 )
 }
 \arguments{
-\item{allInfoFile}{file containing cell barcode and celltype information
+\item{allInfoFile}{file containing barcode, celltype, and exon information
 per read. Defaults to output of the InfoPerLongRead function}
 
-\item{exon.gff}{gzipped file containing exon mapping information.
-Defaults to output from MapAndFilter}
-
 \item{groupingFactor}{"Celltype" or "Barcode" to group reads by for
-counting inclusion levels. Defaults to celltype}
+counting inclusion levels. Defaults to Celltype}
 
 \item{threshold}{minimum number of reads per grouping factor in order
 to consider that exon to be sufficiently expressed. Defaults to 10}
