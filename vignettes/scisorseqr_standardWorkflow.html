@@ -12,7 +12,7 @@
 
 <meta name="author" content="Anoushka Joglekar" />
 
-<meta name="date" content="2020-11-25" />
+<meta name="date" content="2021-03-03" />
 
 <title>scisorseqr: Standard Workflow</title>
 
@@ -301,7 +301,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">scisorseqr: Standard Workflow</h1>
 <h4 class="author">Anoushka Joglekar</h4>
-<h4 class="date">2020-11-25</h4>
+<h4 class="date">2021-03-03</h4>
 
 
 
@@ -309,8 +309,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="software-required" class="section level2">
 <h2>Software required</h2>
 <ul>
-<li>STARlong (and corresponding genome index file)</li>
-<li>Minimap2 if not using STARlong</li>
+<li><a href="https://github.com/alexdobin/STAR/">STARlong</a> (and corresponding genome index file)</li>
+<li><a href="https://github.com/lh3/minimap2">Minimap2</a> if not using STARlong</li>
 <li>samtools</li>
 <li>bedtools</li>
 <li>python version &gt;= 3.7 with the following libraries
@@ -320,8 +320,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul></li>
 </ul>
 </div>
-<div id="step1-barcode-deconvolution" class="section level2">
-<h2>Step1: Barcode deconvolution</h2>
+<div id="step-1-barcode-deconvolution" class="section level2">
+<h2>Step 1: Barcode deconvolution</h2>
 <p>The first step is to deconvolve barcodes from either the PacBio or ONT fastq output For that the user needs to specify</p>
 <ul>
 <li>Tab separated Barcode-Celltype file</li>
@@ -351,36 +351,36 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CAGTAACAGTGATCGG</td>
-<td align="left">Hipp_Oligo</td>
-</tr>
-<tr class="even">
-<td align="left">ACTTGTTGTAGCGTCC</td>
+<td align="left">CGGACGTTCCAGTAGT</td>
 <td align="left">Hipp_InhibNeuron</td>
 </tr>
+<tr class="even">
+<td align="left">TATGCCCCAACTTGAC</td>
+<td align="left">Hipp_GranuleNB</td>
+</tr>
 <tr class="odd">
-<td align="left">TGTGGTAAGTGCAAGC</td>
-<td align="left">Hipp_Astro</td>
+<td align="left">GATCGCGGTGAGCGAT</td>
+<td align="left">Hipp_GranuleNB</td>
 </tr>
 <tr class="even">
-<td align="left">TCAGGATAGGATGCGT</td>
+<td align="left">TAAGTGCCACCTCGGA</td>
 <td align="left">PFC_Astro</td>
 </tr>
 <tr class="odd">
-<td align="left">GGAATAACAGGTGGAT</td>
+<td align="left">GCGCCAAGTGTAATGA</td>
+<td align="left">Hipp_ExciteNeuron</td>
+</tr>
+<tr class="even">
+<td align="left">TGGCCAGAGTGGGATC</td>
+<td align="left">Hipp_Oligo</td>
+</tr>
+<tr class="odd">
+<td align="left">CGACCTTCAATCCGAT</td>
 <td align="left">PFC_ExciteNeuron</td>
 </tr>
 <tr class="even">
-<td align="left">CTAGAGTCAGCTGTTA</td>
-<td align="left">PFC_InhibNeuron</td>
-</tr>
-<tr class="odd">
-<td align="left">GGCGACTCACAACTGT</td>
-<td align="left">Hipp_Oligo</td>
-</tr>
-<tr class="even">
-<td align="left">GCTGCAGGTTCGTCTC</td>
-<td align="left">Hipp_ExciteNeuron</td>
+<td align="left">ATCTGCCAGCTTCGCG</td>
+<td align="left">Hipp_Ependymal</td>
 </tr>
 </tbody>
 </table>
@@ -453,8 +453,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </table>
 </div>
 </div>
-<div id="step2-align-your-fastq-files-to-the-reference" class="section level2">
-<h2>Step2: Align your fastq files to the reference</h2>
+<div id="step-2-align-your-fastq-files-to-the-reference" class="section level2">
+<h2>Step 2: Align your fastq files to the reference</h2>
 <p>We have made two aligners available and compatible with our package</p>
 <ul>
 <li>STARlong</li>
@@ -474,8 +474,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb3-12" data-line-number="12">        <span class="dt">numThreads =</span> <span class="dv">16</span>)</a></code></pre></div>
 <p>This process will convert all the aligned sam files to bam files, and dump the output into <em>STARoutput</em></p>
 </div>
-<div id="step3-map-and-filter-for-full-length-spliced-reads" class="section level2">
-<h2>Step3: Map and filter for full-length, spliced reads</h2>
+<div id="step-3-map-and-filter-for-full-length-spliced-reads" class="section level2">
+<h2>Step 3: Map and filter for full-length, spliced reads</h2>
+<p>We used annotated <a href="https://fantom.gsc.riken.jp/5/datafiles/reprocessed/mm10_latest/extra/CAGE_peaks/">CAGE peaks</a> and <a href="https://polyasite.unibas.ch/atlas">PolyA sites</a> for our study</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">MapAndFilter</span>(<span class="dt">annoGZ=</span><span class="st">'[PATH_TO_annotation.gtf.gz]'</span>,<span class="dt">numThreads=</span><span class="dv">24</span>, </a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">             <span class="dt">seqDir =</span> <span class="st">'[PATH_TO_DIR/chr*.fa.gz]'</span>,</a>
@@ -486,8 +487,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>NOTE</strong> the parameter seqDir takes in a reference genome broken down by chromosome so as to parallelize the process. This function has not yet been made generalizable to loading in the full reference</p>
 <p>This will result in multiple files being stored in yet another output directory: <em>LRProcessingOutput</em></p>
 </div>
-<div id="step4-concatenate-all-the-information-collected-so-far" class="section level2">
-<h2>Step4: Concatenate all the information collected so far</h2>
+<div id="step-4-concatenate-all-the-information-collected-so-far" class="section level2">
+<h2>Step 4: Concatenate all the information collected so far</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"> </a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">InfoPerLongRead</span>(<span class="dt">barcodeOutputFile =</span> </a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">                  <span class="st">'OutputFiltered/FilteredDeconvBC_AllFiles.csv'</span>,</a>
@@ -511,8 +512,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tbody>
 </table>
 </div>
-<div id="step5a-quantify-the-various-isoforms-observed-in-your-data" class="section level2">
-<h2>Step5a: Quantify the various isoforms observed in your data</h2>
+<div id="step-5a-quantify-the-various-isoforms-observed-in-your-data" class="section level2">
+<h2>Step 5a: Quantify the various isoforms observed in your data</h2>
 <p>If you provided CAGE and PolyA peaks at the MapAndFilter() stage, you can choose to quantify unique cage and polyA sites per gene. Otherwise the default option is False</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">IsoQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">          <span class="dt">Iso =</span> <span class="ot">TRUE</span>, <span class="dt">TSS =</span> <span class="ot">TRUE</span>, <span class="dt">PolyA =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
@@ -523,16 +524,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul>
 <p>These will be used for the differential splicing analysis step</p>
 </div>
-<div id="step5b-optional-quantify-the-various-exons-observed-in-your-data" class="section level2">
-<h2>Step5b: [OPTIONAL] Quantify the various exons observed in your data</h2>
+<div id="step-5b-optional-quantify-the-various-exons-observed-in-your-data" class="section level2">
+<h2>Step 5b: [OPTIONAL] Quantify the various exons observed in your data</h2>
 <p>For ONT reads we don’t have too much confidence in this method and recommend using our sister package IsoQuant.</p>
 <p>This function however, works for annotated as well as novel exons</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ExonQuant</span>(<span class="dt">AllInfoFile =</span> <span class="st">'LongReadInfo/AllInfo'</span>, </a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">          <span class="dt">groupingFactor =</span> <span class="st">&quot;Celltype&quot;</span>, <span class="dt">threshold =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>This will output the quantifications to a separate folder <em>ExonQuantOutput</em></p>
 </div>
-<div id="step6-differential-isoform-analysis" class="section level2">
-<h2>Step6: Differential isoform analysis</h2>
+<div id="step-6-differential-isoform-analysis" class="section level2">
+<h2>Step 6: Differential isoform analysis</h2>
 <p>This step can be done using various settings for various modalities. Options include</p>
 <ul>
 <li>Full-length isoform (Iso)</li>
@@ -642,8 +643,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>NOTE</strong> Deeper data will yield significant values. These ^ are just a product of the example data subset we have provided with the package</p>
 <p>You can use the above output to plot your significant genes</p>
 </div>
-<div id="step7-visualizations" class="section level2">
-<h2>Step7: Visualizations</h2>
+<div id="step-7-visualizations" class="section level2">
+<h2>Step 7: Visualizations</h2>
 <div id="triangular-heatmap" class="section level3">
 <h3>Triangular Heatmap</h3>
 <p>This function plots a triangular heatmap of percentage DIE genes of pairwise comparisons in a directory It also takes in an untitled file list of cell types to be plotted as follows:</p>

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_01_20_Anchors/DevelopmentAnchors_prelimAnalysis.R="A5A516AD"
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_01_23_ExplainingDiffIsoExp_ExonsAndTSS/TSS.Iso.PolyA/GOrilla/ReviGO/GNB_EN.r="E341AD96"
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_01_23_ExplainingDiffIsoExp_ExonsAndTSS/TSS.Iso.PolyA/GOrilla/ReviGO/NIPC_GNB_BP.r="98BA0BCA"
@@ -6,6 +5,7 @@
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_01_23_ExplainingDiffIsoExp_ExonsAndTSS/TSS.Iso.PolyA/GOrilla/ReviGO/REVIGO_RGL_NIPC_MF.r="E6C0C764"
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_08_05_SpatialSeq_MoreBarcodes/README.md="AB5064DB"
 /Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_09_10_TrainingSCmodels_scPred/scPred_ZeiselBrainData.Rmd="2837CB44"
+/Users/anoushkajoglekar/Documents/TilgnerLab/2020/2020_11_24_snisorSeq/shortRead_10X_analysis/integrationAnchors.R="F648F40B"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/.Rbuildignore="E33BA6B"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/.Rhistory="10B183B7"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/.gitignore="E546622D"
@@ -26,6 +26,7 @@
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/R/sigSplitPie.R="F4C39CAC"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/R/triHeatmap.R="C9C19620"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/README.Rmd="97A65510"
+/Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/README.md="53DEF75"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/RScript/ExonCounting.R="7502E7B1"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/RScript/ExonTest.R="E50CF3EB"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/RScript/GOAnalysisWithPlots.R="4DDB2F0D"
@@ -45,6 +46,7 @@
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/bash/minimap2comm.sh="F7A8BDCA"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/bash/toolCheck.sh="5C25BA34"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/bash/v0.1.getSpliceSiteSequence.awk="DCD71F4C"
+/Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/bash/v1.0b.correct.strand.bySpliceSiteConsensus.awk="4F092B39"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/bash/v1.0b.getGenes_andHighlightProblematicReadsAndGenes.awk="8CB3BD84"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/python/AllIsoformsXCell_sparseMatrix.py="6174652"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/scisorseqr/inst/python/BarcodeDeconvolution.py="2D7EFD8B"
@@ -60,7 +62,3 @@
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/sl-iso-seq/app.R="A8ED935C"
 /Users/anoushkajoglekar/Documents/TilgnerLab/GitLab/spatialviz_extended/app.R="178834D1"
 /Users/anoushkajoglekar/ScISOrSeqR/man/LongReadInfo.Rd="D8221054"
-=======
-E:/Anoushka_2020/Gitlab/scisorseqr/README.Rmd="F02F66E9"
-E:/Anoushka_2020/Gitlab/scisorseqr/README.md="390E8471"
->>>>>>> 0743fd2b60e4bdcd41318fa9b639188dd45cb857
