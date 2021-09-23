@@ -43,8 +43,14 @@ InfoPerLongRead <- function(barcodeOutputFile, mapAndFilterOut, minTimesIsoObser
           exonFile, minTimesIsoObserve, incompFile)
   system(longReadInfoComm)
 
-  removeDirComm <- paste("rm -r",mapAndFilterOut)
+  fN <- list.files(mapAndFilterOut,recursive=T,include.dirs=T)
+  filesToKeep <- c('mapping.bestperRead.bam','mapping.bestperRead.RNAdirection.withConsensIntrons.gff.gz',
+	'mapping.bestperRead.RNAdirection.withConsensIntrons.transcriptWise.genes.gz')
+  filesToRemove <- setdiff(fN,filesToKeep)
 
-  if(rmTmpFolder == TRUE){system(removeDirComm)}
+  if(rmTmpFolder == TRUE){
+    s1 = sapply(filesToRemove, function(f) file.remove(file.path(mapAndFilterOut,f)))
+    s2 = file.remove('tmpDir/')		
+  }
 
 }

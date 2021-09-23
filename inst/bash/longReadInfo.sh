@@ -85,7 +85,8 @@ awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 
 mv a LongReadInfo/XX_2
 
-cat LongReadInfo/XX_2 | awk 'BEGIN {OFS="\t"} {print $1,$9,$8,$7,$10,$5,$4,$6,$11,$3,$2}' > LongReadInfo/AllInfo_IncompleteReads
+cat LongReadInfo/XX_2 | awk 'BEGIN {OFS="\t"} {print $1,$9,$8,$7,$10,$5,$4,$6,$11,$3,$2}' | \
+gzip -c > LongReadInfo/AllInfo_IncompleteReads.gz
 
 rm LongReadInfo/tmp_2
 rm LongReadInfo/XX_2
@@ -96,7 +97,7 @@ awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 <(zcat $exonStretches) LongReadInfo/XX > a
 
 mv a LongReadInfo/XX
-cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$9,$3,$2}' > LongReadInfo/AllInfo
+cat LongReadInfo/XX | awk 'BEGIN {OFS="\t"} {print $1,$7,$6,$5,$8,$4,$9,$3,$2}' | gzip -c > LongReadInfo/AllInfo.gz
 
 rm LongReadInfo/tmp
 rm LongReadInfo/XX

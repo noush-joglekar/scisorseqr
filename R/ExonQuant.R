@@ -22,7 +22,7 @@
 #' @import parallel
 #' @export
 
-ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo_IncompleteReads',
+ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo_IncompleteReads.gz',
                            groupingFactor = "Celltype",threshold = 10, numThreads = 4) {
 
   if(!dir.exists('ExonQuantOutput')){dir.create("ExonQuantOutput/")}
