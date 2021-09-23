@@ -103,13 +103,13 @@ rm LongReadInfo/tmp
 rm LongReadInfo/XX
 
 
-cat LongReadInfo/AllInfo | awk '{if(!seen[$2"_"$4]++){count[$4"~"$3]++$2;}}END {for (c in count) \
+zcat LongReadInfo/AllInfo.gz | awk '{if(!seen[$2"_"$4]++){count[$4"~"$3]++$2;}}END {for (c in count) \
 {split(c,s,"~"); OFS="\t"; {print s[1],s[2],count[c]}}}' > LongReadInfo/GenesPerCell
 
-cat LongReadInfo/AllInfo | awk '{if(!seen[$1"_"$4]++){count[$4"~"$3]++$1;}}END {for (c in count) \
+zcat LongReadInfo/AllInfo.gz | awk '{if(!seen[$1"_"$4]++){count[$4"~"$3]++$1;}}END {for (c in count) \
 {split(c,s,"~"); OFS="\t"; {print s[1],s[2],count[c]}}}' > LongReadInfo/ReadsPerCell
 
-cat LongReadInfo/AllInfo | awk '{if(!seen[$5"_"$4]++){count[$4"~"$3]++$5;}}END {for (c in count) \
+zcat LongReadInfo/AllInfo.gz | awk '{if(!seen[$5"_"$4]++){count[$4"~"$3]++$5;}}END {for (c in count) \
 {split(c,s,"~"); OFS="\t"; {print s[1],s[2],count[c]}}}' > LongReadInfo/UMIsPerCell
 
 echo "Output in LongReadInfo"
