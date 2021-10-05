@@ -9,21 +9,25 @@ genomeFa=$4;
 numThreads=$5;
 
 ## Create a fastq guide
-for i in $(ls $fastqDir/*.fastq.gz) ; do echo $i | awk -v path=$(pwd) \
-'{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path"/"$1}' ; done > Misc/fastqGuide
+for i in $(ls $fastqDir/*.fastq.gz); do 
+    echo $i | awk -v path=$(pwd) \
+    '{n=split($1,a,/\/|.fastq/); print a[n-1]"\t"path"/"$1}'
+done > Misc/fastqGuide
 
 ## Running minimap2 over all files listed in the guide
-n=`cat Misc/fastqGuide | wc -l` ; for i in `seq 1 $n` ; do name=`cat Misc/fastqGuide \
-| head -$i | tail -1 | awk '{print $1;}'` ; \
-echo "### treating "$name >> $mmOut/REPORT.minimap2 ; \
-file=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $2}'` ; \
-$progPath -t $numThreads -ax splice --secondary=no $genomeFa \
-$file > $mmOut/$name.sam ; done &>> $mmOut/REPORT.minimap2
+n=`cat Misc/fastqGuide | wc -l`
+for i in `seq 1 $n`; do
+    name=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $1;}'`
+    echo "### treating $name" >> $mmOut/REPORT.minimap2
+    file=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $2}'`
+    $progPath -t $numThreads -ax splice --secondary=no $genomeFa \
+        $file > $mmOut/$name.sam
+done >> $mmOut/REPORT.minimap2
 
-for i in $(ls $mmOut/*.sam) ; \
-do name=`echo $i | awk '{n=split($1,a,/\/|.sam/); print a[n-1]}'`; \
-samtools view -bh $i -o $mmOut/$name.bam ; \
-rm $mmOut/$name.sam; \
+for i in $(ls $mmOut/*.sam); do 
+    name=`echo $i | awk '{n=split($1,a,/\/|.sam/); print a[n-1]}'`
+    samtools view -bh $i -o $mmOut/$name.bam
+    rm $mmOut/$name.sam
 done
 
 
