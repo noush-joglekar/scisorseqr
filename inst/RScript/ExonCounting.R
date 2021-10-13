@@ -33,12 +33,14 @@ internalExons = allInfo_SE %>% tidyr::separate_rows(Exons,sep = ";%;") %>% dplyr
 uniqExons <- internalExons %>% dplyr::ungroup() %>% dplyr::select(Exons, Gene) %>% dplyr::distinct()
 
 inclusionCounts <- internalExons %>% dplyr::ungroup() %>% dplyr::select(Exons,Gene,all_of(groupingFactor)) %>%
-        dplyr::group_by(Exons,Gene,.dots=groupingFactor) %>% dplyr::add_count(name = "Inclusion") %>%
+        dplyr::group_by(Exons,Gene,.dots=groupingFactor) %>% dplyr::add_count(name = "inclusion") %>%
         dplyr::distinct() %>% as.data.frame()
 
-readSE <- internalExons %>% dplyr::select(Read,Gene,all_of(groupingFactor),start,end) %>% dplyr::distinct() %>% as.data.frame()
+readSE <- internalExons %>% dplyr::select(Read,Gene,all_of(groupingFactor),start,end) %>%
+	dplyr::distinct() %>% as.data.frame()
 
 checkSpanningReads <- function(gene){
+	tid <- as.character(Sys.getpid())
         exons <- uniqExons %>% dplyr::filter(Gene == gene) %>%
                 tidyr::separate(Exons,into=c("chr","s","e","strand"),sep = "_",remove=FALSE)
         reads <- readSE %>% dplyr::filter(Gene == gene)
@@ -48,13 +50,14 @@ checkSpanningReads <- function(gene){
         inclusionReads <- inclusionCounts %>% dplyr::filter(Gene == gene)
         inc_tot <- dplyr::right_join(inclusionReads,spanningReads,by = c('Exons',"Gene",groupingFactor)) %>%
                 replace(is.na(.),0) %>%
-                dplyr::mutate(PSI = Inclusion/Total, Exclusion = Total-Inclusion) %>% as.data.frame()
-        fName <- file.path(outDir,"InclusionExclusionCounts.tsv")
+                dplyr::mutate(PSI = inclusion/Total, exclusion = Total-inclusion) %>% as.data.frame()
+	inc_tot <- inc_tot[,c(1:4,7,5,6)]
+        fName <- file.path(outDir,paste0("PID_",tid,"_InclusionExclusionCounts.tsv"))
         if(file.exists(fName)){
-                write.table(inc_tot,file.path(outDir,"InclusionExclusionCounts.tsv"),sep ="\t",
+                write.table(inc_tot,fName,sep ="\t",
                         append= T, quote = F, row.names = F, col.names = FALSE)
         } else{
-               	write.table(inc_tot,file.path(outDir,"InclusionExclusionCounts.tsv"),sep ="\t",
+               	write.table(inc_tot,fName,sep ="\t",
                         quote = F, row.names = F, col.names = TRUE)
         }
 	return

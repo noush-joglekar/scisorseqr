@@ -34,4 +34,10 @@ ExonQuant <- function(allInfoFile = 'LongReadInfo/AllInfo_IncompleteReads.gz',
   countExons <- paste("Rscript", R_file, allInfoFile, groupingFactor, numThreads, threshold)
   system(countExons)
 
+  concatComm <- "awk 'FNR==1 && NR!=1{next;}{print}' ExonQuantOutput/PID*.tsv > ExonQuantOutput/InclusionExclusionCounts.tsv"
+  system(concatComm)
+
+  rmComm = "rm ExonQuantOutput/PID*.tsv"
+  system(rmComm)
+
 }

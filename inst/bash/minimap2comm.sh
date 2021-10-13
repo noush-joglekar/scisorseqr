@@ -18,14 +18,13 @@ n=`cat Misc/fastqGuide | wc -l` ; for i in `seq 1 $n` ; do name=`cat Misc/fastqG
 echo "### treating "$name >> $mmOut/REPORT.minimap2 ; \
 file=`cat Misc/fastqGuide | head -$i | tail -1 | awk '{print $2}'` ; \
 $progPath -t $numThreads -ax splice --secondary=no $genomeFa \
-$file > $mmOut/$name.sam ; done &>> $mmOut/REPORT.minimap2
+$file > $mmOut/$name.sam ; done >> $mmOut/REPORT.minimap2 2>&1
 
 for i in $(ls $mmOut/*.sam) ; \
 do name=`echo $i | awk '{n=split($1,a,/\/|.sam/); print a[n-1]}'`; \
 samtools view -bh $i -o $mmOut/$name.bam ; \
 rm $mmOut/$name.sam; \
 done
-
 
 ## Create a bam guide for further processing
 for i in $(ls $mmOut/*.bam) ; do echo $i | awk -v path=$(pwd) '{print path"/"$1}' ; done > Misc/bamGuide
