@@ -93,11 +93,12 @@ pval <- geneL <- exonL <- dpsi <- psi1 <- psi2 <- c()
 ## dataframe is sorted so two lines correspond to our comparisons of interest
 ## Filter on counts: chi-sq test criterion + PSI of matrix should be >=0.1 and <=0.9
 checkAndCompute <- function(inputMat,ix){
-	mat<- as.matrix(inputMat[c((2*ix)-1,2*ix),c(4,5)])
+	mat <- inputMat %>% dplyr::filter(Exon == ix) %>%
+		dplyr::select(Inclusion,Exclusion) %>% as.matrix()
 	if (sum(mat) > 0 && max(colSums(mat))/sum(mat) <= 0.9 &&
 	min(rowSums(mat))*min(colSums(mat))/sum(mat) > 5){
-		exonL <- c(exonL,as.character(inputMat[2*ix,1]))
-		geneL <- c(geneL,as.character(inputMat[2*ix,2]))
+		exonL <- as.matrix(inputMat %>% dplyr::filter(Exon == ix) %>% dplyr::select(Exon))[1]
+		geneL <- as.matrix(inputMat %>% dplyr::filter(Exon == ix) %>% dplyr::select(Gene))[1]
 		psis <- mat[,1]/rowSums(mat)
 		psi1 <- c(psi1,psis[1])
 		psi2 <- c(psi2,psis[2])
@@ -107,7 +108,7 @@ checkAndCompute <- function(inputMat,ix){
 	return(list(exonL,geneL,pval,dpsi,psi1,psi2))}
 
 ## Run function for the full dataset and convert to dataframe
-res <- parallel::mclapply(1:numExons, function(ix) checkAndCompute(condensedDF,ix),mc.cores=24)
+res <- parallel::mclapply(unique(condensedDF$Exon), function(ix) checkAndCompute(condensedDF,ix),mc.cores=24)
 res <- unlist(plyr::compact(res))
 res <- as.data.frame(matrix(res, ncol = 6,  byrow = TRUE), stringsAsFactors = FALSE)
 colnames(res) <- c("Exon","Gene","Pval","dPSI","psi1","psi2")
