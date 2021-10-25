@@ -64,4 +64,3 @@ checkSpanningReads <- function(gene){
 }
 
 byGene = parallel::mclapply(unique(uniqExons$Gene), function(g) checkSpanningReads(g), mc.cores = nThreads)
-reads <- readSE %>% dplyr::filter(Gene == gene)
