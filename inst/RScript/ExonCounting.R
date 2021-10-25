@@ -44,7 +44,7 @@ checkSpanningReads <- function(gene){
         exons <- uniqExons %>% dplyr::filter(Gene == gene) %>%
                 tidyr::separate(Exons,into=c("chr","s","e","strand"),sep = "_",remove=FALSE)
         reads <- readSE %>% dplyr::filter(Gene == gene)
-        spanningReads <- dplyr::left_join(reads,exons,by = "Gene") %>% dplyr::filter(s >= start && e <= end) %>%
+        spanningReads <- dplyr::left_join(reads,exons,by = "Gene") %>% dplyr::filter(s >= start & e <= end) %>%
                 dplyr::select(Exons,Gene,all_of(groupingFactor)) %>% dplyr::group_by(Exons,Gene,.dots = groupingFactor) %>%
                 dplyr::add_count(name = "Total") %>% dplyr::distinct() %>% as.data.frame()
         inclusionReads <- inclusionCounts %>% dplyr::filter(Gene == gene)
@@ -64,3 +64,4 @@ checkSpanningReads <- function(gene){
 }
 
 byGene = parallel::mclapply(unique(uniqExons$Gene), function(g) checkSpanningReads(g), mc.cores = nThreads)
+reads <- readSE %>% dplyr::filter(Gene == gene)
