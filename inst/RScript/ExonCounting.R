@@ -45,7 +45,7 @@ checkSpanningReads <- function(gene){
                 tidyr::separate(Exons,into=c("chr","s","e","strand"),sep = "_",remove=FALSE)
         reads <- readSE %>% dplyr::filter(Gene == gene)
         spanningReads <- dplyr::left_join(reads,exons,by = "Gene") %>%
-		mutate_at(c('s','e','start','end'), as.integer) %>%
+		dplyr::mutate_at(c('s','e','start','end'), as.integer) %>%
 		dplyr::filter(s >= start & e <= end) %>%
                 dplyr::select(Exons,Gene,all_of(groupingFactor)) %>% dplyr::group_by(Exons,Gene,.dots = groupingFactor) %>%
                 dplyr::add_count(name = "Total") %>% dplyr::distinct() %>% as.data.frame()
