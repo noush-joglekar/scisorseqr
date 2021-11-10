@@ -12,6 +12,8 @@
 #' genes. Defaults to 25
 #' @param typeOfTest Exon, TSS, PolyA or Isoform test conducted
 #' depending on input. Defaults to Iso
+#' @param numThreads number of parallel processes for the differential
+#' testing. Defaults to 10
 #' @param is.hier OPTIONAL logical indicating hierarchical structure
 #' @param region1 string containing comparison1 for parsing if is.hier
 #' is TRUE
@@ -30,7 +32,7 @@
 #'
 #' @export
 DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25, typeOfTest = "Iso",
-                                 is.hier = FALSE, region1 = NULL, region2 = NULL, yamlFile = NULL) {
+			numThreads = 10, is.hier = FALSE, region1 = NULL, region2 = NULL, yamlFile = NULL) {
   R_file <- system.file("RScript", "IsoformTest.R", package = "scisorseqr")
   exonFile <- system.file("RScript", "ExonTest.R", package = "scisorseqr")
 
@@ -48,22 +50,22 @@ DiffSplicingAnalysis <- function(configFile, numIsoforms = 10, minNumReads = 25,
     if (is.hier == FALSE){
       call1 <- paste("while read -r line; do echo $line | Rscript", R_file,
                      inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                     numIsoforms, minNumReads, typeOfTest, FALSE, "; done <", configFile)
+                     numIsoforms, minNumReads, typeOfTest, numThreads, FALSE, "; done <", configFile)
     } else {
       call1 <- paste("while read -r line; do echo $line | Rscript ", R_file,
                      inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                     numIsoforms, minNumReads, typeOfTest, TRUE ,
+                     numIsoforms, minNumReads, typeOfTest, numThreads, TRUE ,
                      yamlFile, region1, region2, "; done <", configFile)
     }
   } else {
     if (is.hier == FALSE){
       call1 <- paste("while read -r line; do echo $line | Rscript", exonFile,
                      inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                     FALSE, "; done <", configFile)
+                     numThreads, FALSE, "; done <", configFile)
     } else {
       call1 <- paste("while read -r line; do echo $line | Rscript ", exonFile,
                      inputFile, "$(awk \'{split($0,a,\"\\t\"); {print a[1],a[2],a[3],a[4]}}\')",
-                     TRUE, numIsoforms, minNumReads, yamlFile,
+                     numThreads, TRUE, numIsoforms, minNumReads, yamlFile,
                      region1, region2, "; done <", configFile)
     }
   }

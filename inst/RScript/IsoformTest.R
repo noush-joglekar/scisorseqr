@@ -24,10 +24,11 @@ inum <- as.integer(args[6])
 threshold <- as.integer(args[7])
 
 typeOfTest <- args[8]
-is.hier <- args[9]
+coresToUse <- as.integer(args[9])
+is.hier <- args[10]
 
 if(is.hier == TRUE){
-  if(length(args) < 12){
+  if(length(args) < 13){
     print("Please input path to hierarchy.yaml file")
     print("Indicate names of case-control corresponding to config file")
     print("Aborting")
@@ -38,9 +39,9 @@ if(is.hier == TRUE){
            call. = FALSE)
     }
 
-    h <- yaml::yaml.load_file(args[10])
+    h <- yaml::yaml.load_file(args[11])
     hier <- data.tree::as.Node(h)
-    region <- c(args[11],args[12])
+    region <- c(args[12],args[13])
     if(!dir.exists(paste0('TreeTraversal_Hier_',typeOfTest))){
       dir.create(paste0('TreeTraversal_Hier_',typeOfTest))
       out_dir <- paste0('TreeTraversal_Hier_',typeOfTest,'/',comps[1],"_",comps[2],"_",inum,"/")
@@ -92,9 +93,6 @@ Get_Pval_DeltaPI <- function(mat){
 }
 
 ############################
-
-coresToUse <- parallel::detectCores()/2
-
 
 numIsoPerCluster <- numIsoPerCluster[numIsoPerCluster$V2 %in% comparisons]
 colnames(numIsoPerCluster) <- c("Isoform","CellType","NumTranscripts")

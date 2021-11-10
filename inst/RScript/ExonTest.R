@@ -13,9 +13,7 @@
 
 args <- commandArgs(trailingOnly=TRUE)
 
-
 inclusionFile <- data.table::fread(args[1])
-
 comps <- c(args[2],args[4])
 
 type1 <- unlist(strsplit(args[3],","))
@@ -25,10 +23,11 @@ inclusionFile$Celltype[inclusionFile$Celltype %in% type1] = args[2]	## rename ce
 inclusionFile$Celltype[inclusionFile$Celltype %in% type2] = args[4]
 comparisons <- comps
 
-is.hier <- args[6]
+numThreads <- as.integer(args[6])
+is.hier <- args[7]
 
 if(is.hier == TRUE){
-  if(length(args) < 11){
+  if(length(args) < 12){
     print("Please input path to hierarchy.yaml file")
     print("Indicate names of case-control corresponding to config file")
     print("Aborting")
@@ -38,11 +37,11 @@ if(is.hier == TRUE){
       stop("Packages \"yaml\" and \"data.tree\" needed for this function to work. Please install it.",
            call. = FALSE)
     }
-    inum <- as.integer(args[7])
-    threshold = as.integer(args[8])
-    h <- yaml::yaml.load_file(args[9])
+    inum <- as.integer(args[8])
+    threshold = as.integer(args[9])
+    h <- yaml::yaml.load_file(args[10])
     hier <- data.tree::as.Node(h)
-    region <- c(args[10],args[11])
+    region <- c(args[11],args[12])
     if(!dir.exists('TreeTraversal_Hier_Exon')){
       dir.create('TreeTraversal_Hier_Exon/')
       out_dir <- paste0('TreeTraversal_Hier_Exon/',comps[1],"_",comps[2],"/")
@@ -108,7 +107,7 @@ checkAndCompute <- function(inputMat,ix){
 	return(list(exonL,geneL,pval,dpsi,psi1,psi2))}
 
 ## Run function for the full dataset and convert to dataframe
-res <- parallel::mclapply(unique(condensedDF$Exon), function(ix) checkAndCompute(condensedDF,ix),mc.cores=24)
+res <- parallel::mclapply(unique(condensedDF$Exon), function(ix) checkAndCompute(condensedDF,ix),mc.cores=numThreads)
 res <- unlist(plyr::compact(res))
 res <- as.data.frame(matrix(res, ncol = 6,  byrow = TRUE), stringsAsFactors = FALSE)
 colnames(res) <- c("Exon","Gene","Pval","dPSI","psi1","psi2")
@@ -126,6 +125,7 @@ genesTested <- length(unique(res$Gene))
 genesSig <- length(unique(res[sigCor,"Gene"]))
 
 cat("Total exons tested:",length(res$FDR),"\n")
+
 cat("Number exons with |deltaPSI| >= 0.1:",length(dPSI),"\n")
 cat("Number of significant exons by BY:",length(sig),"\n")
 cat("Number of BY sig genes with deltaPSI >= 0.1:",length(sigCor),"\n")
