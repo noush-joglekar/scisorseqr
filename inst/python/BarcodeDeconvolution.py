@@ -310,9 +310,7 @@ def chunkAndProcess(args,d,tooShort):
 		for lineno, line in enumerate(f, start = startLine):
 			if lineno < startLine + (toFork * 4):
 				if lineno % step == 0:
-					rn = line[:-1]
-					if 'runid' in rn:
-						rn = line.split(' ')[0]
+					rn = line[:-1].split(' ')[0]
 				if lineno % step == 1 and len(line) >= 201:
 					d = addToDict(d, line, rn)
 				if  lineno % step == 1 and len(line) < 201:
