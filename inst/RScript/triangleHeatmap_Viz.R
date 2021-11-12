@@ -7,22 +7,21 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 tree_dir <- args[1]
-
 files = list.files(tree_dir,recursive = TRUE)[grep("results.csv",list.files(tree_dir,recursive = TRUE))]
 
-fileNames = unlist(strsplit(files,"_10/"))[c(TRUE,FALSE)]
+cT <- unique(as.vector(read.table(args[2])$V1))
 
-x <- as.vector(read.table(args[2])$V1)
-cT <- unique(unlist(strsplit(x,"_"))[c(FALSE,TRUE)])
+teType <- args[3]
 
 summaryMat <- matrix(0,length(cT),length(cT))
 rownames(summaryMat) <- colnames(summaryMat) <- cT
 
 for (file in files){
   i = grep(file,files)
-  f = read.table(paste0(tree_dir,"/",file),header=TRUE,row.names = 1)
+  f = read.table(file.path(tree_dir,file),header=TRUE,row.names = 1)
+  if(teType == "Exon"){colnames(f)[3] <- "dPI"} 
   perc <- nrow(f %>% dplyr::filter(FDR <= 0.05 & abs(dPI) >= 0.1))/nrow(f)
-  s = unlist(strsplit(file,"_"))[1:2]
+  s = unlist(strsplit(basename(file),"_"))[1:2]
   if(s[1] %in% cT & s[2] %in% cT){
     summaryMat[s[1],s[2]] = perc
     summaryMat[s[2],s[1]] = perc
@@ -45,13 +44,13 @@ g = ggplot2::ggplot(data = mS, ggplot2::aes(x=Var1, y=Var2, fill=as.numeric(valu
   cowplot::theme_cowplot() +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1,
                                    size = 12, hjust = 1))+
-  ggplot2::coord_fixed()+ggplot2::labs(title=paste0("Percentage significant genes\n",args[3]),
+  ggplot2::coord_fixed()+ggplot2::labs(title=paste0("Percentage significant genes\n",args[4],"_",teType),
                      x ="CellType1", y = "CellType2") +
   ggplot2::geom_text(data = mS,
 	ggplot2::aes(Var1, Var2, label = round(as.numeric(value)*100,digits = 1)),
 	color = "black", size = 4)
 
 
-pdf(paste0("Visualizations/",args[3],".pdf"),12,8,useDingbats=FALSE)
+pdf(paste0("Visualizations/",args[4],"_",teType,".pdf"),12,8,useDingbats=FALSE)
 print(g)
 dev.off()
