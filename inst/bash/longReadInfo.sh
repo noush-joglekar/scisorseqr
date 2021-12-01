@@ -80,7 +80,7 @@ name[a[2]]=a[2];bc[a[2]]=$5;ct[a[2]]=$7;umi[a[2]]=$8;ensGene[a[2]]=$12;next} \
 $1 in name {print $0,bc[$1],ct[$1],ensGene[$1],umi[$1]}' \
 LongReadInfo/Mapped_Barcoded LongReadInfo/tmp_2 > LongReadInfo/XX_2
 
-awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
+awk 'NR==FNR {split($1,r,/"|.path1/); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 <(zcat $exonStretches) LongReadInfo/XX_2 > a
 
 mv a LongReadInfo/XX_2
@@ -93,7 +93,7 @@ rm LongReadInfo/XX_2
 
 fi
 
-awk 'NR==FNR {split($1,r,/"|\./); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
+awk 'NR==FNR {split($1,r,/"|.path1/); e[r[2]]=$2; next} $1 in e {print $0,e[$1]}' \
 <(zcat $exonStretches) LongReadInfo/XX > a
 
 mv a LongReadInfo/XX
