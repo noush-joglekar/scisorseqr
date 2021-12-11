@@ -5,7 +5,7 @@
 \title{Count exon inclusion and exclusion according to grouping factor}
 \usage{
 ExonQuant(
-  allInfoFile = "LongReadInfo/AllInfo_IncompleteReads",
+  allInfoFile = "LongReadInfo/AllInfo_IncompleteReads.gz",
   groupingFactor = "Celltype",
   threshold = 10,
   numThreads = 4

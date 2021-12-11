@@ -20,6 +20,9 @@ genes. Defaults to 25}
 \item{typeOfTest}{Exon, TSS, PolyA or Isoform test conducted
 depending on input. Defaults to Iso}
 
+\item{numThreads}{number of parallel processes for the differential
+testing. Defaults to 10}
+
 \item{is.hier}{OPTIONAL logical indicating hierarchical structure}
 
 \item{region1}{string containing comparison1 for parsing if is.hier

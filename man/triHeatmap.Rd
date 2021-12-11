@@ -11,6 +11,9 @@ triHeatmap('TreeTraversal_Iso/','neuronal_cellTypes','NeuronSubtype')
 
 \item{comparisonList}{List of comparisons to be included in plot}
 
+\item{typeOfTest}{type of test being visualized, e.g. "Exon" or "Iso".
+Defaults to "Iso".}
+
 \item{outName}{plot label}
 }
 \value{
