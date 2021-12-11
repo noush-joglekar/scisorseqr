@@ -34,7 +34,7 @@ IsoQuant <- function(AllInfoFile, Iso=TRUE, TSS=FALSE, PolyA=FALSE) {
   dir.create(iso_quant_folder)
 
   run_prog <- paste("Rscript", R_file, AllInfoFile, Iso, TSS, PolyA, iso_quant_folder)
-  DS_iso <- paste("sh", sh_file, iso_quant_folder, "Gene_Cluster_Cell_IsoIDs_PerRead.csv", Iso, TSS, PolyA)
+  DS_iso <- paste("bash", sh_file, iso_quant_folder, "Gene_Cluster_Cell_IsoIDs_PerRead.csv", Iso, TSS, PolyA)
 
   system(run_prog)
   if(file.exists(file.path(iso_quant_folder, "Gene_Cluster_Cell_IsoIDs_PerRead.csv"))){

@@ -17,10 +17,10 @@ FilterBCOutput <- function(outputFolder, raw_Output,  concatenate, filterReads, 
   dir.create(filt_Output)
 
   if (concatenate == TRUE){
-    filterAndConcat <- paste("sh", filterOut, raw_Output, filt_Output, TRUE, filterReads, fqFolder)
+    filterAndConcat <- paste("bash", filterOut, raw_Output, filt_Output, TRUE, filterReads, fqFolder)
     system(filterAndConcat)
   } else {
-    filterOnly <- paste("sh", filterOut, raw_Output, filt_Output, FALSE, filterReads, fqFolder)
+    filterOnly <- paste("bash", filterOut, raw_Output, filt_Output, FALSE, filterReads, fqFolder)
     system(filterOnly)
   }
 }

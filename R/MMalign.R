@@ -32,7 +32,7 @@ MMalign <- function(fqFolder, mmProgPath, refGenome, numThreads=8) {
   if(!dir.exists(mmOut)){dir.create(mmOut)}
 
   print("Aligning with minimap2")
-  runIt <- paste("sh", mmComm, fqFolder, mmOut, mmProgPath, refGenome, numThreads)
+  runIt <- paste("bash", mmComm, fqFolder, mmOut, mmProgPath, refGenome, numThreads)
   system(runIt)
 
 }

@@ -19,7 +19,7 @@ STARalign <- function(fqFolder, starProgPath, refGenomeIndex, numThreads=8) {
 
   # Check that bedtools and samtools are correctly installed and loaded.
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
-  if(system(paste("sh", checkFile)) == 127) {
+  if(system(paste("bash", checkFile)) == 127) {
     stop(paste0("Error: samtools necessary for conversion to .bam format \n",
                 "Check that both bedtools and samtools are installed and loaded before moving forward."))
   }
@@ -32,7 +32,7 @@ STARalign <- function(fqFolder, starProgPath, refGenomeIndex, numThreads=8) {
   if(!dir.exists(starOut)){dir.create(starOut)}
 
   print("Aligning with STAR")
-  runIt <- paste("sh", starComm, fqFolder, starOut, starProgPath, refGenomeIndex, numThreads)
+  runIt <- paste("bash", starComm, fqFolder, starOut, starProgPath, refGenomeIndex, numThreads)
   system(runIt)
 
 }
