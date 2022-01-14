@@ -46,7 +46,7 @@ if(is.tss != FALSE){
 	ids2 <- data_df %>% dplyr::filter(TSS != "NoTSS") %>% 
           dplyr::group_by(Gene) %>% dplyr::count(TSS) %>%
 	  dplyr::arrange(-n, .by_group=TRUE) %>% dplyr::mutate(tss.id = dplyr::row_number()-1)
-	data_df <- dplyr::inner_join(data_df,ids2, by = c("Gene","TSS")) %>% dplyr::select(-n, -TSS)
+	data_df <- dplyr::left_join(data_df,ids2, by = c("Gene","TSS")) %>% dplyr::select(-n, -TSS)
 	write.table(ids2,file=paste0(isoDir,"TSS-ID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
@@ -56,7 +56,7 @@ if(is.polya != FALSE){
 	ids3 <- data_df %>% dplyr::filter(PolyA != "NoPolyA") %>%
           dplyr::group_by(Gene) %>% dplyr::count(PolyA) %>%
 	  dplyr::arrange(-n, .by_group=TRUE) %>% dplyr::mutate(polya.id = dplyr::row_number()-1)
-	data_df <- dplyr::inner_join(data_df,ids3, by = c("Gene","PolyA")) %>% dplyr::select(-n, -PolyA)
+	data_df <- dplyr::left_join(data_df,ids3, by = c("Gene","PolyA")) %>% dplyr::select(-n, -PolyA)
 	write.table(ids3,file=paste0(isoDir,"PolyA-PolyID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 

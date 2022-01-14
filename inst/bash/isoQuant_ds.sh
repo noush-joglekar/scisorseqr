@@ -28,14 +28,14 @@ fi
 
 if [[ $isTSS = "TRUE" ]]
 then
-	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {count[$2"_"$6"~"$3]++}END \
+	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {if($6!="NA"){count[$2"_"$6"~"$3]++}}END \
 {for (gc in count) {split(gc,g,"~"); \
 print g[1],g[2],count[gc];}}' > $outDir/"NumTSSPerCluster"
 fi
 
 if [[ $isPolyA = "TRUE" ]]
 then
-	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {count[$2"_"$7"~"$3]++}END \
+	cat $outDir/$tabFile | awk 'BEGIN{OFS="\t"} NR>1 {if($7!="NA"){count[$2"_"$7"~"$3]++}}END \
 {for (gc in count) {split(gc,g,"~"); \
 print g[1],g[2],count[gc];}}' > $outDir/"NumPolyAPerCluster"
 fi
