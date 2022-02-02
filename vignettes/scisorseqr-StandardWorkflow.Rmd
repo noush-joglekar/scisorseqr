@@ -1,6 +1,7 @@
 ---
 title: "scisorseqr: Standard Workflow"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
