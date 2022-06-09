@@ -94,7 +94,7 @@ pval <- geneL <- exonL <- dpsi <- psi1 <- psi2 <- c()
 checkAndCompute <- function(inputMat,ix){
 	mat <- inputMat %>% dplyr::filter(Exon == ix) %>%
 		dplyr::select(Inclusion,Exclusion) %>% as.matrix()
-	if (sum(mat) > 0 && max(colSums(mat))/sum(mat) <= 0.9 &&
+	if (sum(mat) > 0 & max(colSums(mat))/sum(mat) <= 0.9 &
 	min(rowSums(mat))*min(colSums(mat))/sum(mat) > 5){
 		exonL <- as.matrix(inputMat %>% dplyr::filter(Exon == ix) %>% dplyr::select(Exon))[1]
 		geneL <- as.matrix(inputMat %>% dplyr::filter(Exon == ix) %>% dplyr::select(Gene))[1]
