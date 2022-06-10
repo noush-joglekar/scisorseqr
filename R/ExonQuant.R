@@ -4,7 +4,7 @@
 #' or cell-barcode to count inclusion and exclusion of exons. Inputs
 #' to this function are based on previous preprocessing steps
 #'
-#' For ONT data we recomment \url{https://github.com/ablab/IsoQuant.git}
+#' For ONT data we recomment \link[IsoQuant]{https://github.com/ablab/IsoQuant}
 #' which allows for non-exact splice-site matching
 #' @param allInfoFile file containing barcode, celltype, and exon information
 #' per read. Defaults to output of the InfoPerLongRead function
@@ -16,6 +16,7 @@
 #' to 4
 #' @seealso \code{\link{MapAndFilter}}
 #' @seealso \code{\link{InfoPerLongRead}}
+#' @seealso \link[IsoQuant]{https://github.com/ablab/IsoQuant}
 #' @return ExonQuantOutput/InclusionExclusionCounts.tsv
 #' 
 #' @import dplyr
