@@ -32,11 +32,13 @@ This function groups reads by either the celltype
 or cell-barcode to count inclusion and exclusion of exons. Inputs
 to this function are based on previous preprocessing steps
 
-For ONT data we recomment \url{https://github.com/ablab/IsoQuant.git}
+For ONT data we recomment \link[IsoQuant]{https://github.com/ablab/IsoQuant}
 which allows for non-exact splice-site matching
 }
 \seealso{
 \code{\link{MapAndFilter}}
 
 \code{\link{InfoPerLongRead}}
+
+\link[IsoQuant]{https://github.com/ablab/IsoQuant}
 }
