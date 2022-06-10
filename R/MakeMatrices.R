@@ -43,8 +43,8 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
     if(convertTo10XoutputFormat == TRUE){
 
       isoMat <- utils::read.table("Matrices/AllIsoformsXAllCells_matrix.csv")
-      geneNames <- data.frame("gene"=unlist(strsplit(rownames(isoMat),"_"))[c(TRUE,FALSE)])
-      isoID <- as.vector(unlist(strsplit(rownames(isoMat),"_"))[c(FALSE,TRUE)])
+      geneNames <- data.frame("gene"=unlist(strsplit(rownames(isoMat),"::"))[c(TRUE,FALSE)])
+      isoID <- as.vector(unlist(strsplit(rownames(isoMat),"::"))[c(FALSE,TRUE)])
 
       if(is.null(ensemblToClear)){
         ensemblToClear <- system.file("extdata", "ENSEMBLE_v21_ClearGeneNames", package = "scisorseqr")}
@@ -54,7 +54,7 @@ MakeMatrices <- function(isoQuantOutDir = 'IsoQuantOutput/', groupBy = "Cell",
 
       isoClear <- as.vector(plyr::join(geneNames,clearGenes)$clear)
       isoClearID <- data.frame("clear"=isoClear,"id"=isoID)
-      isoClearwithID <- tidyr::unite(isoClearID, "clearID", sep = "_")
+      isoClearwithID <- tidyr::unite(isoClearID, "clearID", sep = "::")
 
       DropletUtils::write10xCounts("Matrices/SeuratFriendly/",
                                    methods::as(as.matrix(isoMat),"dgCMatrix"),

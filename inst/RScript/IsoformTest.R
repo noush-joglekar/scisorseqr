@@ -96,7 +96,7 @@ Get_Pval_DeltaPI <- function(mat){
 
 numIsoPerCluster <- numIsoPerCluster[numIsoPerCluster$V2 %in% comparisons]
 colnames(numIsoPerCluster) <- c("Isoform","CellType","NumTranscripts")
-data_df <- tidyr::separate(numIsoPerCluster, Isoform, into=c("Gene","IsoID"), sep="_")
+data_df <- tidyr::separate(numIsoPerCluster, Isoform, into=c("Gene","IsoID"), sep="::")
 
 rm(numIsoPerCluster)
 
