@@ -14,8 +14,8 @@ outFile = "LongReadInfo/AllInfo_IncompleteReads_corrected.gz")
 \item{bedPath}{Path to corrected bed file. Currently does not
 support bed.gz}
 
-\item{Path}{to the output file. Defaults to the LongReadInfo folder and
-generates a file named "AllInfo_IncompleteReads_corrected.gz"}
+\item{Path}{to the output.gz file. Defaults to the LongReadInfo folder and
+generates a file named "AllInfo_IncompleteReads_corrected.gz".}
 }
 \value{
 A file in the AllInfo_Incomplete format with column 6 being the
