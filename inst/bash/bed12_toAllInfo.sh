@@ -15,12 +15,26 @@ cat $corrBed | awk 'NR>1 {exonChain=""; rn=$4; chr=$1; str=$6; nE=$10; nz=split(
 if(nE>=2) {for(i=1;i<=nE;i++) {exon=chr"_"1+$2+bst[i]"_"$2+bst[i]+bsz[i]"_"str; \
 exonChain=exonChain";%;"exon} print rn"\t"exonChain} }' > corrBed_ai
 
+nCol=$(zcat $allInfo | head -1 | awk '{print NF}')
+
+if [ $nCol == 9 ]; then
+echo "processing all-info file w/ complete reads"
+awk -v allInfo=$allInfo 'BEGIN{comm="cat corrBed_ai"; while(comm|getline) {ec[$1]=$2;} comm="zcat "allInfo; \
+while(comm|getline) {if($1 in ec) {$11=$9; $10=$8; $9=$7; $8=$6; $7=ec[$1]; split($9,o,/_|;%;/); \
+split($7,n,/_|;%;/); if(n[5]!=o[5]) {gsub(n[5],o[5],$7);} {if($7==$9) {$6=$8;} else {intronChain=""; \
+nE=split($7,exChain,";%;"); for(i=2;i<=(nE-1);i++){split(exChain[i],start,"_"); split(exChain[i+1],end,"_"); \
+intron=start[1]"_"start[3]+1"_"end[2]-1"_"end[4]; intronChain=intronChain";%;"intron; $6=intronChain}} } OFS="\t"; \
+print }}}' | gzip -c > $allInfoCorrected
+else
+echo "processing all-info file w/ complete and incomplete reads"
 awk -v allInfo=$allInfo 'BEGIN{comm="cat corrBed_ai"; while(comm|getline) {ec[$1]=$2;} comm="zcat "allInfo; \
 while(comm|getline) {if($1 in ec) {$13=$11; $12=$10; $11=$9; $10=$6; $9=ec[$1]; split($11,o,/_|;%;/); \
 split($9,n,/_|;%;/); if(n[5]!=o[5]) {gsub(n[5],o[5],$9);} {if($9==$11) {$6=$10;} else {intronChain=""; \
 nE=split($9,exChain,";%;"); for(i=2;i<=(nE-1);i++){split(exChain[i],start,"_"); split(exChain[i+1],end,"_"); \
 intron=start[1]"_"start[3]+1"_"end[2]-1"_"end[4]; intronChain=intronChain";%;"intron; $6=intronChain}} } OFS="\t"; \
 print }}}' | gzip -c > $allInfoCorrected
+
+fi
 
 rm corrBed_ai
 
