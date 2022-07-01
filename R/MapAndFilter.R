@@ -18,6 +18,9 @@
 #' @param cp_distance OPTIONAL distance from annotated CAGE peak or polyA site
 #' for a read to be considered full-length. Defaults to 50
 #' @param genomeVersion genome and version for GFF output file. Defaults to mm10
+#' @param onlyFullLength OPTIONAL If you have already run this command without
+#' annotated CAGE and PolyA sites and now want to just run that portion, set to
+#' TRUE. Defaults to FALSE
 #' @return directory containing several bam, gff.gz, and flat files
 #' necessary for downstream analysis
 #' @usage MapAndFilter('LRoutput','gencode.vM21.annotation.gtf.gz',16)
@@ -25,7 +28,7 @@
 #'
 MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numThreads = 12,
                         seqDir, filterFullLength = FALSE, cageBed = NULL, polyABed = NULL,
-                        cp_distance = 50, genomeVersion = NULL){
+                        cp_distance = 50, genomeVersion = NULL, onlyFullLength = FALSE){
 
   checkFile <- system.file("bash", "toolCheck.sh", package = "scisorseqr")
   if(system(paste("sh", checkFile)) == 127) {
@@ -48,7 +51,6 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
   bamGuide <- paste0(miscFolder,'bamGuide')
 
   tmpFolder <- 'tmpDir'
-  if(!dir.exists(tmpFolder)){dir.create(tmpFolder)}
 
   if(is.null(annoGZ)){
     annoGZ <- system.file("extdata/", "gencode.vM21.annotation.gtf.gz", package = "scisorseqr")
@@ -61,11 +63,15 @@ MapAndFilter <- function(outputDir = 'LRProcessingOutput/', annoGZ = NULL, numTh
   awkScriptDir <- system.file("bash", package = "scisorseqr")
   pyScriptDir <- system.file("python", package = "scisorseqr")
 
-  if(!dir.exists(outputDir)){dir.create(outputDir)}
-
   runCommand <- paste("sh", mainFile, fastqGuide, outputDir, tmpFolder, numThreads,
                       seqDir, annoGZ, bamGuide, awkScriptDir, pyScriptDir, genomeVersion)
-  system(runCommand)
+
+  if(!dir.exists(outputDir)){dir.create(outputDir)}
+
+  if(onlyFullLength == FALSE){
+    if(!dir.exists(tmpFolder)){dir.create(tmpFolder)}
+    system(runCommand)
+  }
 
   if(filterFullLength == TRUE){
     cageGZ <- cageBed

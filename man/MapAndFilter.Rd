@@ -28,6 +28,10 @@ sites. Defaults to FALSE}
 for a read to be considered full-length. Defaults to 50}
 
 \item{genomeVersion}{genome and version for GFF output file. Defaults to mm10}
+
+\item{onlyFullLength}{OPTIONAL If you have already run this command without
+annotated CAGE and PolyA sites and now want to just run that portion, set to
+TRUE. Defaults to FALSE}
 }
 \value{
 directory containing several bam, gff.gz, and flat files
