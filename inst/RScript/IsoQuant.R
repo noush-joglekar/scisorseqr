@@ -12,7 +12,7 @@ all_info <- data.table::fread(args[1])
 if(ncol(all_info) == 9){
 	all_info <- all_info[,c(1:4,6)]
 	colnames(all_info) <- c("Readname","Gene","Celltype","Barcode","Isoform")
-} else if(ncol(all_info) == 11){
+} else if(ncol(all_info) >= 11){
 	all_info <- all_info[,c(1:4,6:8)]
 	colnames(all_info) <- c("Readname","Gene","Celltype","Barcode","Isoform","TSS","PolyA")
 }
