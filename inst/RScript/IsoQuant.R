@@ -60,16 +60,17 @@ if(is.polya != FALSE){
 	write.table(ids3,file=paste0(isoDir,"PolyA-PolyID.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
-if(exists("data_df")){
+if(exists("data_df") && exists('df1')){
 	tS <- colnames(data_df)[c(1, grep("id",colnames(data_df)))]
 	data_df <- data_df %>% dplyr::select(all_of(tS))
 	outDF <- dplyr::inner_join(df1,data_df,by = "Readname")
-} else {
+	write.table(outDF,file=paste0(isoDir,"Gene_Cluster_Cell_IsoIDs_PerRead.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
+} else if (exists('df1')){
 	outDF <- df1
+	write.table(outDF,file=paste0(isoDir,"Gene_Cluster_Cell_IsoIDs_PerRead.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 }
 
 
-write.table(outDF,file=paste0(isoDir,"Gene_Cluster_Cell_IsoIDs_PerRead.csv"),col.names=TRUE,row.names=FALSE,quote=FALSE,sep="\t")
 
 
 
