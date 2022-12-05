@@ -1,7 +1,7 @@
 Package: scisorseqr
 Type: Package
 Title: Processes long reads for differential isoform analysis
-Version: 0.1.8
+Version: 0.1.9
 Author: Anoushka Joglekar
 Maintainer: Anoushka Joglekar <anj2026@med.cornell.edu>
 Description: For any comparative (e.g. case-control) studies of alternative splicing,
