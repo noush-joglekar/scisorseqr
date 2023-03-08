@@ -15,30 +15,31 @@ cellsPerIso = [x[1::2] for x in all_info]
 numIsoPerCell = [[int(y) for y in x[2::2]] for x in all_info]
 
 print("Creating Isoform X cell matrix")
-print("Processing file with ",len(all_info)," entries")
-
+print("Processing file with ", len(all_info), " entries")
 
 cell_list = list(set(list(chain.from_iterable([x for x in cellsPerIso]))))
 lc = len(cell_list)
 
+
 def MakeListToAppend(index):
-	toAppend = [0]*lc
-	ixes = [cell_list.index(x) for x in cellsPerIso[i]]
-	for ix in ixes:
-		toAppend[ix] = numIsoPerCell[i][ixes.index(ix)]
-	return(toAppend)
+    toAppend = [0] * lc
+    ixes = [cell_list.index(x) for x in cellsPerIso[i]]
+    for ix in ixes:
+        toAppend[ix] = numIsoPerCell[i][ixes.index(ix)]
+    return (toAppend)
+
 
 tA = []
 for i in range(len(all_info)):
-	tA.append(MakeListToAppend(i))
-	if i%10000 == 0:
-		print(i/1000,'k done')
+    tA.append(MakeListToAppend(i))
+    if i % 10000 == 0:
+        print(i / 1000, 'k done')
 
 print("Writing to dataframe")
-numIso_frame = pd.DataFrame(tA,columns = cell_list, index = iso_names)
+numIso_frame = pd.DataFrame(tA, columns=cell_list, index=iso_names)
 
 elapsed_time = time.time() - start_time
 print(time.strftime("%H:%M:%S", time.gmtime(elapsed_time)))
 
 print("Writing output file")
-numIso_frame.to_csv('Matrices/AllIsoformsXAllCells_matrix.csv',sep="\t")
+numIso_frame.to_csv('Matrices/AllIsoformsXAllCells_matrix.csv', sep="\t")
