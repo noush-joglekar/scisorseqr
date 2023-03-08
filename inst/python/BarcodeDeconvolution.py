@@ -22,11 +22,14 @@ def revComp(my_seq):            ## obtain reverse complement of a sequence
         return(lms)
 
 def BC_scan(barcodes,start_scan,end_scan,seq):  ## Given start and end position of scanning sequence, look for barcodes
-        str_list = [seq[i:i+16] for i in range(start_scan,end_scan)]    ## barcode file has "\n" in encoding
-        bc_intersect = list(set(str_list).intersection(barcodes))
+        bc_dict = {}
+        for i in range(start_scan, end_scan):
+                bc_dict[seq[i:i + 16]] = i
+        bc_intersect = barcodes_set.intersection(bc_dict.keys())
+
         if bc_intersect:
-                bc_intersect = [element for element in bc_intersect]    ## allow for possibility of multiple barcodes matching
-                bc_pos = [seq.index(element) for element in bc_intersect]
+                ## allow for possibility of multiple barcodes matching
+                bc_pos = [bc_dict[element] for element in bc_intersect]
         else:
                 bc_intersect = 'no_bc'
                 bc_pos='-'
@@ -71,7 +74,7 @@ def TSODetectRev(revEnd_seq):   ## If it was actually the reverse strand then it
 
 def prelim(args):
 	global barcodes
-	global cluster_id
+	global barcodes_set
 	global umiLength
 
 	file_name = re.split('/|.fq.gz|.fastq.gz',args.fq)[-2]
@@ -87,9 +90,12 @@ def prelim(args):
 
 	bc_file = args.bcClust.replace(u'\xa0', u'')
 
-	barcodes = [x.strip('\n').split('\t')[0] for x in open(bc_file).readlines()]
-	cluster_id = [x.strip('\n').split('\t')[1] for x in open(bc_file).readlines()]
-	
+	barcodes = {}
+	for l in open(bc_file):
+		v = l.strip().split('\t')
+		barcodes[v[0]] = v[1]
+	barcodes_set = set(barcodes.keys())
+
 	if args.chemistry == "v2":
 	  umiLength = 10
 	elif args.chemistry == "v3":
@@ -149,6 +155,10 @@ def addToDict(d, line, rn):
 			bc_found = BC_scan(barcodes,start_scan,end_scan,rev_seq)
 		elif start_scan <0 and end_scan <= 0:
 			bc_found = {'bc_pos':'-','bc_intersect':'no_bc'}
+		else:
+			bc_found = False # add this so bc_found is always defined
+			print("Error")
+
 		if bc_found:
 			d['BarcodeFound'].append(bc_found.get('bc_intersect'))
 			d['bc_position'].append(bc_found.get('bc_pos'))
@@ -156,7 +166,7 @@ def addToDict(d, line, rn):
 				d['Cluster'].append('no_clust')
 				d['UMIs'].append('-')
 			else:
-				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found.get('bc_intersect')]])
+				d['Cluster'].append([barcodes[item] for item in bc_found.get('bc_intersect')])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
 				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(rev_seq[UMI_start:UMI_end])
@@ -181,7 +191,9 @@ def addToDict(d, line, rn):
 		elif start_scan <0 and end_scan <= 0:
 			bc_found = {'bc_pos':'-','bc_intersect':'no_bc'}
 		else:
-			print("wtf",fwd_ix,rev_ix,start_scan,end_scan)
+			bc_found = False  # add this so bc_found is always defined
+			print("Error")
+
 		if bc_found:
 			d['BarcodeFound'].append(bc_found.get('bc_intersect'))
 			d['bc_position'].append(bc_found.get('bc_pos'))
@@ -189,7 +201,7 @@ def addToDict(d, line, rn):
 				d['Cluster'].append('no_clust')
 				d['UMIs'].append('-')
 			else:
-				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found.get('bc_intersect')]])
+				d['Cluster'].append([barcodes[item] for item in bc_found.get('bc_intersect')])
 				UMI_start = int(bc_found.get('bc_pos')[0])+16
 				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(seq[UMI_start:UMI_end])
@@ -210,6 +222,9 @@ def addToDict(d, line, rn):
 			bc_found_f = BC_scan(barcodes,start_scan_f,end_scan_f,seq)
 		elif start_scan_f <0 and end_scan_f <= 0:
 			bc_found_f = {'bc_pos':'-','bc_intersect':'no_bc'}
+		else:
+			bc_found_f = False # add this so bc_found is always defined
+			print("Error")
 
 		start_scan_r = rev_ix-36
 		end_scan_r = rev_ix-6
@@ -220,6 +235,9 @@ def addToDict(d, line, rn):
 			bc_found_r = BC_scan(barcodes,start_scan_r,end_scan_r,rev_seq)
 		elif start_scan_r <0 and end_scan_r <= 0:
 			bc_found_r = {'bc_pos':'-','bc_intersect':'no_bc'}
+		else:
+			bc_found_r = False # add this so bc_found is always defined
+			print("Error")
 
 		if bc_found_f and bc_found_r and bc_found_r.get('bc_intersect') != 'no_bc' and bc_found_f.get('bc_intersect') != 'no_bc':
 			## BC found in forward AND reverse strand implies something is wrong, discard the read
@@ -237,13 +255,13 @@ def addToDict(d, line, rn):
 			d['Strand_info'].append('fwd')
 			d['BarcodeFound'].append(bc_found_f.get('bc_intersect'))
 			d['bc_position'].append(bc_found_f.get('bc_pos'))
-			if 'no_bc' in bc_found.get('bc_intersect'):
+			if 'no_bc' in bc_found_f.get('bc_intersect'):
 				d['Cluster'].append('no_clust')
 				d['UMIs'].append('-')
 			else:
-				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found_f.get('bc_intersect')]])
-				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
+				d['Cluster'].append([barcodes[item] for item in bc_found_f.get('bc_intersect')])
+				UMI_start = int(bc_found_f.get('bc_pos')[0])+16
+				UMI_end = int(bc_found_f.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(seq[UMI_start:UMI_end])
 				#bc_count += 1
 		elif bc_found_r and not bc_found_f:     ## Barcode found in reverse strand, fwd T9 was a false positive
@@ -252,13 +270,13 @@ def addToDict(d, line, rn):
 			d['Strand_info'].append('rev')
 			d['BarcodeFound'].append(bc_found_f.get('bc_intersect'))
 			d['bc_position'].append(bc_found_f.get('bc_pos'))
-			if 'no_bc' in bc_found.get('bc_intersect'):
+			if 'no_bc' in bc_found_r.get('bc_intersect'):
 				d['Cluster'].append('no_clust')
 				d['UMIs'].append('-')
 			else:
-				d['Cluster'].append([cluster_id[x] for x in [barcodes.index(item) for item in bc_found_f.get('bc_intersect')]])
-				UMI_start = int(bc_found.get('bc_pos')[0])+16
-				UMI_end = int(bc_found.get('bc_pos')[0])+16+umiLength
+				d['Cluster'].append([barcodes[item] for item in bc_found_f.get('bc_intersect')])
+				UMI_start = int(bc_found_r.get('bc_pos')[0])+16
+				UMI_end = int(bc_found_r.get('bc_pos')[0])+16+umiLength
 				d['UMIs'].append(rev_seq[UMI_start:UMI_end])
 				#bc_count += 1
 		else:
